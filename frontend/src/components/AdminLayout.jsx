@@ -38,9 +38,11 @@ const AdminLayout = ({ children }) => {
       {/* Logo */}
       <div className="px-5 py-6 border-b border-white/10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
-            <span className="text-gold font-extrabold font-jakarta text-base">S</span>
-          </div>
+          <img
+            src="/Gemini_Generated_Image_1938en1938en1938.png"
+            alt="SM Golden Resorts Logo"
+            className="w-10 h-10 object-contain rounded-full shrink-0"
+          />
           <div>
             <p className="text-white font-extrabold text-sm font-jakarta leading-none">SM Golden Resorts</p>
             <p className="text-white/40 text-[10px] uppercase tracking-widest mt-0.5">Admin Panel</p>
@@ -151,6 +153,11 @@ const AdminLayout = ({ children }) => {
           >
             <Menu className="w-5 h-5" />
           </button>
+          <img
+            src="/Gemini_Generated_Image_1938en1938en1938.png"
+            alt="SM Golden Resorts Logo"
+            className="w-8 h-8 object-contain rounded-full"
+          />
           <span className="text-white font-extrabold text-sm font-jakarta">SM Golden Resorts</span>
           <div className="w-9" />
         </div>

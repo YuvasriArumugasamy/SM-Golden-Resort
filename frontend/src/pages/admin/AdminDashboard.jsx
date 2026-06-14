@@ -1,13 +1,376 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  CalendarDays, BedDouble, CheckCircle2, XCircle,
-  Clock, TrendingUp, RefreshCw, ExternalLink, IndianRupee,
+  CalendarDays, BedDouble, CheckCircle2,
+  Clock, RefreshCw, ExternalLink,
+  MapPin, Star, ChevronLeft, ChevronRight, Thermometer,
+  Wifi, Wind, Tv, Image as ImageIcon,
+  X, Edit3,
 } from "lucide-react";
 import api from "../../api/axios";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import AdminLayout from "../../components/AdminLayout";
+
+// ── Property photos (uses existing public images) ──
+const PROPERTY_PHOTOS = [
+  "/WhatsApp Image 2026-06-14 at 07.53.04.jpeg",
+  "/WhatsApp Image 2026-06-14 at 07.53.09.jpeg",
+  "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
+  "/WhatsApp Image 2026-06-14 at 07.53.15 (1).jpeg",
+  "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
+  "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
+  "/WhatsApp Image 2026-06-14 at 07.56.05.jpeg",
+  "/WhatsApp Image 2026-06-14 at 09.15.41.jpeg",
+  "/WhatsApp Image 2026-05-15 at 10.48.37.webp",
+  "/WhatsApp Image 2026-05-15 at 10.48.39.webp",
+  "/WhatsApp Image 2026-05-15 at 10.48.40.webp",
+  "/WhatsApp Image 2026-05-15 at 10.48.41.webp",
+];
+
+// ── Hotel Listing Card ──
+function HotelListingCard() {
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [activeTab, setActiveTab] = useState("overview");
+
+  const prev = () => setCurrentPhoto(c => (c - 1 + PROPERTY_PHOTOS.length) % PROPERTY_PHOTOS.length);
+  const next = () => setCurrentPhoto(c => (c + 1) % PROPERTY_PHOTOS.length);
+
+  const tabs = ["Overview", "Amenities", "Rooms"];
+  const tabContent = {
+    overview: (
+      <div className="mt-3 text-sm text-slate-600 leading-relaxed">
+        SM Golden Resorts is located on Old Falls Main Road, just 0.38km from the iconic Courtallam Old Falls.
+        We offer 11 thoughtfully designed rooms including Non-AC, AC, Suite, and Villa options — perfect for families and couples.
+      </div>
+    ),
+    amenities: (
+      <div className="mt-3 flex flex-wrap gap-2">
+        {[
+          { icon: Wifi, label: "Free WiFi" },
+          { icon: Wind, label: "AC Rooms" },
+          { icon: Tv, label: "TV" },
+          { icon: CheckCircle2, label: "Hot Water" },
+          { icon: CheckCircle2, label: "Parking" },
+          { icon: CheckCircle2, label: "24/7 Check-in" },
+          { icon: CheckCircle2, label: "Family Rooms" },
+          { icon: CheckCircle2, label: "Near Falls" },
+        ].map(({ icon: Icon, label }) => (
+          <span key={label} className="flex items-center gap-1.5 text-xs bg-slate-50 border border-slate-200 text-slate-600 px-3 py-1.5 rounded-full font-medium">
+            <Icon className="w-3 h-3 text-blue-500" /> {label}
+          </span>
+        ))}
+      </div>
+    ),
+    rooms: (
+      <div className="mt-3 space-y-2">
+        {[
+          { type: "Non-AC Room", price: "₹1,500/night", beds: "1 Double Bed", avail: true },
+          { type: "AC Room", price: "₹2,000/night", beds: "1 Double Bed", avail: true },
+          { type: "Villa (Room 110)", price: "₹2,500/night", beds: "2 Beds", avail: true },
+          { type: "Suite Room", price: "₹10,000/night", beds: "King Bed + Lounge", avail: false },
+        ].map(r => (
+          <div key={r.type} className="flex items-center justify-between py-2 border-b border-slate-100 last:border-0">
+            <div>
+              <p className="text-sm font-bold text-slate-800">{r.type}</p>
+              <p className="text-xs text-slate-500">{r.beds}</p>
+            </div>
+            <div className="text-right">
+              <p className="text-sm font-extrabold text-blue-600">{r.price}</p>
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${r.avail ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-600"}`}>
+                {r.avail ? "✓ Available" : "✕ Full"}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    ),
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-6"
+    >
+      {/* ── Photo Carousel ── */}
+      <div className="relative h-56 sm:h-64 bg-slate-200 overflow-hidden">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.img
+            key={currentPhoto}
+            src={PROPERTY_PHOTOS[currentPhoto]}
+            alt={`SM Golden Resorts - Photo ${currentPhoto + 1}`}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.25 }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+
+        {/* Prev / Next */}
+        <button onClick={prev}
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-all z-10">
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <button onClick={next}
+          className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-all z-10">
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+        {/* Photos count badge */}
+        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm z-10">
+          <ImageIcon className="w-3.5 h-3.5" />
+          {currentPhoto + 1} of {PROPERTY_PHOTOS.length} photos
+        </div>
+
+        {/* Dot strip */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+          {PROPERTY_PHOTOS.map((_, i) => (
+            <button key={i} onClick={() => setCurrentPhoto(i)}
+              className={`rounded-full transition-all ${i === currentPhoto ? "bg-white w-4 h-1.5" : "bg-white/50 w-1.5 h-1.5"}`} />
+          ))}
+        </div>
+      </div>
+
+      {/* ── Hotel Info ── */}
+      <div className="p-4 sm:p-5">
+        {/* Name + Temp */}
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">
+            SM Golden Resorts in Courtallam
+          </h2>
+          <div className="flex flex-col items-center shrink-0 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2">
+            <Thermometer className="w-4 h-4 text-blue-500" />
+            <span className="text-sm font-extrabold text-blue-700 mt-0.5">27°C</span>
+          </div>
+        </div>
+
+        {/* Address */}
+        <div className="flex items-start gap-1.5 text-slate-500 text-sm mb-3">
+          <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+          <span>Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu 627802, India</span>
+        </div>
+
+        {/* Rating + Reviews + Badge */}
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+            <span className="text-white text-[9px] font-extrabold">G</span>
+          </div>
+          <div className="flex">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+            ))}
+          </div>
+          <span className="text-sm font-bold text-slate-700">56 Reviews</span>
+          <span className="bg-orange-500 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wide">
+            Limited Offer
+          </span>
+        </div>
+
+        {/* Tab Bar */}
+        <div className="flex gap-1 border-b border-slate-200 mb-0 overflow-x-auto">
+          {tabs.map(tab => (
+            <button key={tab}
+              onClick={() => setActiveTab(tab.toLowerCase())}
+              className={`px-4 py-2.5 text-sm font-bold whitespace-nowrap transition-all border-b-2 -mb-px ${
+                activeTab === tab.toLowerCase()
+                  ? "text-blue-600 border-blue-600"
+                  : "text-slate-500 border-transparent hover:text-slate-700"
+              }`}>
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        <AnimatePresence mode="wait">
+          <motion.div key={activeTab}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}>
+            {tabContent[activeTab]}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* WhatsApp Button */}
+        <div className="flex justify-end mt-4 pt-4 border-t border-slate-100">
+          <a href="https://wa.me/919443710420" target="_blank" rel="noopener noreferrer"
+            className="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-4 py-2.5 rounded-xl text-sm transition-all shadow-sm flex items-center gap-1.5">
+            💬 WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </motion.div>
+  );
+}
+
+// ── Manage Booking Modal ──
+function ManageBookingModal({ isOpen, onClose }) {
+  const [phone, setPhone] = useState("");
+  const [bookingId, setBookingId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null); // { type: 'success'|'error', text }
+
+  const reset = () => {
+    setPhone("");
+    setBookingId("");
+    setMessage(null);
+  };
+
+  const handleClose = () => {
+    reset();
+    onClose();
+  };
+
+  const handleAction = async (action) => {
+    if (!phone && !bookingId) {
+      setMessage({ type: "error", text: "Please enter phone number or booking ID." });
+      return;
+    }
+    setLoading(true);
+    setMessage(null);
+    try {
+      if (action === "cancel") {
+        await api.patch("/api/admin/bookings/manage", { phone, bookingId, action: "cancel" });
+        setMessage({ type: "success", text: "Booking cancelled successfully." });
+      } else {
+        // Modify — navigate to bookings page filtered
+        window.location.href = `/admin/bookings?search=${bookingId || phone}`;
+      }
+    } catch (err) {
+      setMessage({ type: "error", text: err.response?.data?.message || "Action failed. Please try again." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleClose}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 20 }}
+            transition={{ type: "spring", duration: 0.35 }}
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90vw] max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md">
+                  <CalendarDays className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-xl font-extrabold text-slate-900 font-jakarta">Manage Booking</h2>
+              </div>
+              <button onClick={handleClose}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-all">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="px-5 py-5 space-y-5">
+              {/* Phone Number */}
+              <div>
+                <label className="block text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-2">
+                  Phone Number
+                </label>
+                <div className="flex items-center gap-0 border border-slate-200 rounded-2xl overflow-hidden bg-slate-50 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                  {/* India flag picker */}
+                  <div className="flex items-center gap-1.5 px-3 py-3 bg-slate-100 border-r border-slate-200 shrink-0 cursor-default select-none">
+                    <span className="text-lg">🇮🇳</span>
+                    <svg className="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                    placeholder="Please enter phone"
+                    className="flex-1 bg-transparent px-4 py-3 text-sm text-slate-700 placeholder-slate-400 outline-none font-medium"
+                  />
+                </div>
+              </div>
+
+              {/* Booking ID */}
+              <div>
+                <label className="block text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-2">
+                  Booking ID
+                </label>
+                <div className="flex items-center gap-0 border border-slate-200 rounded-2xl overflow-hidden bg-slate-50 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                  <span className="pl-4 text-slate-400 font-bold text-sm">#</span>
+                  <input
+                    type="text"
+                    value={bookingId}
+                    onChange={e => setBookingId(e.target.value)}
+                    placeholder="Please enter booking id"
+                    className="flex-1 bg-transparent px-3 py-3.5 text-sm text-slate-700 placeholder-slate-400 outline-none font-medium"
+                  />
+                </div>
+              </div>
+
+              {/* Error / Success message */}
+              {message && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`text-xs font-bold px-4 py-2.5 rounded-xl ${
+                    message.type === "error"
+                      ? "bg-red-50 text-red-600 border border-red-200"
+                      : "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                  }`}
+                >
+                  {message.text}
+                </motion.div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                {/* Cancel Booking */}
+                <button
+                  onClick={() => handleAction("cancel")}
+                  disabled={loading}
+                  className="flex flex-col items-center justify-center gap-1 py-4 rounded-2xl border-2 border-red-300 text-red-500 hover:bg-red-50 font-extrabold text-sm transition-all disabled:opacity-50"
+                >
+                  <X className="w-4 h-4" />
+                  <span>Cancel<br />Booking</span>
+                </button>
+
+                {/* Modify Booking */}
+                <button
+                  onClick={() => handleAction("modify")}
+                  disabled={loading}
+                  className="flex flex-col items-center justify-center gap-1 py-4 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 text-white font-extrabold text-sm shadow-md hover:from-blue-600 hover:to-blue-700 transition-all disabled:opacity-50"
+                >
+                  <Edit3 className="w-4 h-4" />
+                  <span>Modify<br />Booking</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
 
 const StatCard = ({ icon: Icon, label, value, color, delay }) => (
   <motion.div
@@ -38,6 +401,7 @@ export default function AdminDashboard() {
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [manageModalOpen, setManageModalOpen] = useState(false);
 
   const load = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true); else setLoading(true);
@@ -64,13 +428,20 @@ export default function AdminDashboard() {
 
   if (loading) return (
     <AdminLayout>
-      <div className="flex items-center justify-center h-full"><LoadingSpinner /></div>
+      <div className="p-6 md:p-8">
+        <HotelListingCard />
+        <div className="flex items-center justify-center h-40"><LoadingSpinner /></div>
+      </div>
     </AdminLayout>
   );
 
   return (
+    <>
     <AdminLayout>
       <div className="p-6 md:p-8 space-y-8">
+        {/* Hotel Listing Card */}
+        <HotelListingCard />
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -198,10 +569,11 @@ export default function AdminDashboard() {
         >
           <h3 className="font-extrabold text-navy font-jakarta text-sm mb-4">Quick Actions</h3>
           <div className="flex flex-wrap gap-3">
-            <Link to="/admin/bookings"
+            <button
+              onClick={() => setManageModalOpen(true)}
               className="flex items-center gap-2 bg-navy text-white text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-navy/90 transition-all shadow-sm">
               <CalendarDays className="w-3.5 h-3.5" /> Manage Bookings
-            </Link>
+            </button>
             <Link to="/admin/rooms"
               className="flex items-center gap-2 bg-gold text-white text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-gold/90 transition-all shadow-sm">
               <BedDouble className="w-3.5 h-3.5" /> View Rooms
@@ -214,5 +586,7 @@ export default function AdminDashboard() {
         </motion.div>
       </div>
     </AdminLayout>
+    <ManageBookingModal isOpen={manageModalOpen} onClose={() => setManageModalOpen(false)} />
+    </>
   );
 }

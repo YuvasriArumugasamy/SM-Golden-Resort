@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import api from "../../api/axios";
 import toast from "react-hot-toast";
-import { Shield, Mail, Lock, LogIn } from "lucide-react";
+import { Mail, Lock, LogIn } from "lucide-react";
 
 const AdminLogin = () => {
   const { login, isAuthenticated } = useAuth();
@@ -35,9 +35,11 @@ const AdminLogin = () => {
       <div className="w-full max-w-md">
         {/* Logo area */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center mx-auto mb-4">
-            <Shield className="w-8 h-8 text-gold" />
-          </div>
+          <img
+            src="/Gemini_Generated_Image_1938en1938en1938.png"
+            alt="SM Golden Resorts Logo"
+            className="w-20 h-20 object-contain rounded-full mx-auto mb-4"
+          />
           <h1 className="text-2xl font-extrabold text-white font-jakarta">SM Golden Resorts</h1>
           <p className="text-white/50 text-xs uppercase tracking-widest mt-1 font-semibold">Admin Portal</p>
         </div>
