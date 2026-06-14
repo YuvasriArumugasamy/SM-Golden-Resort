@@ -10,8 +10,8 @@ const roomsData = [
   { roomId: "107", name: "Room 107", type: "Non-AC", price: 1500, beds: "Double Bed", badge: "Non-AC", amenities: ["WiFi", "TV", "Hot Water", "Fan"] },
   { roomId: "108", name: "Room 108", type: "AC", price: 2000, beds: "Double Bed", badge: "AC", amenities: ["WiFi", "TV", "Hot Water", "AC"] },
   { roomId: "109", name: "Room 109", type: "Non-AC", price: 1500, beds: "Double Bed", badge: "Non-AC", amenities: ["WiFi", "TV", "Hot Water", "Fan"] },
-  { roomId: "110", name: "Room 110", type: "Villa", price: 2500, beds: "Double Bed", badge: "Villa", amenities: ["WiFi", "TV", "Hot Water", "Fan", "Garden View"] },
-  { roomId: "111", name: "Suite AC Premium", type: "Suite AC", price: 10000, beds: "King Bed", badge: "Suite Premium", amenities: ["WiFi", "TV", "Hot Water", "AC", "Minibar", "Balcony", "Mountain View"] },
+  { roomId: "110", name: "Room 110 - Villa", type: "Villa", price: 2500, beds: "Double Bed", badge: "Villa", amenities: ["WiFi", "TV", "Hot Water", "Fan", "Garden View", "Kitchen Access"] },
+  { roomId: "111", name: "Suite Premium", type: "Suite AC", price: 10000, beds: "King Bed", badge: "Suite Premium", amenities: ["WiFi", "TV", "Hot Water", "AC", "Minibar", "Balcony", "Mountain View"] },
 ];
 
 // @desc    Get all rooms

@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
 
 // Pages
 import Home from "./pages/Home";
@@ -17,23 +18,24 @@ import Rooms from "./pages/Rooms";
 import Contact from "./pages/Contact";
 import Booking from "./pages/Booking";
 import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminBookings from "./pages/admin/AdminBookings";
+import AdminRooms from "./pages/admin/AdminRooms";
+import AdminGuests from "./pages/admin/AdminGuests";
+import AdminSettings from "./pages/admin/AdminSettings";
 
-// PageWrapper for slide/fade animations
-const PageWrapper = ({ children }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25, ease: "easeInOut" }}
-    >
-      {children}
-    </motion.div>
-  );
-};
+// PageWrapper for fade animations
+const PageWrapper = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.25, ease: "easeInOut" }}
+  >
+    {children}
+  </motion.div>
+);
 
-// Layout wrapper that conditionally shows Footer & WhatsApp on non-admin routes
 const AppLayout = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
@@ -41,68 +43,28 @@ const AppLayout = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
+      {!isAdminRoute && <Navbar />}
       <div className="flex-grow">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
-            <Route
-              path="/"
-              element={
-                <PageWrapper>
-                  <Home />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/rooms"
-              element={
-                <PageWrapper>
-                  <Rooms />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <PageWrapper>
-                  <Contact />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/booking"
-              element={
-                <PageWrapper>
-                  <Booking />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/admin/login"
-              element={
-                <PageWrapper>
-                  <AdminLogin />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/admin"
-              element={<Navigate to="/admin/bookings" replace />}
-            />
-            <Route
-              path="/admin/dashboard"
-              element={<Navigate to="/admin/bookings" replace />}
-            />
-            <Route
-              path="/admin/bookings"
-              element={
-                <ProtectedRoute>
-                  <PageWrapper>
-                    <AdminBookings />
-                  </PageWrapper>
-                </ProtectedRoute>
-              }
-            />
-            {/* Redirect any other path to Home */}
+            {/* Public Routes */}
+            <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+            <Route path="/rooms" element={<PageWrapper><Rooms /></PageWrapper>} />
+            <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+            <Route path="/booking" element={<PageWrapper><Booking /></PageWrapper>} />
+
+            {/* Admin Auth */}
+            <Route path="/admin/login" element={<PageWrapper><AdminLogin /></PageWrapper>} />
+            <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+
+            {/* Admin Protected Routes */}
+            <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/bookings" element={<ProtectedRoute><AdminBookings /></ProtectedRoute>} />
+            <Route path="/admin/rooms" element={<ProtectedRoute><AdminRooms /></ProtectedRoute>} />
+            <Route path="/admin/guests" element={<ProtectedRoute><AdminGuests /></ProtectedRoute>} />
+            <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
+
+            {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AnimatePresence>
