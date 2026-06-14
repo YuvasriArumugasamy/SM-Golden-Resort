@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Styles ─────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+  background-color: #FDF6EE;
+  color: #1C2B4A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100vw;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ─── Custom Scrollbar ────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5E8D4;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8963E;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A67830;
+}
+
+/* ─── React Datepicker Overrides ──────────────── */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  border: 1px solid #E8D5BE;
+  border-radius: 0.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  outline: none;
+  background: #fff;
+  color: #1C2B4A;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.react-datepicker__input-container input:focus {
+  border-color: #C8963E;
+  box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.12);
+}
+.react-datepicker__header {
+  background-color: #1C2B4A !important;
+  border-bottom: none !important;
+}
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  color: white !important;
+}
+.react-datepicker__navigation-icon::before {
+  border-color: white !important;
+}
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #C8963E !important;
+  border-radius: 50% !important;
+}
+.react-datepicker__day:hover {
+  background-color: #F5E8D4 !important;
+  border-radius: 50% !important;
+}
+
+/* ─── Page Transition ─────────────────────────── */
+.page-transition {
+  animation: fadeIn 0.4s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── WhatsApp Pulse ──────────────────────────── */
+@keyframes ping-slow {
+  0%   { transform: scale(1); opacity: 1; }
+  75%  { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ─── Section Divider ─────────────────────────── */
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, #C8963E, #F0C96A);
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+/* ─── Gold Gradient Text ──────────────────────── */
+.gold-text {
+  background: linear-gradient(135deg, #D4A843, #F0C96A, #C8963E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Hero Section ────────────────────────────── */
+.hero-section {
+  background: linear-gradient(135deg, rgba(28,43,74,0.88) 0%, rgba(28,43,74,0.65) 60%, rgba(200,150,62,0.25) 100%);
+}
+
+/* ─── Booking bar glass card ──────────────────── */
+.booking-bar {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(200, 150, 62, 0.15);
+}
+
+/* ─── Room Card hover ─────────────────────────── */
+.room-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.room-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(28, 43, 74, 0.12);
+}
+
+/* ─── Hide scrollbar utilities ────────────────── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

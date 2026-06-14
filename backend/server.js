@@ -1,0 +1,80 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const bcrypt = require("bcryptjs");
+
+const connectDB = require("./config/db");
+const { seedRooms } = require("./controllers/roomController");
+const Admin = require("./models/Admin");
+
+const adminRoutes = require("./routes/adminRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
+const roomRoutes = require("./routes/roomRoutes");
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// ─── Middleware ───────────────────────────────────────────────
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ─── Routes ──────────────────────────────────────────────────
+app.use("/api/admin", adminRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/rooms", roomRoutes);
+
+// Health check
+app.get("/", (req, res) => {
+  res.json({ message: "SM Golden Resorts API is running 🏨", status: "ok" });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Internal server error" });
+});
+
+// ─── Seed Default Admin ───────────────────────────────────────
+const seedAdmin = async () => {
+  try {
+    const existingAdmin = await Admin.findOne({ email: process.env.ADMIN_EMAIL });
+    if (!existingAdmin) {
+      const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+      await Admin.create({
+        email: process.env.ADMIN_EMAIL,
+        password: hashedPassword,
+      });
+      console.log(`✅ Default admin seeded: ${process.env.ADMIN_EMAIL}`);
+    } else {
+      console.log("ℹ️  Admin already exists in DB");
+    }
+  } catch (error) {
+    console.error("Admin seeding error:", error);
+  }
+};
+
+// ─── Start Server ─────────────────────────────────────────────
+const startServer = async () => {
+  await connectDB();
+  await seedAdmin();
+  await seedRooms();
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`📦 Environment: ${process.env.NODE_ENV || "development"}`);
+  });
+};
+
+startServer();
