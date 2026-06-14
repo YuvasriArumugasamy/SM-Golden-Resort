@@ -441,6 +441,8 @@ export default function AdminDashboard() {
       <div className="p-6 md:p-8 space-y-8">
         {/* Hotel Listing Card */}
         <HotelListingCard />
+        {/* Manage Booking Modal — rendered inside layout so it's always on top */}
+        <ManageBookingModal isOpen={manageModalOpen} onClose={() => setManageModalOpen(false)} />
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -586,7 +588,6 @@ export default function AdminDashboard() {
         </motion.div>
       </div>
     </AdminLayout>
-    <ManageBookingModal isOpen={manageModalOpen} onClose={() => setManageModalOpen(false)} />
     </>
   );
 }
