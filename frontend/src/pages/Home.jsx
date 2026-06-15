@@ -246,15 +246,6 @@ export default function Home() {
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Logo — bottom left */}
-          <div className="absolute bottom-3 left-3 z-10">
-            <img
-              src="/Gemini_Generated_Image_1938en1938en1938.png"
-              alt="SM Golden Resorts"
-              className="w-12 h-12 rounded-2xl object-cover shadow-lg border-2 border-white/70"
-            />
-          </div>
-
           {/* Dot indicators */}
           <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
             {GALLERY.map((_, i) => (
@@ -271,14 +262,6 @@ export default function Home() {
                onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}>
             <img src={GALLERY[0].src} alt="SM Golden Resorts"
                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
-            {/* Logo on desktop too */}
-            <div className="absolute bottom-3 left-3 z-10">
-              <img
-                src="/Gemini_Generated_Image_1938en1938en1938.png"
-                alt="SM Golden Resorts"
-                className="w-12 h-12 rounded-2xl object-cover shadow-lg border-2 border-white/70"
-              />
-            </div>
           </div>
           {/* Right 2×2 */}
           <div className="col-span-2 grid grid-cols-2 gap-1.5">
@@ -557,15 +540,6 @@ export default function Home() {
                                   className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-md outline-none focus:outline-none z-10">
                             <ChevronRight className="w-4.5 h-4.5" />
                           </button>
-
-                          {/* Logo circle — bottom left */}
-                          <div className="absolute bottom-2.5 left-2.5 z-10">
-                            <img
-                              src="/Gemini_Generated_Image_1938en1938en1938.png"
-                              alt="SM Golden Resorts"
-                              className="w-11 h-11 rounded-2xl object-cover shadow-lg border-2 border-white/80"
-                            />
-                          </div>
                         </div>
                         {/* Details */}
                         <div className="flex-1 p-4 flex flex-col justify-between">
