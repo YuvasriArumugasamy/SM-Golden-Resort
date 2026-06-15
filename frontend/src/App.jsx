@@ -39,11 +39,12 @@ const PageWrapper = ({ children }) => (
 const AppLayout = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isHomePage = location.pathname === "/";
 
   return (
     <div className="flex flex-col min-h-screen">
       <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
-      {!isAdminRoute && <Navbar />}
+      {!isAdminRoute && !isHomePage && <Navbar />}
       <div className="flex-grow">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
