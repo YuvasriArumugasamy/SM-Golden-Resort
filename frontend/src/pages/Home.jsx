@@ -423,7 +423,7 @@ export default function Home() {
         <div className="max-w-[1280px] mx-auto px-4">
 
           {/* Tabs row — blue pill active — FIRST */}
-          <div className="flex gap-1 overflow-x-auto tabs-scrollbar py-2">
+          <div className="flex gap-1 overflow-x-auto no-scrollbar py-2">
             {TAB_LIST.map(t => (
               <button key={t.id} onClick={() => scrollTo(t.id, t.ref)}
                       className={`text-sm font-medium px-4 py-2 rounded-xl shrink-0 transition-all outline-none focus:outline-none cursor-pointer ${
