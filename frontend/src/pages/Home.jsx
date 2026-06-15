@@ -103,16 +103,16 @@ function ManageBookingModal({ isOpen, onClose }) {
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.93, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.93, y: 24 }}
-            transition={{ type: "spring", duration: 0.35 }}
-            style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 51 }}
-            className="w-[92vw] max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4"
           >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.93, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.93, y: 24 }}
+              transition={{ type: "spring", duration: 0.35 }}
+              onClick={e => e.stopPropagation()}
+              className="w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden"
+            >
             {/* Header */}
             <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100">
               <div className="flex items-center gap-3">
@@ -186,6 +186,7 @@ function ManageBookingModal({ isOpen, onClose }) {
                 </button>
               </div>
             </div>
+          </motion.div>
           </motion.div>
         </>
       )}
