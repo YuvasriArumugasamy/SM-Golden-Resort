@@ -469,31 +469,40 @@ export default function Home() {
                           isSelected ? "border-blue-500 ring-1 ring-blue-500/30 shadow-sm" : "border-slate-200 hover:border-slate-300"
                         }`}>
                         {/* Image */}
-                        <div className="w-full sm:w-[260px] h-[180px] sm:h-auto shrink-0 relative overflow-hidden bg-slate-100">
+                        <div className="w-full sm:w-[280px] h-[220px] sm:h-auto shrink-0 relative overflow-hidden bg-slate-100 rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none">
                           <img src={ROOM_SLIDES[curImg]} alt={room.name} className="w-full h-full object-cover" />
-                          <div className="absolute top-2 left-2">
+
+                          {/* View Room — top left */}
+                          <div className="absolute top-2.5 left-2.5 z-10">
                             <button onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}
-                                    className="bg-white/85 text-slate-700 text-[10px] font-semibold px-2 py-1 rounded outline-none focus:outline-none">
+                                    className="bg-white text-slate-800 text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-md outline-none focus:outline-none hover:bg-slate-50 transition-all">
                               View Room
                             </button>
                           </div>
-                          <div className="absolute top-2 right-2 bg-black/50 text-white text-[9px] font-medium px-2 py-0.5 rounded">
+
+                          {/* Counter — top right */}
+                          <div className="absolute top-2.5 right-2.5 bg-black/55 text-white text-[10px] font-bold px-2.5 py-1 rounded-full z-10">
                             {curImg + 1} of {ROOM_SLIDES.length}
                           </div>
+
+                          {/* Prev Arrow */}
                           <button onClick={e => { e.stopPropagation(); setRoomImgIdx(p => ({ ...p, [room.roomId]: ((p[room.roomId] || 0) - 1 + ROOM_SLIDES.length) % ROOM_SLIDES.length })); }}
-                                  className="absolute left-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-sm outline-none focus:outline-none">
-                            <ChevronLeft className="w-4 h-4" />
+                                  className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-md outline-none focus:outline-none z-10">
+                            <ChevronLeft className="w-4.5 h-4.5" />
                           </button>
+
+                          {/* Next Arrow */}
                           <button onClick={e => { e.stopPropagation(); setRoomImgIdx(p => ({ ...p, [room.roomId]: ((p[room.roomId] || 0) + 1) % ROOM_SLIDES.length })); }}
-                                  className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-sm outline-none focus:outline-none">
-                            <ChevronRight className="w-4 h-4" />
+                                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-md outline-none focus:outline-none z-10">
+                            <ChevronRight className="w-4.5 h-4.5" />
                           </button>
+
                           {/* Logo circle — bottom left */}
                           <div className="absolute bottom-2.5 left-2.5 z-10">
                             <img
                               src="/Gemini_Generated_Image_1938en1938en1938.png"
                               alt="SM Golden Resorts"
-                              className="w-11 h-11 rounded-2xl object-cover shadow-lg border-2 border-white/70"
+                              className="w-11 h-11 rounded-2xl object-cover shadow-lg border-2 border-white/80"
                             />
                           </div>
                         </div>
