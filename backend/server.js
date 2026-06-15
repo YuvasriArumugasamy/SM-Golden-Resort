@@ -49,14 +49,22 @@ app.use((err, req, res, next) => {
 // ─── Seed Default Admin ───────────────────────────────────────
 const seedAdmin = async () => {
   try {
-    const existingAdmin = await Admin.findOne({ email: process.env.ADMIN_EMAIL });
+    // Support both ADMIN_USERNAME (new) and ADMIN_EMAIL (legacy)
+    const identifier = process.env.ADMIN_USERNAME || process.env.ADMIN_EMAIL;
+    const isUsername = !!process.env.ADMIN_USERNAME;
+
+    const query = isUsername
+      ? { username: identifier?.toLowerCase() }
+      : { email: identifier?.toLowerCase() };
+
+    const existingAdmin = await Admin.findOne(query);
     if (!existingAdmin) {
       const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
       await Admin.create({
-        email: process.env.ADMIN_EMAIL,
+        ...(isUsername ? { username: identifier?.toLowerCase() } : { email: identifier?.toLowerCase() }),
         password: hashedPassword,
       });
-      console.log(`✅ Default admin seeded: ${process.env.ADMIN_EMAIL}`);
+      console.log(`✅ Default admin seeded: ${identifier}`);
     } else {
       console.log("ℹ️  Admin already exists in DB");
     }

@@ -14,8 +14,6 @@ import Navbar from "./components/Navbar";
 
 // Pages
 import Home from "./pages/Home";
-import Rooms from "./pages/Rooms";
-import Contact from "./pages/Contact";
 import Booking from "./pages/Booking";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -24,7 +22,6 @@ import AdminRooms from "./pages/admin/AdminRooms";
 import AdminGuests from "./pages/admin/AdminGuests";
 import AdminSettings from "./pages/admin/AdminSettings";
 
-// PageWrapper for fade animations
 const PageWrapper = ({ children }) => (
   <motion.div
     initial={{ opacity: 0 }}
@@ -38,45 +35,54 @@ const PageWrapper = ({ children }) => (
 
 const AppLayout = () => {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
-  const isHomePage = location.pathname === "/";
+  const isAdminRoute  = location.pathname.startsWith("/admin");
+  const isHomePage    = location.pathname === "/";
+  const isBookingPage = location.pathname === "/booking";
+
+  // Hide navbar & footer on admin routes AND booking page
+  const hideChrome = isAdminRoute || isBookingPage;
 
   return (
     <div className="flex flex-col min-h-screen">
       <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
-      {!isAdminRoute && !isHomePage && <Navbar />}
+
+      {/* Navbar — only on Home (not on booking, not on admin) */}
+      {!hideChrome && !isHomePage && <Navbar />}
+
       <div className="flex-grow">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
-            {/* Public Routes */}
-            <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-            <Route path="/rooms" element={<PageWrapper><Rooms /></PageWrapper>} />
-            <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+            {/* Public */}
+            <Route path="/"        element={<PageWrapper><Home /></PageWrapper>} />
             <Route path="/booking" element={<PageWrapper><Booking /></PageWrapper>} />
 
-            {/* Admin Auth */}
-            <Route path="/admin/login" element={<PageWrapper><AdminLogin /></PageWrapper>} />
-            <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+            {/* Redirect old pages to home */}
+            <Route path="/rooms"   element={<Navigate to="/" replace />} />
+            <Route path="/contact" element={<Navigate to="/" replace />} />
 
-            {/* Admin Protected Routes */}
-            <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/admin/bookings" element={<ProtectedRoute><AdminBookings /></ProtectedRoute>} />
-            <Route path="/admin/rooms" element={<ProtectedRoute><AdminRooms /></ProtectedRoute>} />
-            <Route path="/admin/guests" element={<ProtectedRoute><AdminGuests /></ProtectedRoute>} />
-            <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
+            {/* Admin */}
+            <Route path="/admin/login"      element={<PageWrapper><AdminLogin /></PageWrapper>} />
+            <Route path="/admin"            element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="/admin/dashboard"  element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/bookings"   element={<ProtectedRoute><AdminBookings /></ProtectedRoute>} />
+            <Route path="/admin/rooms"      element={<ProtectedRoute><AdminRooms /></ProtectedRoute>} />
+            <Route path="/admin/guests"     element={<ProtectedRoute><AdminGuests /></ProtectedRoute>} />
+            <Route path="/admin/settings"   element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AnimatePresence>
       </div>
-      {!isAdminRoute && <Footer />}
-      {!isAdminRoute && <WhatsAppButton />}
+
+      {/* Footer & WhatsApp — only on Home */}
+      {!hideChrome && <Footer />}
+      {!hideChrome && <WhatsAppButton />}
     </div>
   );
 };
 
-function App() {
+export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -85,5 +91,3 @@ function App() {
     </AuthProvider>
   );
 }
-
-export default App;

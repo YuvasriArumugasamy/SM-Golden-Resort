@@ -7,15 +7,36 @@ import toast from "react-hot-toast";
 import { RefreshCw, ExternalLink, Phone } from "lucide-react";
 
 export default function AdminGuests() {
-  const [bookings, setBookings] = useState([]);
-  const [loading,  setLoading]  = useState(true);
+  const [guests,  setGuests]  = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchGuests = useCallback(async () => {
     setLoading(true);
     try {
+      // GET /api/bookings — protected, token auto-attached by axios interceptor
       const res = await api.get("/api/bookings");
-      setBookings(res.data);
-    } catch {
+      const bookings = Array.isArray(res.data) ? res.data : (res.data.bookings || []);
+
+      // Deduplicate by phone → build guest records
+      const map = {};
+      bookings.forEach((b) => {
+        const key = b.phone;
+        if (!key) return;
+        if (!map[key]) {
+          map[key] = {
+            name:     b.guestName || "—",
+            phone:    key,
+            stays:    0,
+            lastRoom: b.roomName || b.roomType || "—",
+          };
+        }
+        map[key].stays += 1;
+        map[key].lastRoom = b.roomName || b.roomType || map[key].lastRoom;
+      });
+
+      setGuests(Object.values(map));
+    } catch (err) {
+      console.error("Guests fetch error:", err);
       toast.error("Failed to fetch guests");
     } finally {
       setLoading(false);
@@ -23,17 +44,6 @@ export default function AdminGuests() {
   }, []);
 
   useEffect(() => { fetchGuests(); }, [fetchGuests]);
-
-  // Deduplicate by phone
-  const guestMap = {};
-  bookings.forEach((b) => {
-    if (!guestMap[b.phone]) {
-      guestMap[b.phone] = { name: b.guestName, phone: b.phone, stays: 0, lastRoom: b.roomName };
-    }
-    guestMap[b.phone].stays += 1;
-    guestMap[b.phone].lastRoom = b.roomName;
-  });
-  const guests = Object.values(guestMap);
 
   return (
     <AdminLayout>
@@ -77,7 +87,9 @@ export default function AdminGuests() {
                 <tbody className="divide-y divide-slate-50">
                   {guests.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="py-14 text-center text-slate-400 text-sm">No guests yet.</td>
+                      <td colSpan={5} className="py-14 text-center text-slate-400 text-sm">
+                        No guests yet.
+                      </td>
                     </tr>
                   ) : guests.map((g, i) => (
                     <motion.tr key={g.phone}
@@ -96,7 +108,7 @@ export default function AdminGuests() {
                       <td className="py-4 px-6">
                         <a href={`tel:${g.phone}`}
                           className="flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-blue-600 transition-colors">
-                          <Phone className="w-3.5 h-3.5" />{g.phone}
+                          <Phone className="w-3.5 h-3.5" /> {g.phone}
                         </a>
                       </td>
                       <td className="py-4 px-6">

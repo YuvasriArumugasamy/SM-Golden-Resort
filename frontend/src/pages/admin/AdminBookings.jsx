@@ -11,6 +11,8 @@ const statusCls = {
   pending:    "bg-amber-50  text-amber-700  border-amber-200",
 };
 
+const getStatusCls = (status) => statusCls[status?.toLowerCase()] || statusCls.pending;
+
 export default function AdminBookings() {
   const { bookings, loading, fetchBookings, updateStatus, deleteBooking } = useBookings();
   const [activeTab,   setActiveTab]   = useState("all");
@@ -19,6 +21,7 @@ export default function AdminBookings() {
 
   const loadData = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
+    // Use the correct backend route: GET /api/bookings (protected, token auto-sent)
     await fetchBookings("all", "");
     setRefreshing(false);
   }, [fetchBookings]);
@@ -26,9 +29,12 @@ export default function AdminBookings() {
   useEffect(() => { loadData(); }, [loadData]);
 
   const filtered = bookings.filter((b) => {
-    const matchTab    = activeTab === "all" || b.status === activeTab;
+    // Backend uses lowercase: "pending", "confirmed", "cancelled"
+    const matchTab    = activeTab === "all" || b.status?.toLowerCase() === activeTab;
     const term        = searchTerm.toLowerCase().trim();
-    const matchSearch = !term || b.guestName.toLowerCase().includes(term) || b.phone.includes(term);
+    const matchSearch = !term ||
+      (b.guestName || "").toLowerCase().includes(term) ||
+      (b.phone     || "").includes(term);
     return matchTab && matchSearch;
   });
 
@@ -131,7 +137,7 @@ export default function AdminBookings() {
                         ₹{b.totalPrice?.toLocaleString("en-IN")}
                       </td>
                       <td className="py-4 px-5">
-                        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${statusCls[b.status] || statusCls.pending}`}>
+                        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider ${getStatusCls(b.status)}`}>
                           {b.status}
                         </span>
                       </td>

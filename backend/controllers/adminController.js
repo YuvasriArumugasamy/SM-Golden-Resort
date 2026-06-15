@@ -3,18 +3,24 @@ const jwt = require("jsonwebtoken");
 const Admin = require("../models/Admin");
 const Booking = require("../models/Booking");
 
-// @desc    Admin Login
+// @desc    Admin Login — accepts username OR email + password
 // @route   POST /api/admin/login
 // @access  Public
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
+    const identifier = (username || email || "").toLowerCase().trim();
 
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+    if (!identifier || !password) {
+      return res.status(400).json({ message: "Username and password are required" });
     }
 
-    const admin = await Admin.findOne({ email: email.toLowerCase() });
+    // Try username first, then email
+    let admin = await Admin.findOne({ username: identifier });
+    if (!admin) {
+      admin = await Admin.findOne({ email: identifier });
+    }
+
     if (!admin) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -25,7 +31,7 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: admin._id, email: admin.email },
+      { id: admin._id, username: admin.username || admin.email },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -33,7 +39,7 @@ const login = async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       token,
-      admin: { id: admin._id, email: admin.email },
+      admin: { id: admin._id, username: admin.username || admin.email },
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -46,8 +52,8 @@ const login = async (req, res) => {
 // @access  Protected
 const getStats = async (req, res) => {
   try {
-    const total = await Booking.countDocuments();
-    const pending = await Booking.countDocuments({ status: "pending" });
+    const total     = await Booking.countDocuments();
+    const pending   = await Booking.countDocuments({ status: "pending" });
     const confirmed = await Booking.countDocuments({ status: "confirmed" });
     const cancelled = await Booking.countDocuments({ status: "cancelled" });
 
@@ -56,13 +62,7 @@ const getStats = async (req, res) => {
       .limit(5)
       .lean();
 
-    res.status(200).json({
-      total,
-      pending,
-      confirmed,
-      cancelled,
-      recentBookings,
-    });
+    res.status(200).json({ total, pending, confirmed, cancelled, recentBookings });
   } catch (error) {
     console.error("Stats error:", error);
     res.status(500).json({ message: "Server error fetching stats" });
@@ -79,20 +79,15 @@ const changePassword = async (req, res) => {
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ message: "Current and new password are required" });
     }
-
     if (newPassword.length < 6) {
       return res.status(400).json({ message: "New password must be at least 6 characters" });
     }
 
     const admin = await Admin.findById(req.admin.id);
-    if (!admin) {
-      return res.status(404).json({ message: "Admin not found" });
-    }
+    if (!admin) return res.status(404).json({ message: "Admin not found" });
 
     const isMatch = await bcrypt.compare(currentPassword, admin.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Current password is incorrect" });
-    }
+    if (!isMatch) return res.status(401).json({ message: "Current password is incorrect" });
 
     admin.password = await bcrypt.hash(newPassword, 10);
     await admin.save();
