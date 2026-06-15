@@ -79,6 +79,34 @@ const NEARBY = [
   ["Main Falls Arch", "1.39 km"],
 ];
 
+// Per-room photo sets — first image is the best hero shot
+const ROOM_PHOTO_SETS = {
+  "101": [
+    "/WhatsApp Image 2026-06-14 at 07.53.04.jpeg",
+    "/WhatsApp Image 2026-06-14 at 07.53.09.jpeg",
+    "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
+    "/WhatsApp Image 2026-05-15 at 10.48.37.webp",
+  ],
+  "102": [
+    "/WhatsApp Image 2026-05-15 at 10.48.35 (1).webp",
+    "/WhatsApp Image 2026-06-14 at 07.53.15 (1).jpeg",
+    "/WhatsApp Image 2026-06-14 at 07.53.16 (1).jpeg",
+    "/WhatsApp Image 2026-05-15 at 10.48.40.webp",
+  ],
+  "104": [
+    "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
+    "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
+    "/WhatsApp Image 2026-05-15 at 10.48.39 (1).webp",
+    "/WhatsApp Image 2026-05-15 at 10.48.41.webp",
+  ],
+  "110": [
+    "/WhatsApp Image 2026-06-14 at 09.15.41.jpeg",
+    "/WhatsApp Image 2026-06-14 at 07.56.05.jpeg",
+    "/WhatsApp Image 2026-05-15 at 10.48.39.webp",
+    "/WhatsApp Image 2026-06-14 at 07.53.09 (1).jpeg",
+  ],
+};
+
 const ROOM_SLIDES = [
   "/WhatsApp Image 2026-06-14 at 07.53.04.jpeg",
   "/WhatsApp Image 2026-06-14 at 07.53.09.jpeg",
@@ -612,6 +640,7 @@ export default function Home() {
                   {rooms.filter((room, idx, arr) =>
                     arr.findIndex(r => r.price === room.price) === idx
                   ).map((room, ri) => {
+                    const slides = ROOM_PHOTO_SETS[room.roomId] || ROOM_SLIDES;
                     const curImg = roomImgIdx[room.roomId] || 0;
                     const isSelected = selectedRoomId === room.roomId;
                     const mrpPerNight = Math.round(room.price * 1.12);
@@ -624,7 +653,7 @@ export default function Home() {
                         }`}>
                         {/* Image */}
                         <div className="w-full sm:w-[280px] h-[220px] sm:h-auto shrink-0 relative overflow-hidden bg-slate-100 rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none">
-                          <img src={ROOM_SLIDES[curImg]} alt={room.name} className="w-full h-full object-cover" />
+                          <img src={slides[curImg]} alt={room.name} className="w-full h-full object-cover" />
 
                           {/* View Room — top left */}
                           <div className="absolute top-2.5 left-2.5 z-10">
@@ -636,17 +665,17 @@ export default function Home() {
 
                           {/* Counter — top right */}
                           <div className="absolute top-2.5 right-2.5 bg-black/55 text-white text-[10px] font-bold px-2.5 py-1 rounded-full z-10">
-                            {curImg + 1} of {ROOM_SLIDES.length}
+                            {curImg + 1} of {slides.length}
                           </div>
 
                           {/* Prev Arrow */}
-                          <button onClick={e => { e.stopPropagation(); setRoomImgIdx(p => ({ ...p, [room.roomId]: ((p[room.roomId] || 0) - 1 + ROOM_SLIDES.length) % ROOM_SLIDES.length })); }}
+                          <button onClick={e => { e.stopPropagation(); setRoomImgIdx(p => ({ ...p, [room.roomId]: ((p[room.roomId] || 0) - 1 + slides.length) % slides.length })); }}
                                   className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-md outline-none focus:outline-none z-10">
                             <ChevronLeft className="w-4.5 h-4.5" />
                           </button>
 
                           {/* Next Arrow */}
-                          <button onClick={e => { e.stopPropagation(); setRoomImgIdx(p => ({ ...p, [room.roomId]: ((p[room.roomId] || 0) + 1) % ROOM_SLIDES.length })); }}
+                          <button onClick={e => { e.stopPropagation(); setRoomImgIdx(p => ({ ...p, [room.roomId]: ((p[room.roomId] || 0) + 1) % slides.length })); }}
                                   className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-md outline-none focus:outline-none z-10">
                             <ChevronRight className="w-4.5 h-4.5" />
                           </button>
