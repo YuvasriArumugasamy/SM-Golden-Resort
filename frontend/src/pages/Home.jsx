@@ -899,7 +899,7 @@ export default function Home() {
                 ) : null}
                 <button onClick={handleBook}
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow outline-none focus:outline-none">
-                  {selRoom ? "Book Now" : "Select Room"}
+                  {selRoom ? "Book Now" : "Book Now"}
                 </button>
               </div>
             </div>
@@ -938,7 +938,7 @@ export default function Home() {
           </div>
           <button onClick={handleBook}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none">
-            {selRoom ? "Book Now →" : "Select Room ↓"}
+            {selRoom ? "Book Now →" : "Book Now →"}
           </button>
         </div>
       </div>
