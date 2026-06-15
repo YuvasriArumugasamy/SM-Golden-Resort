@@ -207,15 +207,81 @@ export default function Home() {
 
       {/* ══ 1. PHOTO GRID ══ */}
       <section className="w-full max-w-[1280px] mx-auto px-3 pt-3">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-1.5 rounded-xl overflow-hidden h-[240px] md:h-[400px] relative">
+
+        {/* ── Mobile: Full-width carousel with arrows + logo ── */}
+        <div className="md:hidden relative rounded-xl overflow-hidden h-[260px] bg-slate-200">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.img
+              key={galleryIdx}
+              src={GALLERY[galleryIdx].src}
+              alt={GALLERY[galleryIdx].label}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.22 }}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </AnimatePresence>
+
+          {/* Counter — top right */}
+          <div className="absolute top-3 right-3 bg-black/50 text-white text-[11px] font-bold px-2.5 py-1 rounded-full z-10">
+            {galleryIdx + 1} of {GALLERY.length}
+          </div>
+
+          {/* Prev Arrow — left edge, outside feel */}
+          <button
+            onClick={() => setGalleryIdx(i => (i - 1 + GALLERY.length) % GALLERY.length)}
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center z-10 shadow-lg transition-all"
+            aria-label="Previous photo"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Next Arrow — right edge */}
+          <button
+            onClick={() => setGalleryIdx(i => (i + 1) % GALLERY.length)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center z-10 shadow-lg transition-all"
+            aria-label="Next photo"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Logo — bottom left */}
+          <div className="absolute bottom-3 left-3 z-10">
+            <img
+              src="/Gemini_Generated_Image_1938en1938en1938.png"
+              alt="SM Golden Resorts"
+              className="w-12 h-12 rounded-2xl object-cover shadow-lg border-2 border-white/70"
+            />
+          </div>
+
+          {/* Dot indicators */}
+          <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+            {GALLERY.map((_, i) => (
+              <button key={i} onClick={() => setGalleryIdx(i)}
+                className={`rounded-full transition-all ${i === galleryIdx ? "bg-white w-4 h-1.5" : "bg-white/50 w-1.5 h-1.5"}`} />
+            ))}
+          </div>
+        </div>
+
+        {/* ── Desktop: original grid ── */}
+        <div className="hidden md:grid grid-cols-4 gap-1.5 rounded-xl overflow-hidden h-[400px] relative">
           {/* Big left photo */}
-          <div className="col-span-1 md:col-span-2 relative overflow-hidden cursor-pointer group"
+          <div className="col-span-2 relative overflow-hidden cursor-pointer group"
                onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}>
             <img src={GALLERY[0].src} alt="SM Golden Resorts"
                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
+            {/* Logo on desktop too */}
+            <div className="absolute bottom-3 left-3 z-10">
+              <img
+                src="/Gemini_Generated_Image_1938en1938en1938.png"
+                alt="SM Golden Resorts"
+                className="w-12 h-12 rounded-2xl object-cover shadow-lg border-2 border-white/70"
+              />
+            </div>
           </div>
           {/* Right 2×2 */}
-          <div className="hidden md:grid col-span-2 grid-cols-2 gap-1.5">
+          <div className="col-span-2 grid grid-cols-2 gap-1.5">
             {[1, 2, 3, 4].map((idx, i) => (
               <div key={i} className="relative overflow-hidden cursor-pointer group"
                    onClick={() => { setGalleryIdx(idx); setGalleryOpen(true); }}>
@@ -232,11 +298,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-          {/* Mobile show all */}
-          <button onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}
-                  className="md:hidden absolute bottom-3 right-3 bg-white/90 text-slate-800 font-bold text-xs px-3 py-1.5 rounded-full shadow">
-            📷 {GALLERY.length} photos
-          </button>
         </div>
       </section>
 
