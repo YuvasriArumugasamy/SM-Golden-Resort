@@ -714,11 +714,11 @@ export default function Home() {
                               <p className="text-[10px] text-slate-400">Plus Taxes · {guests} Guests</p>
                             </div>
                             {room.available ? (
-                              <button onClick={() => { setSelectedRoomId(room.roomId); toast.success(`${room.name} selected!`); }}
+                              <button onClick={() => { setSelectedRoomId(room.roomId); navigate("/booking", { state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests } }); }}
                                       className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all outline-none focus:outline-none ${
                                         isSelected ? "bg-emerald-500 text-white" : "border-2 border-slate-300 text-slate-700 hover:border-blue-400 bg-white"
                                       }`}>
-                                {isSelected ? "✓ Selected" : "Select Room"}
+                                {isSelected ? "✓ Selected" : "Book Now"}
                               </button>
                             ) : (
                               <button disabled className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-400 cursor-not-allowed">Sold Out</button>
