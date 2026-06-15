@@ -608,7 +608,10 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {rooms.map((room, ri) => {
+                  {/* Show only one room per unique price */}
+                  {rooms.filter((room, idx, arr) =>
+                    arr.findIndex(r => r.price === room.price) === idx
+                  ).map((room, ri) => {
                     const curImg = roomImgIdx[room.roomId] || 0;
                     const isSelected = selectedRoomId === room.roomId;
                     const mrpPerNight = Math.round(room.price * 1.12);
