@@ -7,7 +7,8 @@ import {
   Wifi, Car, UtensilsCrossed, Zap, ShieldCheck,
   ChevronLeft, ChevronRight, CheckCircle2, MapPin, Star,
   Calendar, Users, ChevronDown, Check, X,
-  Phone, BedDouble, Droplets, Wind, Trees, ParkingCircle, Tv
+  Phone, BedDouble, Droplets, Wind, Trees, ParkingCircle, Tv,
+  CalendarDays, Edit3,
 } from "lucide-react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
@@ -88,6 +89,109 @@ const ROOM_SLIDES = [
   "/WhatsApp Image 2026-05-15 at 10.48.37.webp",
 ];
 
+/* ── Manage Booking Modal ── */
+function ManageBookingModal({ isOpen, onClose }) {
+  const [phone, setPhone] = useState("");
+  const [bookingId, setBookingId] = useState("");
+
+  const handleClose = () => { setPhone(""); setBookingId(""); onClose(); };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={handleClose}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.93, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.93, y: 24 }}
+            transition={{ type: "spring", duration: 0.35 }}
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[92vw] max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md">
+                  <CalendarDays className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-xl font-extrabold text-slate-900">Manage Booking</h2>
+              </div>
+              <button onClick={handleClose}
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-all">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="px-5 py-5 space-y-5">
+              {/* Phone Number */}
+              <div>
+                <label className="block text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-2">
+                  Phone Number
+                </label>
+                <div className="flex items-center border border-slate-200 rounded-2xl overflow-hidden bg-slate-50 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                  <div className="flex items-center gap-1.5 px-3 py-3 bg-slate-100 border-r border-slate-200 shrink-0 select-none">
+                    <span className="text-lg">🇮🇳</span>
+                    <svg className="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                  <input
+                    type="tel" value={phone} onChange={e => setPhone(e.target.value)}
+                    placeholder="Please enter phone"
+                    className="flex-1 bg-transparent px-4 py-3 text-sm text-slate-700 placeholder-slate-400 outline-none font-medium"
+                  />
+                </div>
+              </div>
+
+              {/* Booking ID */}
+              <div>
+                <label className="block text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-2">
+                  Booking ID
+                </label>
+                <div className="flex items-center border border-slate-200 rounded-2xl overflow-hidden bg-slate-50 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                  <span className="pl-4 text-slate-400 font-bold text-sm">#</span>
+                  <input
+                    type="text" value={bookingId} onChange={e => setBookingId(e.target.value)}
+                    placeholder="Please enter booking id"
+                    className="flex-1 bg-transparent px-3 py-3.5 text-sm text-slate-700 placeholder-slate-400 outline-none font-medium"
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <button
+                  onClick={() => { toast.error("Please contact us to cancel your booking."); handleClose(); }}
+                  className="flex flex-col items-center justify-center gap-1 py-4 rounded-2xl border-2 border-red-300 text-red-500 hover:bg-red-50 font-extrabold text-sm transition-all"
+                >
+                  <X className="w-4 h-4" />
+                  <span>Cancel<br />Booking</span>
+                </button>
+                <button
+                  onClick={() => {
+                    if (!phone && !bookingId) { toast.error("Please enter phone or booking ID"); return; }
+                    toast.success("Redirecting to modify your booking...");
+                    handleClose();
+                  }}
+                  className="flex flex-col items-center justify-center gap-1 py-4 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 text-white font-extrabold text-sm shadow-md hover:from-blue-600 hover:to-blue-700 transition-all"
+                >
+                  <Edit3 className="w-4 h-4" />
+                  <span>Modify<br />Booking</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
 const Stars = ({ n = 5 }) => (
   <span className="flex gap-px">
     {Array.from({ length: n }).map((_, i) => (
@@ -137,6 +241,7 @@ export default function Home() {
   const [roomImgIdx, setRoomImgIdx]     = useState({});
   const [reviewIdx, setReviewIdx]       = useState(0);
   const [openFaq, setOpenFaq]           = useState(null);
+  const [manageModalOpen, setManageModalOpen] = useState(false);
 
   const guests = adults + children + infants;
 
@@ -708,7 +813,7 @@ export default function Home() {
               </div>
               <div className="pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-slate-100 mt-4">
                 <p className="text-sm font-semibold text-slate-800">Have a booking you want to make changes to?</p>
-                <button onClick={() => navigate("/admin/login")}
+                <button onClick={() => setManageModalOpen(true)}
                         className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-all shadow-sm shrink-0 outline-none focus:outline-none">
                   Manage Booking
                 </button>
@@ -849,6 +954,9 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Manage Booking Modal */}
+      <ManageBookingModal isOpen={manageModalOpen} onClose={() => setManageModalOpen(false)} />
 
     </div>
   );
