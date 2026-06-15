@@ -9,6 +9,51 @@ import api from "../api/axios";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
 
+// ── Sidebar Image Carousel ──
+function SidebarCarousel({ photos, roomType }) {
+  const [idx, setIdx] = React.useState(0);
+  return (
+    <div className="h-[160px] relative bg-slate-100 overflow-hidden">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.img
+          key={idx}
+          src={photos[idx]}
+          alt="Room"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.22 }}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </AnimatePresence>
+      {/* Arrows */}
+      <button onClick={() => setIdx(i => (i - 1 + photos.length) % photos.length)}
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center z-10 transition-all">
+        <ChevronDown className="w-3.5 h-3.5 rotate-90" />
+      </button>
+      <button onClick={() => setIdx(i => (i + 1) % photos.length)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center z-10 transition-all">
+        <ChevronDown className="w-3.5 h-3.5 -rotate-90" />
+      </button>
+      {/* Counter */}
+      <div className="absolute top-2 right-2 bg-black/50 text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">
+        {idx + 1} of {photos.length}
+      </div>
+      {/* Room type badge */}
+      <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider z-10">
+        {roomType}
+      </div>
+      {/* Dots */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+        {photos.map((_, i) => (
+          <button key={i} onClick={() => setIdx(i)}
+            className={`rounded-full transition-all ${i === idx ? "bg-white w-3 h-1.5" : "bg-white/50 w-1.5 h-1.5"}`} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const Booking = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -382,26 +427,33 @@ const Booking = () => {
             {/* ─── RIGHT COLUMN: BILL & SUMMARY DETAILS ─── */}
             <div className="lg:col-span-1 space-y-6">
               
-              {/* Countdown timer alert */}
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 px-4 flex items-center gap-2.5 text-xs text-amber-800 font-bold shadow-sm animate-pulse">
-                <Clock className="w-4 h-4 text-amber-700 shrink-0" />
-                <span>We have saved your booking for {formatTime(timeLeft)} Mins</span>
+              {/* Flash Sale + Countdown timer */}
+              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                <div className="bg-amber-400 px-4 py-1.5 flex items-center gap-2">
+                  <span className="text-white text-xs font-extrabold">⚡ FLASH SALE</span>
+                </div>
+                <div className="px-4 py-3 flex items-center justify-between gap-2">
+                  <span className="text-xs text-slate-600 font-medium">We have saved your booking for</span>
+                  <span className="text-base font-extrabold text-amber-600 font-jakarta">{formatTime(timeLeft)} Mins</span>
+                </div>
               </div>
 
               {/* Room Summary Card */}
               {selectedRoom && (
                 <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                  {/* thumbnail */}
-                  <div className="h-[140px] relative bg-slate-100">
-                    <img
-                      src="/WhatsApp Image 2026-05-15 at 10.48.35 (1).webp"
-                      alt={selectedRoom.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute bottom-2 left-3 bg-black/60 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider">
-                      {selectedRoom.type}
-                    </div>
-                  </div>
+                  {/* Image carousel */}
+                  {(() => {
+                    const BOOKING_PHOTOS = {
+                      "101": ["/WhatsApp Image 2026-06-14 at 07.53.04.jpeg", "/WhatsApp Image 2026-06-14 at 07.53.09.jpeg", "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg", "/WhatsApp Image 2026-05-15 at 10.48.37.webp"],
+                      "102": ["/WhatsApp Image 2026-05-15 at 10.48.35 (1).webp", "/WhatsApp Image 2026-06-14 at 07.53.15 (1).jpeg", "/WhatsApp Image 2026-06-14 at 07.53.16 (1).jpeg", "/WhatsApp Image 2026-05-15 at 10.48.40.webp"],
+                      "104": ["/WhatsApp Image 2026-06-14 at 07.53.17.jpeg", "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg", "/WhatsApp Image 2026-05-15 at 10.48.39 (1).webp", "/WhatsApp Image 2026-05-15 at 10.48.41.webp"],
+                      "110": ["/WhatsApp Image 2026-06-14 at 09.15.41.jpeg", "/WhatsApp Image 2026-06-14 at 07.56.05.jpeg", "/WhatsApp Image 2026-05-15 at 10.48.39.webp", "/WhatsApp Image 2026-06-14 at 07.53.09 (1).jpeg"],
+                    };
+                    const photos = BOOKING_PHOTOS[roomId] || ["/WhatsApp Image 2026-05-15 at 10.48.35 (1).webp"];
+                    return (
+                      <SidebarCarousel photos={photos} roomType={selectedRoom.type} />
+                    );
+                  })()}
                   
                   {/* details */}
                   <div className="p-5 space-y-4">
