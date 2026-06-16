@@ -83,14 +83,19 @@ const seedAdmin = async () => {
 
 // ─── Start Server ─────────────────────────────────────────────
 const startServer = async () => {
-  await connectDB();
-  await seedAdmin();
-  await seedRooms();
+  try {
+    await connectDB();
+    await seedAdmin();
+    await seedRooms();
 
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`📦 Environment: ${process.env.NODE_ENV || "development"}`);
-  });
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`📦 Environment: ${process.env.NODE_ENV || "development"}`);
+    });
+  } catch (error) {
+    console.error("Server startup error:", error);
+    process.exit(1);
+  }
 };
 
 startServer();
