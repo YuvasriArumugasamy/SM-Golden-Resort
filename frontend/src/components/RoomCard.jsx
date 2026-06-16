@@ -8,9 +8,8 @@ const RoomCard = ({ room }) => {
   const badgeStyles = {
     "AC": "bg-blue-50 text-blue-700 border-blue-200",
     "Non-AC": "bg-stone-100 text-stone-700 border-stone-200",
-    "Suite AC": "bg-amber-50 text-amber-800 border-amber-200",
-    "Suite Premium": "bg-yellow-50 text-yellow-800 border-yellow-300 font-bold",
-    "Villa": "bg-emerald-50 text-emerald-800 border-emerald-200",
+    "Three Bed": "bg-emerald-50 text-emerald-800 border-emerald-200",
+    "Four Bed AC": "bg-amber-50 text-amber-800 border-amber-200",
   };
 
   const badgeClass = badgeStyles[badge] || badgeStyles[type] || "bg-primary/10 text-primary";

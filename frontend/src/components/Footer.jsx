@@ -25,10 +25,10 @@ export default function Footer() {
             </div>
           </div>
           <p className="text-blue-100 text-xs leading-relaxed">
-            Your perfect nature escape near the iconic Courtallam Old Falls. AC, Non-AC, Suites & Villa available.
+            Your perfect nature escape near the iconic Courtallam Old Falls. Double Bed, A/C, Three Bed & Four Bed A/C rooms available.
           </p>
           <div className="flex gap-3 mt-4">
-            {[["11", "Rooms"], ["24/7", "Open"], ["4.8★", "Rating"]].map(([v, l]) => (
+            {[["20", "Rooms"], ["24/7", "Open"], ["4.8★", "Rating"]].map(([v, l]) => (
               <div key={l} className="text-center bg-white/15 rounded-lg px-3 py-2 border border-white/20">
                 <p className="text-white font-extrabold text-sm">{v}</p>
                 <p className="text-blue-100 text-[9px] mt-0.5">{l}</p>
@@ -60,10 +60,10 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2.5 text-xs">
             {[
-              "Non-AC Rooms — ₹1,500/night",
-              "AC Rooms — ₹2,000/night",
-              "Villa (Room 110) — ₹2,500/night",
-              "Suite Rooms — ₹10,000/night",
+              "Double Bed Non-AC — ₹1,300/night",
+              "Double Bed A/C — ₹1,600/night",
+              "Three Bed — ₹1,800/night",
+              "Four Bed A/C — ₹2,800/night",
             ].map(item => (
               <li key={item} className="flex items-center gap-1.5 text-blue-100 font-medium">
                 <span className="text-white shrink-0">→</span> {item}

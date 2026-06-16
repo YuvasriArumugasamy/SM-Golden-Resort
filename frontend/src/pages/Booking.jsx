@@ -8,13 +8,14 @@ import {
 import api from "../api/axios";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { roomsData as fallbackRooms } from "../utils/roomData";
 
 /* ── room type → single image mapping ── */
 const ROOM_TYPE_IMAGE = {
-  "Non-AC":   "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
-  "AC":       "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
-  "Villa":    "/WhatsApp Image 2026-05-15 at 10.48.39 (1).webp",
-  "Suite AC": "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
+  "Non-AC":       "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
+  "AC":           "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
+  "Three Bed":    "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
+  "Four Bed AC":  "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
 };
 const FALLBACK_IMG = "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg";
 
@@ -200,6 +201,7 @@ export default function Booking() {
 
   const [rooms,          setRooms]          = useState([]);
   const [loadingRooms,   setLoadingRooms]   = useState(true);
+  const [roomsError,     setRoomsError]     = useState(false);
   const [step,           setStep]           = useState(1);
   const [roomId,         setRoomId]         = useState(passed.roomId || "");
   const [checkIn,        setCheckIn]        = useState(
@@ -224,10 +226,12 @@ export default function Booking() {
 
   const today = new Date().toISOString().split("T")[0];
 
-  useEffect(() => {
+  const fetchRooms = () => {
+    setLoadingRooms(true);
+    setRoomsError(false);
     api.get("/api/rooms")
       .then(res => {
-        const data = res.data || [];
+        const data = res.data?.length ? res.data : fallbackRooms;
         setRooms(data);
         if (passed.roomId) {
           setRoomId(passed.roomId);
@@ -235,9 +239,19 @@ export default function Booking() {
           setRoomId(data[0].roomId);
         }
       })
-      .catch(() => toast.error("Failed to load rooms."))
+      .catch(() => {
+        setRooms(fallbackRooms);
+        setRoomsError(false);
+        if (passed.roomId) {
+          setRoomId(passed.roomId);
+        } else {
+          setRoomId(fallbackRooms[0].roomId);
+        }
+      })
       .finally(() => setLoadingRooms(false));
-  }, []);
+  };
+
+  useEffect(() => { fetchRooms(); }, []);
 
   const selectedRoom = rooms.find(r => r.roomId === roomId);
   const nights = useMemo(() => {
@@ -373,20 +387,34 @@ export default function Booking() {
                     <label className="block text-sm font-bold text-slate-700 mb-3">
                       Room Type <span className="text-red-500">*</span>
                     </label>
-                    {rooms.length === 0 ? (
+                    {loadingRooms ? (
                       <div className="flex items-center justify-center gap-2 py-8 text-slate-400 text-sm">
                         <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                         Loading rooms...
+                      </div>
+                    ) : rooms.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center gap-3 py-8 text-center">
+                        <p className="text-sm text-slate-500 font-medium">
+                          {roomsError
+                            ? "Could not connect to server. Please make sure the backend is running."
+                            : "No rooms available at the moment."}
+                        </p>
+                        <button type="button" onClick={fetchRooms}
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition-all">
+                          🔄 Retry
+                        </button>
                       </div>
                     ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {(() => {
                         // Display name mapping
                         const DISPLAY = {
-                          "Non-AC":   { name: "Double Bed",     sub: "Non-A/C", icon: "🛏️" },
-                          "AC":       { name: "Double Bed A/C", sub: "A/C",     icon: "❄️" },
-                          "Villa":    { name: "Villa Room",     sub: "Non-A/C", icon: "🏡" },
-                          "Suite AC": { name: "Suite A/C",      sub: "A/C",     icon: "👑" },
+                          "Non-AC":       { name: "Double Bed Non-AC", sub: "Non-A/C", icon: "🛏️" },
+                          "AC":           { name: "Double Bed AC",     sub: "A/C",     icon: "❄️" },
+                          "Three Bed":    { name: "Double Bed Non-AC", sub: "Non-A/C", icon: "🛏️" },
+                          "Four Bed AC":  { name: "Suite Room",        sub: "A/C",     icon: "👑" },
+                          "Villa":        { name: "Villa",             sub: "Non-A/C", icon: "🏡" },
+                          "Suite AC":     { name: "Suite Room",        sub: "A/C",     icon: "👑" },
                         };
                         return rooms
                           .filter((r, i, arr) => arr.findIndex(x => x.price === r.price) === i)
@@ -399,36 +427,34 @@ export default function Booking() {
                               <button key={room.roomId} type="button"
                                 onClick={() => room.available && setRoomId(room.roomId)}
                                 disabled={!room.available}
-                                className={`relative text-left border-2 rounded-2xl p-4 transition-all focus:outline-none ${
+                                className={`relative text-left rounded-2xl p-5 transition-all focus:outline-none border-2 ${
                                   isSelected
-                                    ? "border-blue-400 bg-blue-50/50 shadow-sm"
+                                    ? "border-amber-400 bg-amber-50/40 shadow-md"
                                     : room.available
-                                    ? "border-slate-200 hover:border-blue-300 hover:bg-slate-50/60 bg-white"
-                                    : "border-slate-200 bg-slate-50 opacity-60 cursor-not-allowed"
+                                    ? "border-slate-200 hover:border-blue-300 hover:shadow-sm bg-white"
+                                    : "border-slate-200 bg-slate-50 opacity-50 cursor-not-allowed"
                                 }`}>
 
-                                {/* Top: icon + available */}
-                                <div className="flex items-center justify-between mb-3">
-                                  <span className="text-2xl">{d.icon}</span>
-                                  <span className={`text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wide ${
-                                    room.available
-                                      ? "bg-emerald-100 text-emerald-700"
-                                      : "bg-red-100 text-red-600"
-                                  }`}>
-                                    {room.available ? `${countAvail} Available` : "Sold Out"}
-                                  </span>
+                                {/* Top: icon only */}
+                                <div className="flex items-start justify-between mb-4">
+                                  <span className="text-3xl leading-none">{d.icon}</span>
+                                  {!room.available && (
+                                    <span className="text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider bg-red-100 text-red-600">
+                                      Sold Out
+                                    </span>
+                                  )}
                                 </div>
 
                                 {/* Name & subtype */}
-                                <p className="font-extrabold text-slate-800 text-sm leading-tight">{d.name}</p>
-                                <p className="text-[10px] text-slate-400 font-medium mt-0.5">{d.sub}</p>
+                                <p className="font-extrabold text-slate-900 text-base leading-tight">{d.name}</p>
+                                <p className="text-xs text-slate-400 font-medium mt-0.5">{d.sub}</p>
 
                                 {/* Price */}
-                                <div className="mt-3 pt-2.5 border-t border-slate-100">
-                                  <span className="text-lg font-extrabold text-slate-800">
+                                <div className="mt-4 pt-3 border-t border-slate-100 flex items-baseline gap-1">
+                                  <span className="text-xl font-extrabold text-slate-800">
                                     ₹ {room.price?.toLocaleString("en-IN")}
                                   </span>
-                                  <span className="text-xs text-slate-400 font-medium ml-1">/ night</span>
+                                  <span className="text-xs text-slate-400 font-medium">/ day</span>
                                 </div>
 
                                 {/* Selected tick */}

@@ -61,7 +61,7 @@ const REVIEWS = [
 ];
 
 const FAQS = [
-  { q: "What types of rooms are available?", a: "We offer Non-AC (₹1,500), AC (₹2,000), Villa Room 110 (₹2,500), and Suite AC rooms (₹10,000) — 11 rooms total." },
+  { q: "What types of rooms are available?", a: "We offer Double Bed Non-AC (₹1,300), Double Bed A/C (₹1,600), Three Bed (₹1,800), and Four Bed A/C (₹2,800) — 20 rooms total." },
   { q: "Is kitchen facility available?", a: "Yes, full kitchen facility available for all guests." },
   { q: "Are pets allowed?", a: "Yes, pets are allowed at SM Golden Resorts." },
   { q: "Is free parking available?", a: "Yes, free and secured parking available 24/7." },
@@ -609,7 +609,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-slate-500 text-sm leading-relaxed">
-                  SM Golden Resorts is a peaceful retreat next to Old Falls, Courtallam. With 11 well-maintained rooms — AC, Non-AC, Villa, and Suite — it's ideal for families, groups, and honeymooners. Enjoy free parking, kitchen access, pet-friendly stays, and 24-hour assistance surrounded by nature.
+                  SM Golden Resorts is a peaceful retreat next to Old Falls, Courtallam. With 20 well-maintained rooms — Double Bed, Double Bed A/C, Three Bed, and Four Bed A/C — it's ideal for families, groups, and honeymooners. Enjoy free parking, kitchen access, pet-friendly stays, and 24-hour assistance surrounded by nature.
                 </p>
                 <a href="mailto:smgoldenresorts@gmail.com" className="mt-2 block text-sm text-slate-400">smgoldenresorts@gmail.com</a>
               </div>
@@ -654,10 +654,20 @@ export default function Home() {
                 </div>
               ) : (() => {
                 const ROOM_TYPE_IMAGE = {
-                  "Non-AC":   "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
-                  "AC":       "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
-                  "Villa":    "/WhatsApp Image 2026-05-15 at 10.48.39 (1).webp",
-                  "Suite AC": "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
+                  "Non-AC":       "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
+                  "AC":           "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
+                  "Three Bed":    "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
+                  "Four Bed AC":  "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
+                  "Villa":        "/WhatsApp Image 2026-06-14 at 09.15.41.jpeg",
+                  "Suite AC":     "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
+                };
+                const ROOM_DISPLAY_NAME = {
+                  "Non-AC":      "Double Bed Non-AC",
+                  "AC":          "Double Bed AC",
+                  "Three Bed":   "Double Bed Non-AC",
+                  "Four Bed AC": "Suite Room",
+                  "Villa":       "Villa",
+                  "Suite AC":    "Suite Room",
                 };
                 const FALLBACK = "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg";
                 const uniqueRooms = rooms.filter((room, idx, arr) =>
@@ -680,11 +690,11 @@ export default function Home() {
                         </div>
                         {/* Info */}
                         <div className="p-3 flex flex-col gap-2 flex-1">
-                          <h3 className="font-extrabold text-slate-800 text-sm leading-tight">{room.type}</h3>
+                          <h3 className="font-extrabold text-slate-800 text-sm leading-tight">{ROOM_DISPLAY_NAME[room.type] || room.type}</h3>
                           <p className="text-[10px] text-slate-400 font-medium">{room.badge}</p>
                           <div className="flex items-baseline gap-1 mt-auto">
                             <span className="text-lg font-extrabold text-slate-800">₹ {room.price?.toLocaleString("en-IN")}</span>
-                            <span className="text-[10px] text-slate-400 font-medium">/ night</span>
+                            <span className="text-[10px] text-slate-400 font-medium">/ day</span>
                           </div>
                           <button
                             onClick={() => navigate("/booking", {
