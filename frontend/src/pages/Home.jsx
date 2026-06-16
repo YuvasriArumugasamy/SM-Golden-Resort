@@ -196,10 +196,10 @@ function ManageBookingModal({ isOpen, onClose }) {
               <div className="grid grid-cols-2 gap-3 pt-1">
                 <button
                   onClick={() => { toast.error("Please contact us to cancel your booking."); handleClose(); }}
-                  className="flex flex-col items-center justify-center gap-1 py-4 rounded-2xl border-2 border-red-300 text-red-500 hover:bg-red-50 font-extrabold text-sm transition-all"
+                  className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-red-300 text-red-500 hover:bg-red-50 font-bold text-xs transition-all"
                 >
-                  <X className="w-4 h-4" />
-                  <span>Cancel<br />Booking</span>
+                  <X className="w-3.5 h-3.5" />
+                  <span>Cancel Booking</span>
                 </button>
                 <button
                   onClick={() => {
@@ -207,10 +207,10 @@ function ManageBookingModal({ isOpen, onClose }) {
                     toast.success("Redirecting to modify your booking...");
                     handleClose();
                   }}
-                  className="flex flex-col items-center justify-center gap-1 py-4 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 text-white font-extrabold text-sm shadow-md hover:from-blue-600 hover:to-blue-700 transition-all"
+                  className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white font-bold text-xs shadow-sm hover:from-blue-600 hover:to-blue-700 transition-all"
                 >
-                  <Edit3 className="w-4 h-4" />
-                  <span>Modify<br />Booking</span>
+                  <Edit3 className="w-3.5 h-3.5" />
+                  <span>Modify Booking</span>
                 </button>
               </div>
             </div>
@@ -421,25 +421,47 @@ export default function Home() {
 
       {/* ══ 2. TITLE + RATING ══ */}
       <section className="max-w-[1280px] mx-auto px-4 mt-4">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 pb-4 border-b border-slate-100">
-          <div className="space-y-1.5">
-            <h1 className="text-xl md:text-2xl font-bold text-slate-900">SM Golden Resorts in courtallam</h1>
-            <div className="flex items-center gap-1.5 text-xs text-slate-500">
-              <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <span>Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu 627802, India</span>
-              <span className="inline-flex items-center gap-1 bg-sky-50 text-sky-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-sky-100 ml-1">🌦️ 27°C</span>
+        <div
+          className="rounded-2xl px-5 py-5 mb-0"
+          style={{ background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 60%, #1d4ed8 100%)" }}
+        >
+          {/* Title */}
+          <h1 className="leading-tight text-center mb-3">
+            <span
+              className="block text-white font-bold tracking-wide drop-shadow-sm"
+              style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 5vw, 2.4rem)" }}
+            >
+              SM Golden Resorts
+            </span>
+            <span
+              className="block text-blue-100 font-semibold mt-0.5"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(0.85rem, 2.5vw, 1.05rem)", letterSpacing: "0.04em" }}
+            >
+              Courtallam, Tamil Nadu
+            </span>
+          </h1>
+
+          {/* Address + Rating row */}
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex items-center gap-1.5 text-xs text-blue-100">
+              <MapPin className="w-3.5 h-3.5 text-blue-200 shrink-0" />
+              <span>Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu 627802</span>
+              <span className="inline-flex items-center gap-1 bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full ml-1">🌦️ 27°C</span>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap justify-center">
               <div className="flex items-center gap-1.5">
-                <div className="w-5 h-5 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center">
+                <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center shadow-sm">
                   <span className="text-[9px] font-extrabold text-blue-600">G</span>
                 </div>
                 <Stars />
-                <span className="text-xs font-semibold text-slate-600">56 Reviews</span>
+                <span className="text-xs font-semibold text-white">56 Reviews</span>
               </div>
-              <span className="text-[10px] font-bold text-white bg-orange-500 px-2 py-0.5 rounded-full">LIMITED OFFER</span>
+              <span className="text-[10px] font-bold text-blue-900 bg-white px-2 py-0.5 rounded-full">LIMITED OFFER</span>
             </div>
           </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 pb-4 border-b border-slate-100 mt-0">
           <div className="hidden md:flex items-center gap-1 text-xs font-bold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 self-start mt-1">
             <span>IN</span><span className="text-slate-400 mx-1">INR</span><span>₹</span>
           </div>
@@ -581,23 +603,11 @@ export default function Home() {
 
             {/* OVERVIEW */}
             <div ref={overviewRef} className="scroll-mt-[110px] space-y-5">
-              <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1">
-                {[
-                  { label: "sm golden resorts", title: "Get 10% off!", icon: "🏷️", color: "border-amber-200 bg-amber-50/60", accent: "text-amber-700" },
-                  { label: "Early Bird Offer !!", title: "10 ₹ OFF — Book 3 days advance", icon: "⏱️", color: "border-slate-200 bg-slate-50", accent: "text-slate-700" },
-                  { label: "Last Minute Deals !!", title: "5 % OFF — Book Today", icon: "⏱️", color: "border-slate-200 bg-slate-50", accent: "text-slate-700" },
-                ].map((b, i) => (
-                  <div key={i} className={`shrink-0 w-52 border ${b.color} rounded-xl p-4 flex items-center justify-between gap-3`}>
-                    <div>
-                      <p className={`text-[10px] font-semibold ${b.accent} mb-0.5`}>{b.label}</p>
-                      <p className="text-sm font-bold text-slate-800">{b.title}</p>
-                    </div>
-                    <span className="text-xl shrink-0">{b.icon}</span>
-                  </div>
-                ))}
+              <div className="text-center space-y-1">
+                <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">ABOUT</p>
+                <h2 className="text-2xl font-extrabold text-slate-800">Our <span className="text-blue-600 italic">Resort</span></h2>
               </div>
               <div>
-                <h2 className="text-base font-semibold text-slate-800 mb-2">Overview</h2>
                 <p className="text-slate-500 text-sm leading-relaxed">
                   SM Golden Resorts is a peaceful retreat next to Old Falls, Courtallam. With 11 well-maintained rooms — AC, Non-AC, Villa, and Suite — it's ideal for families, groups, and honeymooners. Enjoy free parking, kitchen access, pet-friendly stays, and 24-hour assistance surrounded by nature.
                 </p>
@@ -606,7 +616,10 @@ export default function Home() {
 
               {/* FACILITIES */}
               <div ref={amenitiesRef} className="scroll-mt-[110px]">
-                <h2 className="text-base font-semibold text-slate-800 mb-3">Facilities</h2>
+                <div className="text-center space-y-1 mb-4">
+                  <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">AMENITIES</p>
+                  <h2 className="text-2xl font-extrabold text-slate-800">Our <span className="text-blue-600 italic">Facilities</span></h2>
+                </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-2">
                   {visibleFacilities.map((f, i) => {
                     const Icon = f.icon;
@@ -627,109 +640,70 @@ export default function Home() {
             </div>
 
             {/* ROOMS */}
-            <div ref={roomsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-6 space-y-4">
-              <h2 className="text-base font-semibold text-slate-800">Rooms</h2>
+            <div ref={roomsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-6">
+              <div className="text-center space-y-1">
+                <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TARIFF</p>
+                <h2 className="text-2xl font-extrabold text-slate-800">Our <span className="text-blue-600 italic">Rooms & Prices</span></h2>
+                <p className="text-sm text-slate-400">Best rates guaranteed when you book directly with us</p>
+              </div>
+
               {roomsLoading ? (
-                <div className="flex items-center gap-2 text-sm text-slate-400 py-8">
+                <div className="flex items-center justify-center gap-2 text-sm text-slate-400 py-10">
                   <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                   Loading rooms...
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Show only one room per unique price */}
-                  {rooms.filter((room, idx, arr) =>
-                    arr.findIndex(r => r.price === room.price) === idx
-                  ).map((room, ri) => {
-                    const slides = ROOM_PHOTO_SETS[room.roomId] || ROOM_SLIDES;
-                    const curImg = roomImgIdx[room.roomId] || 0;
-                    const isSelected = selectedRoomId === room.roomId;
-                    const mrpPerNight = Math.round(room.price * 1.12);
-                    return (
+              ) : (() => {
+                const ROOM_TYPE_IMAGE = {
+                  "Non-AC":   "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
+                  "AC":       "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
+                  "Villa":    "/WhatsApp Image 2026-05-15 at 10.48.39 (1).webp",
+                  "Suite AC": "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
+                };
+                const FALLBACK = "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg";
+                const uniqueRooms = rooms.filter((room, idx, arr) =>
+                  arr.findIndex(r => r.price === room.price) === idx
+                ).sort((a, b) => a.price - b.price);
+                return (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {uniqueRooms.map((room, ri) => (
                       <motion.div key={room.roomId}
-                        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: ri * 0.05 }}
-                        className={`border rounded-xl overflow-hidden flex flex-col sm:flex-row bg-white transition-all ${
-                          isSelected ? "border-blue-500 ring-1 ring-blue-500/30 shadow-sm" : "border-slate-200 hover:border-slate-300"
-                        }`}>
-                        {/* Image */}
-                        <div className="w-full sm:w-[280px] h-[220px] sm:h-auto shrink-0 relative overflow-hidden bg-slate-100 rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none">
-                          <img src={slides[curImg]} alt={room.name} className="w-full h-full object-cover" />
-
-                          {/* View Room — top left */}
-                          <div className="absolute top-2.5 left-2.5 z-10">
-                            <button onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}
-                                    className="bg-white text-slate-800 text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-md outline-none focus:outline-none hover:bg-slate-50 transition-all">
-                              View Room
-                            </button>
-                          </div>
-
-                          {/* Counter — top right */}
-                          <div className="absolute top-2.5 right-2.5 bg-black/55 text-white text-[10px] font-bold px-2.5 py-1 rounded-full z-10">
-                            {curImg + 1} of {slides.length}
-                          </div>
-
-                          {/* Prev Arrow */}
-                          <button onClick={e => { e.stopPropagation(); setRoomImgIdx(p => ({ ...p, [room.roomId]: ((p[room.roomId] || 0) - 1 + slides.length) % slides.length })); }}
-                                  className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-md outline-none focus:outline-none z-10">
-                            <ChevronLeft className="w-4.5 h-4.5" />
-                          </button>
-
-                          {/* Next Arrow */}
-                          <button onClick={e => { e.stopPropagation(); setRoomImgIdx(p => ({ ...p, [room.roomId]: ((p[room.roomId] || 0) + 1) % slides.length })); }}
-                                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/85 text-slate-700 flex items-center justify-center hover:bg-white transition-all shadow-md outline-none focus:outline-none z-10">
-                            <ChevronRight className="w-4.5 h-4.5" />
-                          </button>
+                        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: ri * 0.07 }}
+                        className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col">
+                        {/* Single photo */}
+                        <div className="h-40 sm:h-48 overflow-hidden bg-slate-100">
+                          <img
+                            src={ROOM_TYPE_IMAGE[room.type] || FALLBACK}
+                            alt={room.type}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
-                        {/* Details */}
-                        <div className="flex-1 p-4 flex flex-col justify-between">
-                          <div>
-                            <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                              <h3 className="text-base font-bold text-slate-900">{room.name}</h3>
-                              {ri === 0 && (
-                                <span className="text-[10px] font-bold border border-purple-400 text-purple-600 px-2 py-0.5 rounded-full">Recommended</span>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-1.5 text-xs text-blue-600 font-semibold mb-2">
-                              <CheckCircle2 className="w-3.5 h-3.5" /> Book Now Pay Later
-                            </div>
-                            <div className="flex flex-wrap gap-1.5 mb-3">
-                              {room.amenities.slice(0, 4).map((a, ai) => (
-                                <span key={ai} className="inline-flex items-center gap-1 text-[11px] bg-slate-50 border border-slate-200 text-slate-600 px-2 py-0.5 rounded font-medium">{a}</span>
-                              ))}
-                              {room.amenities.length > 4 && (
-                                <span className="text-xs text-blue-600 font-semibold">+{room.amenities.length - 4} More</span>
-                              )}
-                            </div>
+                        {/* Info */}
+                        <div className="p-3 flex flex-col gap-2 flex-1">
+                          <h3 className="font-extrabold text-slate-800 text-sm leading-tight">{room.type}</h3>
+                          <p className="text-[10px] text-slate-400 font-medium">{room.badge}</p>
+                          <div className="flex items-baseline gap-1 mt-auto">
+                            <span className="text-lg font-extrabold text-slate-800">₹ {room.price?.toLocaleString("en-IN")}</span>
+                            <span className="text-[10px] text-slate-400 font-medium">/ night</span>
                           </div>
-                          <div className="flex items-end justify-between mt-2 pt-3 border-t border-slate-100">
-                            <div>
-                              <div className="flex items-baseline gap-2">
-                                <span className="text-slate-400 text-xs line-through">₹{mrpPerNight.toLocaleString("en-IN")}</span>
-                                <span className="text-[10px] text-emerald-600 font-bold">₹{Math.round(room.price * 0.12).toLocaleString("en-IN")} OFF</span>
-                              </div>
-                              <div className="flex items-baseline gap-1">
-                                <span className="text-lg font-bold text-slate-900">₹{room.price.toLocaleString("en-IN")}</span>
-                                <span className="text-xs text-slate-400">/ Night</span>
-                              </div>
-                              <p className="text-[10px] text-slate-400">Plus Taxes · {guests} Guests</p>
-                            </div>
-                            {room.available ? (
-                              <button onClick={() => { setSelectedRoomId(room.roomId); navigate("/booking", { state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests } }); }}
-                                      className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all outline-none focus:outline-none ${
-                                        isSelected ? "bg-emerald-500 text-white" : "border-2 border-slate-300 text-slate-700 hover:border-blue-400 bg-white"
-                                      }`}>
-                                {isSelected ? "✓ Selected" : "Book Now"}
-                              </button>
-                            ) : (
-                              <button disabled className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-400 cursor-not-allowed">Sold Out</button>
-                            )}
-                          </div>
+                          <button
+                            onClick={() => navigate("/booking", {
+                              state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests }
+                            })}
+                            disabled={!room.available}
+                            className={`w-full py-2.5 rounded-xl text-xs font-extrabold transition-all ${
+                              room.available
+                                ? "bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                                : "bg-slate-100 text-slate-400 cursor-not-allowed"
+                            }`}>
+                            {room.available ? "Book Now" : "Sold Out"}
+                          </button>
                         </div>
                       </motion.div>
-                    );
-                  })}
-                </div>
-              )}
+                    ))}
+                  </div>
+                );
+              })()}
             </div>
 
             {/* Refund Policy */}
@@ -739,7 +713,11 @@ export default function Home() {
             </div>
 
             {/* MAP */}
-            <div ref={mapRef} className="scroll-mt-[110px] border-t border-slate-100 pt-6 space-y-4">
+            <div ref={mapRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-4">
+              <div className="text-center space-y-1 mb-2">
+                <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">LOCATION</p>
+                <h2 className="text-2xl font-extrabold text-slate-800">Find <span className="text-blue-600 italic">Us Here</span></h2>
+              </div>
               <div className="rounded-xl overflow-hidden border border-slate-200 h-[280px]">
                 <iframe title="SM Golden Resorts Location"
                   src="https://maps.google.com/maps?q=Old+Falls+Courtallam+Tamil+Nadu&output=embed"
@@ -763,9 +741,12 @@ export default function Home() {
             </div>
 
             {/* REVIEWS */}
-            <div ref={reviewsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-6 space-y-4">
+            <div ref={reviewsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-base font-semibold text-slate-800">Reviews</h2>
+                <div className="space-y-0.5">
+                  <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TESTIMONIALS</p>
+                  <h2 className="text-2xl font-extrabold text-slate-800">Guest <span className="text-blue-600 italic">Reviews</span></h2>
+                </div>
                 <div className="flex gap-1.5">
                   <button onClick={() => setReviewIdx(p => Math.max(0, p - 1))} disabled={reviewIdx === 0}
                           className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 disabled:opacity-30 transition-all outline-none focus:outline-none">
@@ -810,8 +791,11 @@ export default function Home() {
             </div>
 
             {/* FAQs */}
-            <div ref={faqsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-6 pb-8 space-y-3">
-              <h2 className="text-base font-semibold text-slate-800">Frequently Asked Questions</h2>
+            <div ref={faqsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 pb-8 space-y-4">
+              <div className="text-center space-y-1 mb-2">
+                <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">FAQ</p>
+                <h2 className="text-2xl font-extrabold text-slate-800">Frequently <span className="text-blue-600 italic">Asked Questions</span></h2>
+              </div>
               <div className="space-y-2">
                 {FAQS.map((faq, i) => (
                   <div key={i} className="border border-slate-200 rounded-xl overflow-hidden">
@@ -899,7 +883,7 @@ export default function Home() {
                 ) : null}
                 <button onClick={handleBook}
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow outline-none focus:outline-none">
-                  {selRoom ? "Book Now" : "Book Now"}
+                  {selRoom ? "Book Now" : "Select Room"}
                 </button>
               </div>
             </div>
@@ -936,13 +920,15 @@ export default function Home() {
               </>
             ) : null}
           </div>
-          <button onClick={handleBook}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none">
-            {selRoom ? "Book Now →" : "Book Now →"}
-          </button>
+          {selRoom && (
+            <button onClick={handleBook}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none">
+              Book Now →
+            </button>
+          )}
         </div>
       </div>
-      <div className="lg:hidden h-20" />
+
 
       {/* ══ GALLERY LIGHTBOX ══ */}
       <AnimatePresence>
