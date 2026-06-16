@@ -1,52 +1,48 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, BedDouble, CalendarDays, Users, CreditCard,
-  PieChart, Settings, MessageSquare, Bell, LogOut, ExternalLink,
-  RefreshCw, Plus, Trash2, Edit3, CheckCircle2, XCircle, Clock,
-  X, MessageCircle, ClipboardCheck, Calendar, Image as ImageIcon,
-  Lock, Eye, EyeOff, ChevronLeft, ChevronRight, Star,
-  BarChart2, TrendingUp, Wifi, Wind, Tv,
+  Settings, LogOut, ExternalLink, RefreshCw, Plus, Trash2,
+  CheckCircle2, XCircle, Clock, X, MessageCircle, TrendingUp,
+  Eye, EyeOff, Lock, Shield, Phone, MapPin,
 } from "lucide-react";
 import api from "../../api/axios";
 import AdminLayout from "../../components/AdminLayout";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAuth } from "../../hooks/useAuth";
 
-/* ─── helpers ─── */
-const fmt = (d) =>
-  d ? new Date(d).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
+/* ── helpers ── */
+const fmt = (d) => d
+  ? new Date(d).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })
+  : "—";
 
-const statusCls = {
-  Confirmed:    "bg-emerald-50 text-emerald-700 border border-emerald-200",
-  Pending:      "bg-amber-50  text-amber-700  border border-amber-200",
-  Cancelled:    "bg-red-50    text-red-600    border border-red-200",
-  "Checked-out":"bg-blue-50   text-blue-700   border border-blue-200",
+const STATUS_CLS = {
+  confirmed:    "bg-emerald-50 text-emerald-700 border-emerald-200",
+  pending:      "bg-amber-50  text-amber-700  border-amber-200",
+  cancelled:    "bg-red-50    text-red-600    border-red-200",
+  "checked-out":"bg-blue-50   text-blue-700   border-blue-200",
 };
-
-const StatusPill = ({ status }) => (
-  <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide ${statusCls[status] || statusCls.Pending}`}>
-    {status || "Pending"}
+const StatusPill = ({ status = "pending" }) => (
+  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wide
+    ${STATUS_CLS[status?.toLowerCase()] || STATUS_CLS.pending}`}>
+    {status}
   </span>
 );
 
-/* ─── Modal wrapper ─── */
+/* ── Modal ── */
 const Modal = ({ title, isOpen, onClose, children }) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
-         onClick={onClose}>
+      onClick={onClose}>
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 16 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 16 }}
-        transition={{ type: "spring", duration: 0.3 }}
+        initial={{ opacity: 0, scale: 0.95, y: 16 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 16 }} transition={{ type: "spring", duration: 0.3 }}
         className="bg-white rounded-2xl w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto"
-        onClick={e => e.stopPropagation()}
-      >
+        onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 sticky top-0 bg-white z-10 rounded-t-2xl">
-          <h2 className="font-extrabold text-slate-800 text-lg">{title}</h2>
+          <h2 className="font-extrabold text-slate-800 text-base">{title}</h2>
           <button onClick={onClose}
             className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-all">
             <X className="w-4 h-4" />
@@ -58,75 +54,98 @@ const Modal = ({ title, isOpen, onClose, children }) => {
   );
 };
 
-/* ─── Stat Card ─── */
-const StatCard = ({ icon: Icon, label, value, color, delay = 0 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 14 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.3 }}
-    className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 hover:shadow-md hover:-translate-y-0.5 transition-all"
-  >
-    <div className="flex items-center justify-between mb-3">
-      <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">{label}</p>
-      <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${color}`}>
+/* ── Stat Card ── */
+const StatCard = ({ icon: Icon, label, value, sub, color, delay = 0 }) => (
+  <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+    transition={{ delay }} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 hover:shadow-md transition-all">
+    <div className="flex items-start justify-between mb-3">
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{label}</p>
+      <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
         <Icon className="w-4 h-4" />
       </div>
     </div>
-    <p className="text-3xl font-extrabold text-slate-800">{value ?? "—"}</p>
-    <p className="text-[10px] text-emerald-500 font-bold mt-1">● Real-time</p>
+    <p className="text-3xl font-extrabold text-slate-800 leading-none">{value ?? "—"}</p>
+    <p className="text-[10px] text-emerald-500 font-bold mt-2 flex items-center gap-1">
+      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+      {sub || "Real-time update"}
+    </p>
   </motion.div>
 );
 
-/* ══════════════════════════════════
-   DASHBOARD OVERVIEW
-══════════════════════════════════ */
-function DashboardOverview({ stats, bookings }) {
-  const recent = [...(bookings || [])].sort(
-    (a, b) => new Date(b.createdAt || b.checkIn) - new Date(a.createdAt || a.checkIn)
-  ).slice(0, 5);
+/* ══════════ PAGE HEADER ══════════ */
+const PageHeader = ({ title, subtitle, onRefresh, refreshing }) => (
+  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    <div>
+      <h1 className="text-xl font-extrabold text-slate-800">{title}</h1>
+      <p className="text-slate-400 text-xs mt-0.5">{subtitle || "Work with real occupancy and data logs"}</p>
+    </div>
+    <div className="flex items-center gap-2 shrink-0">
+      {onRefresh && (
+        <button onClick={onRefresh} disabled={refreshing}
+          className="flex items-center gap-2 border border-slate-200 bg-white text-slate-600 text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-slate-50 transition-all shadow-sm disabled:opacity-60">
+          <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} /> Refresh
+        </button>
+      )}
+      <a href="/" target="_blank" rel="noopener noreferrer"
+        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow transition-all">
+        <ExternalLink className="w-3.5 h-3.5" /> View Site
+      </a>
+    </div>
+  </div>
+);
 
-  const confirmed  = stats?.confirmed  ?? 0;
-  const pending    = stats?.pending    ?? 0;
-  const cancelled  = stats?.cancelled  ?? 0;
-  const total      = stats?.total      ?? 0;
-  const revenue    = stats?.totalRevenue ?? bookings.reduce((s, b) => s + (b.totalPrice || 0), 0);
+/* ══════════ OVERVIEW ══════════ */
+function Overview({ stats, bookings }) {
+  const total     = stats?.totalBookings ?? 0;
+  const confirmed = stats?.confirmed     ?? 0;
+  const pending   = stats?.pending       ?? 0;
+  const cancelled = stats?.cancelled     ?? 0;
+  const revenue   = bookings.reduce((s, b) => s + (b.totalPrice || 0), 0);
+  const recent    = [...bookings].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6);
+  const today     = new Date().toDateString();
+  const todayIn   = bookings.filter(b => new Date(b.checkIn).toDateString() === today).length;
+  const todayOut  = bookings.filter(b => new Date(b.checkOut).toDateString() === today).length;
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      {/* Stat Cards */}
+    <div className="space-y-5">
+      {/* Stat row 1 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={BedDouble}    label="Total Rooms"    value={stats?.totalRooms ?? 11}  color="bg-blue-50 text-blue-600"    delay={0}    />
-        <StatCard icon={CalendarDays} label="Total Bookings" value={total}                     color="bg-violet-50 text-violet-600" delay={0.05} />
-        <StatCard icon={CheckCircle2} label="Confirmed"      value={confirmed}                 color="bg-emerald-50 text-emerald-600" delay={0.1} />
-        <StatCard icon={Clock}        label="Pending"        value={pending}                   color="bg-amber-50 text-amber-600"  delay={0.15} />
+        <StatCard icon={BedDouble}    label="Total Rooms"    value={stats?.totalRooms ?? 11} color="bg-blue-50 text-blue-600"      delay={0}    />
+        <StatCard icon={CalendarDays} label="Total Bookings" value={total}                   color="bg-violet-50 text-violet-600"  delay={0.05} />
+        <StatCard icon={CheckCircle2} label="Available Rooms"value={stats?.totalRooms ?? 11} color="bg-emerald-50 text-emerald-600"delay={0.1}  />
+        <StatCard icon={Clock}        label="Today Check-ins" value={todayIn}                color="bg-amber-50 text-amber-600"    delay={0.15} />
+      </div>
+      {/* Stat row 2 */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <StatCard icon={XCircle}    label="Today Check-outs" value={todayOut}   color="bg-red-50 text-red-500"          delay={0.2}  />
+        <StatCard icon={Clock}      label="Pending"          value={pending}    color="bg-orange-50 text-orange-600"    delay={0.25} />
+        <StatCard icon={TrendingUp} label="Total Revenue"    value={`₹${revenue.toLocaleString("en-IN")}`} color="bg-teal-50 text-teal-600" delay={0.3} />
       </div>
 
       {/* Revenue + Recent */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Revenue */}
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* Revenue bars */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
           className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
           <div className="flex items-center justify-between mb-5">
             <h3 className="font-extrabold text-slate-800 text-sm">Revenue Summary</h3>
-            <span className="text-xl font-extrabold text-blue-600">₹{revenue.toLocaleString("en-IN")}</span>
+            <span className="text-lg font-extrabold text-blue-600">₹{revenue.toLocaleString("en-IN")}</span>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
-              { label: "Confirmed",  count: confirmed, total, color: "bg-emerald-400" },
-              { label: "Pending",    count: pending,   total, color: "bg-amber-400"   },
-              { label: "Cancelled",  count: cancelled, total, color: "bg-red-400"     },
+              { label: "Confirmed", count: confirmed, color: "bg-emerald-500" },
+              { label: "Pending",   count: pending,   color: "bg-amber-400"   },
+              { label: "Cancelled", count: cancelled, color: "bg-red-400"     },
             ].map(item => (
               <div key={item.label}>
-                <div className="flex justify-between text-xs font-bold text-slate-500 mb-1">
-                  <span>{item.label}</span><span>{item.count}</span>
+                <div className="flex justify-between text-xs font-semibold text-slate-500 mb-1.5">
+                  <span>{item.label}</span><span className="font-bold text-slate-700">{item.count}</span>
                 </div>
                 <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: item.total > 0 ? `${(item.count / item.total) * 100}%` : "0%" }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
-                    className={`h-full rounded-full ${item.color}`}
-                  />
+                  <motion.div initial={{ width: 0 }}
+                    animate={{ width: total > 0 ? `${(item.count / total) * 100}%` : "0%" }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className={`h-full rounded-full ${item.color}`} />
                 </div>
               </div>
             ))}
@@ -134,32 +153,27 @@ function DashboardOverview({ stats, bookings }) {
         </motion.div>
 
         {/* Recent Bookings */}
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
           className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-extrabold text-slate-800 text-sm">Recent Bookings</h3>
-            <Link to="/admin/bookings" className="text-xs font-bold text-blue-600 hover:underline">View all</Link>
+            <Link to="/admin/bookings" className="text-xs font-bold text-blue-600 hover:underline">View all →</Link>
           </div>
           {recent.length === 0 ? (
-            <p className="text-slate-400 text-sm text-center py-6">No bookings yet.</p>
+            <p className="text-slate-400 text-sm text-center py-8">No bookings yet.</p>
           ) : (
             <div className="space-y-3">
-              <div className="grid grid-cols-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider pb-2 border-b border-slate-100">
-                <span>Guest</span><span>Room</span><span className="text-right">Status</span>
-              </div>
               {recent.map((b, i) => (
-                <motion.div key={b._id} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + i * 0.04 }}
-                  className="grid grid-cols-3 items-center text-xs">
+                <div key={b._id} className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0">
                   <div>
-                    <p className="font-bold text-slate-800 truncate">{b.guestName || b.name}</p>
-                    <p className="text-slate-400 text-[10px]">{fmt(b.checkIn)}</p>
+                    <p className="font-bold text-slate-800 text-xs">{b.guestName || "—"}</p>
+                    <p className="text-[10px] text-slate-400">{fmt(b.checkIn)} → {fmt(b.checkOut)}</p>
                   </div>
-                  <p className="text-slate-500 font-medium truncate">{b.roomName || b.roomType}</p>
-                  <div className="flex justify-end">
+                  <div className="flex items-center gap-2 shrink-0">
+                    <p className="text-xs font-bold text-blue-600">₹{(b.totalPrice || 0).toLocaleString("en-IN")}</p>
                     <StatusPill status={b.status} />
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
@@ -167,20 +181,24 @@ function DashboardOverview({ stats, bookings }) {
       </div>
 
       {/* Quick Actions */}
-      <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
         className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
         <h3 className="font-extrabold text-slate-800 text-sm mb-4">Quick Actions</h3>
         <div className="flex flex-wrap gap-3">
           <Link to="/admin/bookings"
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm">
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition-all">
             <CalendarDays className="w-3.5 h-3.5" /> Manage Bookings
           </Link>
           <Link to="/admin/rooms"
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm">
+            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition-all">
             <BedDouble className="w-3.5 h-3.5" /> View Rooms
           </Link>
+          <Link to="/admin/guests"
+            className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-slate-50 shadow-sm transition-all">
+            <Users className="w-3.5 h-3.5" /> Guest Records
+          </Link>
           <Link to="/admin/settings"
-            className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-slate-50 transition-all shadow-sm">
+            className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-slate-50 shadow-sm transition-all">
             <Settings className="w-3.5 h-3.5" /> Settings
           </Link>
         </div>
@@ -189,277 +207,86 @@ function DashboardOverview({ stats, bookings }) {
   );
 }
 
-/* ══════════════════════════════════
-   ROOM MANAGEMENT
-══════════════════════════════════ */
-function RoomManagement({ rooms, onAddClick, onDeleteRoom, onEditRoom }) {
-  return (
-    <div className="space-y-4 animate-fadeIn">
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500">Manage your room inventory and pricing</p>
-        <button onClick={onAddClick}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">
-          <Plus className="w-3.5 h-3.5" /> Add Room
-        </button>
-      </div>
-
-      {rooms.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400 text-sm">
-          No rooms added yet. Click "Add Room" to get started.
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {rooms.map(room => (
-            <motion.div key={room._id}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 hover:shadow-md hover:border-blue-300 transition-all">
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <div className="text-xl font-extrabold text-slate-800">#{room.roomNumber}</div>
-                  <div className="text-xs text-slate-500 mt-0.5">{room.type}</div>
-                </div>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                  room.status === "Available"   ? "bg-emerald-50 text-emerald-700 border border-emerald-200" :
-                  room.status === "Occupied"    ? "bg-red-50 text-red-600 border border-red-200" :
-                  "bg-slate-100 text-slate-500 border border-slate-200"
-                }`}>{room.status}</span>
-              </div>
-              <div className="text-sm font-extrabold text-blue-600 mb-1">
-                ₹{room.price}<span className="text-xs font-medium text-slate-400">/night</span>
-              </div>
-              <div className="text-[10px] text-slate-400 mb-4">
-                Weekday ₹{room.nonSeasonPrice || room.price} · Weekend ₹{room.weekendPrice || room.price} · Peak ₹{room.seasonPrice || room.price}
-              </div>
-              <div className="flex gap-2">
-                <button onClick={() => onEditRoom(room)}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-bold text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50 transition-all">
-                  <Edit3 className="w-3.5 h-3.5" /> Edit
-                </button>
-                <button onClick={() => onDeleteRoom(room._id)}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-bold text-red-500 border border-red-200 rounded-xl hover:bg-red-50 transition-all">
-                  <Trash2 className="w-3.5 h-3.5" /> Delete
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ══════════════════════════════════
-   BOOKING MANAGEMENT
-══════════════════════════════════ */
-function BookingManagement({ bookings, rooms, onConfirm, onCancel, onCheckOut, onWhatsApp, onDelete,
-                              onAddPayment, onUpdateRoomNumber, onAddOfflineClick }) {
+/* ══════════ BOOKING MANAGEMENT ══════════ */
+function BookingMgmt({ bookings, onConfirm, onCancel, onWhatsApp, onDelete, onAddOffline }) {
   const [filter, setFilter] = useState("All");
-  const tabs = ["All", "Pending", "Confirmed", "Checked-out", "Cancelled"];
-  const filtered = filter === "All" ? bookings : bookings.filter(b => b.status === filter);
+  const tabs = ["All", "pending", "confirmed", "cancelled"];
+  const filtered = filter === "All" ? bookings : bookings.filter(b => b.status?.toLowerCase() === filter);
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm animate-fadeIn">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
-        <h3 className="font-extrabold text-slate-800">Booking Management</h3>
-        <button onClick={onAddOfflineClick}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm shrink-0">
-          <Plus className="w-3.5 h-3.5" /> Add Offline Booking
-        </button>
-      </div>
-
-      {/* Filter tabs */}
-      <div className="flex gap-1 px-6 py-3 overflow-x-auto border-b border-slate-100">
-        {tabs.map(tab => (
-          <button key={tab} onClick={() => setFilter(tab)}
-            className={`px-4 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-              filter === tab
-                ? "bg-blue-600 text-white shadow-sm"
-                : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"
-            }`}>
-            {tab}
-          </button>
-        ))}
-        <span className="ml-auto text-xs text-slate-400 font-medium self-center shrink-0">
-          {filtered.length} booking{filtered.length !== 1 ? "s" : ""}
-        </span>
-      </div>
-
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-[10px] font-bold text-slate-400 uppercase tracking-wide border-b border-slate-100">
-              <th className="text-left px-6 py-3">#</th>
-              <th className="text-left px-4 py-3">Guest</th>
-              <th className="text-left px-4 py-3">Phone</th>
-              <th className="text-left px-4 py-3">Room</th>
-              <th className="text-left px-4 py-3">Check-in / out</th>
-              <th className="text-left px-4 py-3">Status</th>
-              <th className="text-left px-4 py-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.length === 0 ? (
-              <tr><td colSpan={7} className="text-center py-12 text-slate-400">No bookings found.</td></tr>
-            ) : filtered.map((b, i) => (
-              <tr key={b._id} className="border-b border-slate-50 hover:bg-slate-50/60 transition-colors">
-                <td className="px-6 py-4 text-slate-400 font-medium">{i + 1}</td>
-                <td className="px-4 py-4">
-                  <div className="font-bold text-slate-800">{b.guestName || b.name || "—"}</div>
-                  <div className="text-[10px] text-blue-600 font-bold mt-0.5">#{b.bookingId || b._id?.slice(-6)}</div>
-                  <div className="text-[10px] text-slate-400">{b.email || ""}</div>
-                </td>
-                <td className="px-4 py-4 text-slate-600">{b.phone || "—"}</td>
-                <td className="px-4 py-4">
-                  <div className="font-medium text-slate-700 mb-1">{b.roomType || b.roomName}</div>
-                  <select
-                    value={b.roomNumber || ""}
-                    onChange={e => onUpdateRoomNumber(b._id, e.target.value)}
-                    className="text-xs border border-slate-200 rounded-lg px-2 py-1 bg-white outline-none cursor-pointer w-32"
-                  >
-                    <option value="">Assign Room</option>
-                    {rooms.map(r => (
-                      <option key={r.roomNumber} value={r.roomNumber}>
-                        {r.roomNumber} ({r.type?.split(" ")[0]})
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td className="px-4 py-4 text-xs text-slate-600">
-                  <div>{fmt(b.checkIn)}</div>
-                  <div className="text-slate-400">→ {fmt(b.checkOut)}</div>
-                </td>
-                <td className="px-4 py-4"><StatusPill status={b.status} /></td>
-                <td className="px-4 py-4">
-                  <div className="flex flex-col gap-1 min-w-[140px]">
-                    {b.status === "Pending" && (
-                      <button onClick={() => onConfirm(b._id, b)}
-                        className="flex items-center gap-1.5 justify-center py-1.5 px-3 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-lg transition-all">
-                        <CheckCircle2 className="w-3 h-3" /> Confirm
-                      </button>
-                    )}
-                    {b.status === "Confirmed" && (
-                      <button onClick={() => onCheckOut(b._id, b)}
-                        className="flex items-center gap-1.5 justify-center py-1.5 px-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition-all">
-                        <LogOut className="w-3 h-3" /> Check-out
-                      </button>
-                    )}
-                    <button onClick={() => onWhatsApp(b)}
-                      className="flex items-center gap-1.5 justify-center py-1.5 px-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-xs font-bold rounded-lg transition-all">
-                      <MessageCircle className="w-3 h-3" /> WhatsApp
-                    </button>
-                    {(b.status === "Pending" || b.status === "Confirmed") && (
-                      <button onClick={() => onCancel(b._id, b)}
-                        className="flex items-center gap-1.5 justify-center py-1.5 px-3 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg border border-red-200 transition-all">
-                        <XCircle className="w-3 h-3" /> Cancel
-                      </button>
-                    )}
-                    <button onClick={() => onAddPayment(b)}
-                      className="flex items-center gap-1.5 justify-center py-1.5 px-3 bg-violet-50 hover:bg-violet-100 text-violet-700 text-xs font-bold rounded-lg border border-violet-200 transition-all">
-                      <CreditCard className="w-3 h-3" /> Payment
-                    </button>
-                    <button onClick={() => onDelete(b._id)}
-                      className="flex items-center gap-1.5 justify-center py-1.5 px-3 text-slate-400 hover:text-red-500 text-xs font-bold transition-all">
-                      <Trash2 className="w-3 h-3" /> Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════
-   GUESTS VIEW
-══════════════════════════════════ */
-function GuestsView({ guests, onDeleteGuest }) {
-  return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm animate-fadeIn overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-100">
-        <h3 className="font-extrabold text-slate-800">Guest Records</h3>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-[10px] font-bold text-slate-400 uppercase tracking-wide border-b border-slate-100 bg-slate-50">
-              <th className="text-left px-6 py-3">Guest Name</th>
-              <th className="text-left px-4 py-3">Phone</th>
-              <th className="text-left px-4 py-3">Total Stays</th>
-              <th className="text-left px-4 py-3">Level</th>
-              <th className="text-left px-4 py-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {guests.length === 0 ? (
-              <tr><td colSpan={5} className="text-center py-12 text-slate-400">No guest records.</td></tr>
-            ) : guests.map(g => (
-              <tr key={g._id} className="border-b border-slate-50 hover:bg-slate-50/60">
-                <td className="px-6 py-4 font-bold text-slate-800">{g.name}</td>
-                <td className="px-4 py-4 text-slate-600">{g.phone}</td>
-                <td className="px-4 py-4 text-slate-600">{g.totalStays}</td>
-                <td className="px-4 py-4">
-                  <span className="text-[10px] font-bold text-blue-600 uppercase bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
-                    {g.loyaltyLevel || "New"}
-                  </span>
-                </td>
-                <td className="px-4 py-4">
-                  <button onClick={() => onDeleteGuest(g._id)}
-                    className="flex items-center gap-1 text-xs text-red-400 hover:text-red-600 font-bold transition-colors">
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════
-   PAYMENTS VIEW
-══════════════════════════════════ */
-function PaymentsView({ payments, totalRevenue }) {
-  return (
-    <div className="space-y-6 animate-fadeIn">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <StatCard icon={TrendingUp} label="Total Revenue" value={`₹${(totalRevenue || 0).toLocaleString("en-IN")}`}
-          color="bg-blue-50 text-blue-600" />
-        <StatCard icon={CreditCard} label="Payment Records" value={payments.length}
-          color="bg-violet-50 text-violet-600" />
-      </div>
+    <div className="space-y-4">
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100">
-          <h3 className="font-extrabold text-slate-800">Transaction History</h3>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
+          <h3 className="font-extrabold text-slate-800">All Bookings</h3>
+          <button onClick={onAddOffline}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all shrink-0">
+            <Plus className="w-3.5 h-3.5" /> Add Offline Booking
+          </button>
+        </div>
+        <div className="flex gap-1 px-6 py-3 border-b border-slate-100 overflow-x-auto">
+          {tabs.map(t => (
+            <button key={t} onClick={() => setFilter(t)}
+              className={`px-4 py-1.5 rounded-xl text-xs font-bold capitalize whitespace-nowrap transition-all ${
+                filter === t ? "bg-blue-600 text-white shadow-sm" : "text-slate-500 hover:bg-slate-100"
+              }`}>
+              {t} {t === "All" ? `(${bookings.length})` : `(${bookings.filter(b => b.status?.toLowerCase() === t).length})`}
+            </button>
+          ))}
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-[10px] font-bold text-slate-400 uppercase tracking-wide border-b border-slate-100 bg-slate-50">
-                <th className="text-left px-6 py-3">Guest</th>
-                <th className="text-left px-4 py-3">Date</th>
-                <th className="text-left px-4 py-3">Amount</th>
-                <th className="text-left px-4 py-3">Method</th>
-                <th className="text-left px-4 py-3">Status</th>
+              <tr className="bg-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                <th className="py-3 px-5 text-left">#ID</th>
+                <th className="py-3 px-5 text-left">Guest</th>
+                <th className="py-3 px-5 text-left">Room</th>
+                <th className="py-3 px-5 text-left">Dates</th>
+                <th className="py-3 px-5 text-left">Amount</th>
+                <th className="py-3 px-5 text-left">Status</th>
+                <th className="py-3 px-5 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {payments.length === 0 ? (
-                <tr><td colSpan={5} className="text-center py-12 text-slate-400">No payment records.</td></tr>
-              ) : payments.map(p => (
-                <tr key={p._id} className="border-b border-slate-50 hover:bg-slate-50/60">
-                  <td className="px-6 py-4 font-bold text-slate-800">{p.guestName}</td>
-                  <td className="px-4 py-4 text-slate-500 text-xs">{new Date(p.date).toLocaleDateString()}</td>
-                  <td className="px-4 py-4 font-extrabold text-blue-600">₹{p.amount}</td>
-                  <td className="px-4 py-4 text-slate-600">{p.method}</td>
-                  <td className="px-4 py-4"><StatusPill status={p.status === "Paid" ? "Confirmed" : p.status} /></td>
+              {filtered.length === 0 ? (
+                <tr><td colSpan={7} className="py-14 text-center text-slate-400 text-sm">No bookings found.</td></tr>
+              ) : filtered.map((b, i) => (
+                <tr key={b._id} className="border-b border-slate-50 hover:bg-blue-50/30 transition-colors">
+                  <td className="px-5 py-4 font-mono text-[10px] text-slate-400 font-bold">#{b._id?.slice(-6).toUpperCase()}</td>
+                  <td className="px-5 py-4">
+                    <p className="font-extrabold text-slate-800 text-sm">{b.guestName || "—"}</p>
+                    <p className="text-xs text-slate-400">{b.phone}</p>
+                  </td>
+                  <td className="px-5 py-4 text-xs text-slate-600 font-medium">{b.roomName || b.roomType}</td>
+                  <td className="px-5 py-4 text-xs text-slate-500">
+                    <p>{fmt(b.checkIn)}</p>
+                    <p className="text-slate-400">→ {fmt(b.checkOut)}</p>
+                  </td>
+                  <td className="px-5 py-4 font-extrabold text-blue-600 text-sm">₹{(b.totalPrice || 0).toLocaleString("en-IN")}</td>
+                  <td className="px-5 py-4"><StatusPill status={b.status} /></td>
+                  <td className="px-5 py-4">
+                    <div className="flex flex-wrap gap-1">
+                      {b.status?.toLowerCase() === "pending" && (
+                        <button onClick={() => onConfirm(b._id, b)}
+                          className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-bold rounded-lg transition-all">
+                          ✓ Confirm
+                        </button>
+                      )}
+                      <button onClick={() => onWhatsApp(b)}
+                        className="px-3 py-1.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white text-[10px] font-bold rounded-lg transition-all">
+                        WhatsApp
+                      </button>
+                      {(b.status?.toLowerCase() === "pending" || b.status?.toLowerCase() === "confirmed") && (
+                        <button onClick={() => onCancel(b._id)}
+                          className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-[10px] font-bold rounded-lg border border-red-200 transition-all">
+                          Cancel
+                        </button>
+                      )}
+                      <button onClick={() => onDelete(b._id)}
+                        className="px-3 py-1.5 text-slate-400 hover:text-red-500 text-[10px] font-bold transition-all">
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -470,220 +297,126 @@ function PaymentsView({ payments, totalRevenue }) {
   );
 }
 
-/* ══════════════════════════════════
-   SETTINGS VIEW
-══════════════════════════════════ */
-function SettingsView({ isSeason, onToggleSeason, isWeekendActive, onToggleWeekend }) {
-  const [showNewPwd, setShowNewPwd]     = useState(false);
-  const [showCurrPwd, setShowCurrPwd]   = useState(false);
+/* ══════════ SETTINGS ══════════ */
+function InlineSettings() {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword,     setNewPassword]     = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurr, setShowCurr] = useState(false);
+  const [showNew,  setShowNew]  = useState(false);
+  const [showConf, setShowConf] = useState(false);
+  const [loading,  setLoading]  = useState(false);
 
-  const handleUpdateLogin = async () => {
-    const newU  = document.getElementById("s-new-user").value;
-    const newP  = document.getElementById("s-new-pass").value;
-    const currP = document.getElementById("s-curr-pass").value;
-    if (!newU && !newP) return;
-    if (!currP) return alert("Current password is required to save changes");
-    if (newP && newP.length < 6) return alert("New password must be at least 6 characters");
-    if (!window.confirm("Are you sure you want to change your login credentials? You will be logged out.")) return;
-    const token = localStorage.getItem("adminToken");
+  const handleChange = async (e) => {
+    e.preventDefault();
+    if (newPassword !== confirmPassword) { alert("Passwords do not match"); return; }
+    if (newPassword.length < 6) { alert("Min 6 characters"); return; }
+    setLoading(true);
     try {
-      await api.patch("/api/admin/profile", { oldPassword: currP, newPassword: newP || undefined },
-        { headers: { Authorization: `Bearer ${token}` } });
-      alert("Success! Please login with your new credentials.");
+      await api.post("/api/admin/change-password", { currentPassword, newPassword });
+      alert("Password changed! Please login again.");
       localStorage.removeItem("adminToken");
-      window.location.reload();
-    } catch (err) {
-      alert(err.response?.data?.message || "Error updating profile");
-    }
+      window.location.href = "/admin/login";
+    } catch (err) { alert(err.response?.data?.message || "Error"); }
+    finally { setLoading(false); }
   };
 
-  const Toggle = ({ active, onToggle, activeColor = "bg-blue-600" }) => (
-    <div onClick={onToggle}
-      className={`w-14 h-7 rounded-full relative cursor-pointer transition-all duration-300 ${active ? activeColor : "bg-slate-300"}`}
-      style={{ boxShadow: active ? "0 4px 12px rgba(37, 99, 235, 0.3)" : "none" }}>
-      <div className={`w-5 h-5 bg-white rounded-full absolute top-1 transition-all duration-300 shadow-md ${active ? "left-8" : "left-1"}`} />
+  const Field = ({ label, value, onChange, show, onToggle, placeholder }) => (
+    <div>
+      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">{label}</label>
+      <div className="relative">
+        <input type={show ? "text" : "password"} value={value} onChange={onChange} placeholder={placeholder}
+          className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 pr-12" required />
+        <button type="button" onClick={onToggle}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+          {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+        </button>
+      </div>
     </div>
   );
 
   return (
-    <div className="max-w-2xl mx-auto space-y-5 animate-fadeIn">
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-        <div className="border-b border-slate-100 pb-4">
-          <h2 className="text-lg font-extrabold text-slate-800">System Settings</h2>
-          <p className="text-sm text-slate-500 mt-1">Manage your lodge's global configuration and seasonal pricing.</p>
-        </div>
-
-        {/* Peak Season */}
-        <div className={`p-5 rounded-xl border transition-all ${isSeason ? "bg-amber-50 border-amber-200" : "bg-slate-50 border-slate-200"}`}>
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-lg">{isSeason ? "🔥" : "❄️"}</span>
-                <h4 className="font-bold text-slate-800">Peak Season Pricing</h4>
-              </div>
-              <p className="text-xs text-slate-500">When activated, the website automatically transitions to peak season rates (₹1300 / ₹2500).</p>
-            </div>
-            <Toggle active={isSeason} onToggle={() => onToggleSeason(!isSeason)} activeColor="bg-amber-500" />
-          </div>
-          <div className={`mt-3 flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-lg ${isSeason ? "bg-amber-100 text-amber-800" : "bg-slate-100 text-slate-500"}`}>
-            <span className={`w-2 h-2 rounded-full ${isSeason ? "bg-amber-500 animate-pulse" : "bg-slate-400"}`} />
-            {isSeason ? "PEAK SEASON RATES ARE LIVE" : "REGULAR RATES ARE LIVE"}
-          </div>
-        </div>
-
-        {/* Weekend Pricing */}
-        <div className={`p-5 rounded-xl border transition-all ${isWeekendActive ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-slate-200"}`}>
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-lg">{isWeekendActive ? "📅" : "📆"}</span>
-                <h4 className="font-bold text-slate-800">Weekend Pricing (Fri–Sun)</h4>
-              </div>
-              <p className="text-xs text-slate-500">When activated, the website automatically applies higher weekend rates on Friday, Saturday, and Sunday.</p>
-            </div>
-            <Toggle active={isWeekendActive} onToggle={() => onToggleWeekend(!isWeekendActive)} activeColor="bg-emerald-500" />
-          </div>
-          <div className={`mt-3 flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-lg ${isWeekendActive ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-500"}`}>
-            <span className={`w-2 h-2 rounded-full ${isWeekendActive ? "bg-emerald-500 animate-pulse" : "bg-slate-400"}`} />
-            {isWeekendActive ? "WEEKEND RATES (FRI–SUN) ARE ENABLED" : "WEEKEND RATES ARE DISABLED"}
-          </div>
-        </div>
-
-        {/* Login Credentials */}
-        <div className="border-t border-slate-100 pt-5">
-          <div className="flex items-center gap-2 mb-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
             <Lock className="w-5 h-5 text-blue-600" />
-            <h4 className="font-bold text-slate-800">Login Credentials</h4>
           </div>
-          <p className="text-xs text-slate-500 mb-4">Update your admin credentials. You will be logged out after changing these.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">New Password</label>
-              <div className="relative flex items-center">
-                <input id="s-new-pass" type={showNewPwd ? "text" : "password"} placeholder="Minimum 6 characters"
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 pr-10" />
-                <button type="button" onClick={() => setShowNewPwd(!showNewPwd)}
-                  className="absolute right-3 text-slate-400 hover:text-slate-600">
-                  {showNewPwd ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">New Username (optional)</label>
-              <input id="s-new-user" type="text" placeholder="Leave blank to keep current"
-                className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-            </div>
+          <div>
+            <h3 className="font-extrabold text-slate-800 text-sm">Change Password</h3>
+            <p className="text-[11px] text-slate-400 mt-0.5">Update your admin login password</p>
           </div>
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
-            <label className="block text-xs font-bold text-red-700 uppercase tracking-wide mb-1.5">Current Password (required)</label>
-            <div className="relative flex items-center">
-              <input id="s-curr-pass" type={showCurrPwd ? "text" : "password"}
-                className="w-full bg-white border border-red-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-red-400 pr-10" />
-              <button type="button" onClick={() => setShowCurrPwd(!showCurrPwd)}
-                className="absolute right-3 text-red-400 hover:text-red-600">
-                {showCurrPwd ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
+        </div>
+        <form onSubmit={handleChange} className="space-y-4">
+          <Field label="Current Password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} show={showCurr} onToggle={() => setShowCurr(!showCurr)} placeholder="Enter current password" />
+          <Field label="New Password"     value={newPassword}     onChange={e => setNewPassword(e.target.value)}     show={showNew}  onToggle={() => setShowNew(!showNew)}   placeholder="Min 6 characters" />
+          <Field label="Confirm Password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} show={showConf} onToggle={() => setShowConf(!showConf)} placeholder="Re-enter new password" />
+          {confirmPassword && newPassword && confirmPassword !== newPassword && (
+            <p className="text-xs text-red-500 font-bold">Passwords do not match</p>
+          )}
+          <button type="submit" disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3 rounded-xl transition-all shadow disabled:opacity-60 flex items-center justify-center gap-2 text-sm">
+            {loading ? <><RefreshCw className="w-4 h-4 animate-spin" /> Updating…</> : <><Shield className="w-4 h-4" /> Update Password</>}
+          </button>
+        </form>
+      </div>
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+        <h3 className="font-extrabold text-slate-800 text-sm mb-2">Resort Info</h3>
+        {[
+          ["Resort Name", "SM Golden Resorts"],
+          ["Location", "Old Falls Main Road, Courtallam, Tamil Nadu"],
+          ["Phone 1", "9443710420"],
+          ["Phone 2", "9003549849"],
+        ].map(([k, v]) => (
+          <div key={k} className="bg-slate-50 rounded-xl px-4 py-3">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">{k}</p>
+            <p className="text-sm font-semibold text-slate-800">{v}</p>
           </div>
-          <div className="flex justify-end">
-            <button onClick={handleUpdateLogin}
-              className="bg-slate-800 hover:bg-slate-900 text-white font-bold px-8 py-2.5 rounded-xl text-sm transition-all shadow-sm">
-              Update Login Details
-            </button>
-          </div>
+        ))}
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-2.5">
+          <Shield className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-700 font-medium">Use a strong password with letters, numbers and special characters for better security.</p>
         </div>
       </div>
     </div>
   );
 }
 
-/* ══════════════════════════════════
-   MAIN ADMIN DASHBOARD
-══════════════════════════════════ */
+/* ══════════ MAIN ══════════ */
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
-  const [activeTab,   setActiveTab]   = useState("overview");
-  const [stats,       setStats]       = useState(null);
-  const [bookings,    setBookings]    = useState([]);
-  const [rooms,       setRooms]       = useState([]);
-  const [guests,      setGuests]      = useState([]);
-  const [payments,    setPayments]    = useState([]);
-  const [isSeason,    setIsSeason]    = useState(false);
-  const [isWeekend,   setIsWeekend]   = useState(false);
-  const [loading,     setLoading]     = useState(true);
-  const [refreshing,  setRefreshing]  = useState(false);
-
-  /* ── modals ── */
-  const [roomModal,    setRoomModal]    = useState(false);
-  const [editingRoom,  setEditingRoom]  = useState(null);
-  const [roomForm,     setRoomForm]     = useState({ roomNumber: "", type: "Double Bed A/C", nonSeasonPrice: "", weekendPrice: "", seasonPrice: "", status: "Available" });
-
-  const [payModal,     setPayModal]     = useState(false);
-  const [payForm,      setPayForm]      = useState({ guestName: "", bookingId: "", amount: "", method: "Cash", status: "Paid" });
-  const [paySaving,    setPaySaving]    = useState(false);
-
+  const [activeTab,    setActiveTab]    = useState("overview");
+  const [stats,        setStats]        = useState(null);
+  const [bookings,     setBookings]     = useState([]);
+  const [loading,      setLoading]      = useState(true);
+  const [refreshing,   setRefreshing]   = useState(false);
   const [offlineModal, setOfflineModal] = useState(false);
-  const [offlineForm,  setOfflineForm]  = useState({ name: "", phone: "", email: "", roomType: "Double Bed A/C", checkIn: "", checkOut: "", checkInTime: "", checkOutTime: "", guests: 2, rooms: 1, message: "", advancePaid: 0, paymentMethod: "Cash" });
-  const [offlineSaving,setOfflineSaving]= useState(false);
-
+  const [offlineForm,  setOfflineForm]  = useState({
+    name: "", phone: "", email: "", roomType: "Non-AC",
+    checkIn: "", checkOut: "", checkInTime: "", checkOutTime: "", guests: 2,
+  });
+  const [offlineSaving, setOfflineSaving] = useState(false);
   const todayStr = new Date().toISOString().split("T")[0];
 
-  /* ── fetch ── */
   const fetchData = useCallback(async (isRefresh = false) => {
     const token = localStorage.getItem("adminToken");
     if (!token) { navigate("/admin/login"); return; }
     if (isRefresh) setRefreshing(true); else setLoading(true);
     try {
-      // Use the actual backend routes that exist:
-      // GET /api/admin/stats  — stats
-      // GET /api/bookings     — all bookings (protected, token auto-sent)
-      // GET /api/rooms        — all rooms (public)
-      const [statsRes, bookRes, roomRes] = await Promise.allSettled([
+      const [statsRes, bookRes] = await Promise.allSettled([
         api.get("/api/admin/stats"),
         api.get("/api/bookings"),
-        api.get("/api/rooms"),
       ]);
-
       if (statsRes.status === "fulfilled") {
         const d = statsRes.value.data;
-        setStats({
-          totalRooms:    11,
-          totalBookings: d.total      ?? 0,
-          confirmed:     d.confirmed  ?? 0,
-          pending:       d.pending    ?? 0,
-          cancelled:     d.cancelled  ?? 0,
-          totalRevenue:  d.recentBookings?.reduce((s, b) => s + (b.totalPrice || 0), 0) ?? 0,
-        });
+        setStats({ totalRooms: 11, totalBookings: d.total ?? 0, confirmed: d.confirmed ?? 0, pending: d.pending ?? 0, cancelled: d.cancelled ?? 0 });
       }
-
       if (bookRes.status === "fulfilled") {
-        const raw = Array.isArray(bookRes.value.data)
-          ? bookRes.value.data
-          : (bookRes.value.data.bookings || []);
+        const raw = Array.isArray(bookRes.value.data) ? bookRes.value.data : (bookRes.value.data.bookings || []);
         setBookings(raw);
-
-        // Build guests from bookings (deduplicate by phone)
-        const map = {};
-        raw.forEach(b => {
-          const key = b.phone;
-          if (!key) return;
-          if (!map[key]) map[key] = { name: b.guestName || "—", phone: key, stays: 0, lastRoom: b.roomName || b.roomType || "—", loyaltyLevel: "New" };
-          map[key].stays += 1;
-          map[key].lastRoom = b.roomName || b.roomType || map[key].lastRoom;
-          map[key].loyaltyLevel = map[key].stays >= 3 ? "Regular" : "New";
-        });
-        setGuests(Object.values(map));
       }
-
-      if (roomRes.status === "fulfilled") {
-        const raw = Array.isArray(roomRes.value.data)
-          ? roomRes.value.data
-          : (roomRes.value.data.rooms || []);
-        setRooms(raw);
-      }
-
     } catch (err) {
       if (err?.response?.status === 401) navigate("/admin/login");
     } finally {
@@ -694,415 +427,145 @@ export default function AdminDashboard() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  /* ── room actions ── */
-  const openAddRoom  = () => { setEditingRoom(null); setRoomForm({ roomNumber: "", type: "Double Bed A/C", nonSeasonPrice: "", weekendPrice: "", seasonPrice: "", status: "Available" }); setRoomModal(true); };
-  const openEditRoom = (room) => { setEditingRoom(room._id || room.roomId); setRoomForm({ roomNumber: room.roomNumber || room.roomId, type: room.type, nonSeasonPrice: room.nonSeasonPrice || room.price, weekendPrice: room.weekendPrice || room.price, seasonPrice: room.seasonPrice || room.price, status: room.status || "Available" }); setRoomModal(true); };
-  const handleRoomSubmit = async e => {
-    e.preventDefault();
-    try {
-      const payload = { ...roomForm, price: roomForm.nonSeasonPrice };
-      if (editingRoom) await api.patch(`/api/rooms/${editingRoom}/toggle`, payload);
-      else             await api.post("/api/rooms", payload);
-      setRoomModal(false);
-      fetchData();
-    } catch (err) { alert("Error saving room: " + (err.response?.data?.message || err.message)); }
-  };
-  const handleDeleteRoom = async id => {
-    if (!window.confirm("Delete this room?")) return;
-    try {
-      await api.delete(`/api/rooms/${id}`);
-      fetchData();
-    } catch (err) { alert("Delete failed: " + (err.response?.data?.message || err.message)); }
-  };
-
-  /* ── booking actions ── */
   const handleConfirm = async (id, b) => {
-    if (!window.confirm(`Confirm booking for ${b.guestName || b.name}?`)) return;
+    if (!window.confirm(`Confirm booking for ${b.guestName}?`)) return;
     try {
       await api.patch(`/api/bookings/${id}/status`, { status: "confirmed" });
-      // WhatsApp notify
-      const checkIn  = new Date(b.checkIn).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-      const checkOut = new Date(b.checkOut).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-      const msg = `✅ *SM Golden Resorts – Booking Confirmed!*\n\nDear ${b.guestName || b.name},\n\n🛏️ Room: *${b.roomType || b.roomName}*\n📅 Check-in: *${checkIn}*\n📅 Check-out: *${checkOut}*\n\n📍 Old Falls Main Road, Courtallam\nThank you! 🙏`;
+      const msg = `✅ *SM Golden Resorts – Booking Confirmed!*\n\nDear ${b.guestName},\n🛏️ Room: *${b.roomType || b.roomName}*\n📅 Check-in: *${fmt(b.checkIn)}*\n📅 Check-out: *${fmt(b.checkOut)}*\n\n📍 Old Falls Main Road, Courtallam\nThank you! 🙏`;
       const phone = (b.phone || "").replace(/[^0-9]/g, "");
-      const formatted = phone.startsWith("91") ? phone : `91${phone}`;
-      window.open(`https://wa.me/${formatted}?text=${encodeURIComponent(msg)}`, "_blank");
-      fetchData();
-    } catch (err) { alert("Error: " + err.message); }
+      window.open(`https://wa.me/${phone.startsWith("91") ? phone : "91" + phone}?text=${encodeURIComponent(msg)}`, "_blank");
+      fetchData(true);
+    } catch { alert("Error confirming booking"); }
   };
 
-  const handleCancel = async (id, b) => {
-    const reason = window.prompt(`Cancellation reason for ${b.guestName || b.name} (optional):`, "") ?? null;
-    if (reason === null) return;
-    try {
-      await api.patch(`/api/bookings/${id}/status`, { status: "cancelled" });
-      fetchData();
-    } catch (err) { alert("Error: " + err.message); }
+  const handleCancel = async (id) => {
+    if (!window.confirm("Cancel this booking?")) return;
+    try { await api.patch(`/api/bookings/${id}/status`, { status: "cancelled" }); fetchData(true); }
+    catch { alert("Error cancelling booking"); }
   };
 
-  const handleCheckOut = async (id, b) => {
-    if (!window.confirm(`Complete check-out for ${b.guestName || b.name}?`)) return;
-    try {
-      // Use confirmed → checked-out if backend supports it, otherwise just notify
-      await api.patch(`/api/bookings/${id}/status`, { status: "confirmed" }).catch(() => {});
-      const phone = (b.phone || "").replace(/[^0-9]/g, "");
-      const formatted = phone.startsWith("91") ? phone : `91${phone}`;
-      const msg = `Hello ${b.guestName || b.name}! 👋\n\nThank you for staying at *SM Golden Resorts*. We hope you had a wonderful experience!\n\nWe'd love your feedback on Google!\n\n📍 Old Falls Main Road, Courtallam\n🙏 We look forward to hosting you again!`;
-      window.open(`https://wa.me/${formatted}?text=${encodeURIComponent(msg)}`, "_blank");
-      fetchData();
-    } catch (err) { alert("Error: " + err.message); }
+  const handleDelete = async (id) => {
+    if (!window.confirm("Delete this booking permanently?")) return;
+    try { await api.delete(`/api/bookings/${id}`); fetchData(true); }
+    catch { alert("Error deleting booking"); }
   };
-  const handleWhatsApp = b => {
-    const checkIn  = new Date(b.checkIn).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-    const checkOut = new Date(b.checkOut).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-    const msg = `✅ *SM Golden Resorts – Booking Update*\n\nDear ${b.guestName || b.name},\n\n🛏️ Room: *${b.roomType || b.roomName}*${b.roomNumber ? ` (Room #${b.roomNumber})` : ""}\n📅 Check-in: *${checkIn}*\n📅 Check-out: *${checkOut}*\n📊 Status: *${b.status}*\n\n📍 SM Golden Resorts, Old Falls Main Road, Courtallam – 627 802\n\nThank you! 🙏`;
+
+  const handleWhatsApp = (b) => {
+    const msg = `📋 *SM Golden Resorts – Booking Update*\n\nDear ${b.guestName},\n🛏️ Room: *${b.roomType || b.roomName}*\n📅 ${fmt(b.checkIn)} → ${fmt(b.checkOut)}\n📊 Status: *${b.status}*\n\nThank you! 🙏`;
     const phone = (b.phone || "").replace(/[^0-9]/g, "");
-    const formatted = phone.startsWith("91") ? phone : `91${phone}`;
-    window.open(`https://wa.me/${formatted}?text=${encodeURIComponent(msg)}`, "_blank");
-  };
-  const handleDeleteBooking = async id => {
-    if (!window.confirm("Delete this booking?")) return;
-    try {
-      await api.delete(`/api/bookings/${id}`);
-      fetchData();
-    } catch (err) { alert("Error: " + err.message); }
+    window.open(`https://wa.me/${phone.startsWith("91") ? phone : "91" + phone}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
-  const handleUpdateRoomNumber = async (id, roomNumber) => {
-    // No backend route for room number update — update locally only
-    setBookings(prev => prev.map(b => b._id === id ? { ...b, roomNumber } : b));
-  };
-
-  /* ── payment actions ── */
-  const openPayModal = b => { setPayForm({ guestName: b.guestName || b.name, bookingId: b._id, amount: "", method: "Cash", status: "Paid" }); setPayModal(true); };
-  const handlePaySubmit = async e => {
+  const handleOfflineSubmit = async (e) => {
     e.preventDefault();
-    if (!payForm.amount || Number(payForm.amount) <= 0) return alert("Enter a valid amount.");
-    setPaySaving(true);
-    try {
-      // Store locally — no backend payment route exists yet
-      setPayments(prev => [...prev, { ...payForm, _id: Date.now().toString(), date: new Date().toISOString() }]);
-      setPayModal(false);
-      alert("Payment recorded locally!");
-    } catch (err) { alert("Error: " + err.message); } finally { setPaySaving(false); }
-  };
-
-  /* ── offline booking ── */
-  const handleOfflineSubmit = async e => {
-    e.preventDefault();
-    if (!offlineForm.name || !offlineForm.phone || !offlineForm.checkIn || !offlineForm.checkOut) return alert("Fill in all required fields.");
-    if (new Date(offlineForm.checkIn) >= new Date(offlineForm.checkOut)) return alert("Check-out must be after check-in.");
+    if (!offlineForm.name || !offlineForm.phone || !offlineForm.checkIn || !offlineForm.checkOut) return alert("Fill required fields");
     setOfflineSaving(true);
     try {
-      // Use the existing public POST /api/bookings endpoint
-      const payload = {
-        guestName: offlineForm.name,
-        phone:     offlineForm.phone,
-        email:     offlineForm.email || "",
-        roomId:    offlineForm.roomType, // will match if roomId = type
-        checkIn:   offlineForm.checkIn,
-        checkOut:  offlineForm.checkOut,
-        guests:    offlineForm.guests,
-      };
-      await api.post("/api/bookings", payload);
+      await api.post("/api/bookings", {
+        guestName: offlineForm.name, phone: offlineForm.phone,
+        email: offlineForm.email || "no-email@smgoldenresorts.com",
+        roomId: offlineForm.roomType, checkIn: offlineForm.checkIn,
+        checkOut: offlineForm.checkOut, guests: offlineForm.guests,
+        checkInTime: offlineForm.checkInTime, checkOutTime: offlineForm.checkOutTime,
+      });
       setOfflineModal(false);
-      setOfflineForm({ name: "", phone: "", email: "", roomType: "Double Bed A/C", checkIn: "", checkOut: "", checkInTime: "", checkOutTime: "", guests: 2, rooms: 1, message: "", advancePaid: 0, paymentMethod: "Cash" });
-      fetchData();
-      alert("Offline booking added successfully!");
-    } catch (err) { alert("Error: " + (err.response?.data?.message || err.message)); } finally { setOfflineSaving(false); }
+      setOfflineForm({ name: "", phone: "", email: "", roomType: "Non-AC", checkIn: "", checkOut: "", checkInTime: "", checkOutTime: "", guests: 2 });
+      fetchData(true);
+      alert("Offline booking added!");
+    } catch (err) { alert(err.response?.data?.message || "Error"); }
+    finally { setOfflineSaving(false); }
   };
 
-  /* ── guests ── */
-  const handleDeleteGuest = (id) => {
-    // No backend delete guest route — remove from local state
-    setGuests(prev => prev.filter(g => g._id !== id));
-  };
-
-  /* ── season/weekend toggles — no backend route, store locally ── */
-  const handleToggleSeason  = (val) => setIsSeason(val);
-  const handleToggleWeekend = (val) => setIsWeekend(val);
-
-  /* ── nav tabs ── */
   const NAV_TABS = [
     { id: "overview",  label: "Dashboard",  icon: LayoutDashboard },
-    { id: "rooms",     label: "Rooms",       icon: BedDouble },
-    { id: "bookings",  label: "Bookings",    icon: CalendarDays },
-    { id: "guests",    label: "Guests",      icon: Users },
-    { id: "payments",  label: "Payments",    icon: CreditCard },
-    { id: "settings",  label: "Settings",    icon: Settings },
+    { id: "bookings",  label: "Bookings",   icon: CalendarDays },
+    { id: "settings",  label: "Settings",   icon: Settings },
   ];
 
-  /* ── render view ── */
-  const renderView = () => {
-    switch (activeTab) {
-      case "overview":
-        return <DashboardOverview stats={stats} bookings={bookings} />;
-      case "rooms":
-        return <RoomManagement rooms={rooms} onAddClick={openAddRoom} onDeleteRoom={handleDeleteRoom} onEditRoom={openEditRoom} />;
-      case "bookings":
-        return (
-          <BookingManagement
-            bookings={bookings} rooms={rooms}
-            onConfirm={handleConfirm} onCancel={handleCancel}
-            onCheckOut={handleCheckOut} onWhatsApp={handleWhatsApp}
-            onDelete={handleDeleteBooking} onAddPayment={openPayModal}
-            onUpdateRoomNumber={handleUpdateRoomNumber}
-            onAddOfflineClick={() => setOfflineModal(true)}
-          />
-        );
-      case "guests":
-        return <GuestsView guests={guests} onDeleteGuest={handleDeleteGuest} />;
-      case "payments":
-        return <PaymentsView payments={payments} totalRevenue={stats?.totalRevenue} />;
-      case "settings":
-        return <SettingsView isSeason={isSeason} onToggleSeason={handleToggleSeason} isWeekendActive={isWeekend} onToggleWeekend={handleToggleWeekend} />;
-      default:
-        return <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400">Coming Soon…</div>;
-    }
-  };
+  const titles = { overview: "Overview", bookings: "Bookings", settings: "Settings" };
 
   return (
     <AdminLayout>
       {loading ? (
         <div className="flex items-center justify-center h-full p-20"><LoadingSpinner /></div>
       ) : (
-        <div className="p-4 md:p-6 space-y-5">
+        <div className="p-4 md:p-6 space-y-4">
+          {/* Header */}
+          <PageHeader title={titles[activeTab]} onRefresh={() => fetchData(true)} refreshing={refreshing} />
 
-          {/* ── Page Header ── */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-6 py-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <h1 className="text-xl font-extrabold text-slate-800 capitalize">{activeTab}</h1>
-                <p className="text-slate-400 text-xs mt-0.5">Work with real occupancy and data logs</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <button onClick={() => fetchData(true)} disabled={refreshing}
-                  className="flex items-center gap-2 border border-slate-200 text-slate-600 text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-slate-50 transition-all shadow-sm">
-                  <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
-                  Refresh
-                </button>
-                <a href="/" target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  View Site
-                </a>
-              </div>
-            </div>
-
-            {/* Sub-nav tabs */}
-            <div className="flex gap-1 mt-4 overflow-x-auto">
-              {NAV_TABS.map(({ id, label, icon: Icon }) => (
-                <button key={id} onClick={() => setActiveTab(id)}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                    activeTab === id
-                      ? "bg-blue-600 text-white shadow-sm"
-                      : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"
-                  }`}>
-                  <Icon className="w-3.5 h-3.5" />
-                  {label}
-                </button>
-              ))}
-            </div>
+          {/* Sub nav */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-4 py-2.5 flex gap-1 overflow-x-auto">
+            {NAV_TABS.map(({ id, label, icon: Icon }) => (
+              <button key={id} onClick={() => setActiveTab(id)}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                  activeTab === id ? "bg-blue-600 text-white shadow-sm" : "text-slate-500 hover:bg-slate-100"
+                }`}>
+                <Icon className="w-3.5 h-3.5" /> {label}
+              </button>
+            ))}
           </div>
 
-          {/* ── View Content ── */}
-          {renderView()}
+          {/* Content */}
+          {activeTab === "overview"  && <Overview stats={stats} bookings={bookings} />}
+          {activeTab === "bookings"  && <BookingMgmt bookings={bookings} onConfirm={handleConfirm} onCancel={handleCancel} onWhatsApp={handleWhatsApp} onDelete={handleDelete} onAddOffline={() => setOfflineModal(true)} />}
+          {activeTab === "settings"  && <InlineSettings />}
         </div>
       )}
-
-      {/* ════════ MODALS ════════ */}
-
-      {/* Room Modal */}
-      <AnimatePresence>
-        {roomModal && (
-          <Modal title={editingRoom ? "Edit Room" : "Add New Room"} isOpen={roomModal} onClose={() => setRoomModal(false)}>
-            <form onSubmit={handleRoomSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Room Number *</label>
-                  <input required type="text" value={roomForm.roomNumber}
-                    onChange={e => setRoomForm({ ...roomForm, roomNumber: e.target.value })}
-                    placeholder="e.g. 101"
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Room Type</label>
-                  <select value={roomForm.type} onChange={e => setRoomForm({ ...roomForm, type: e.target.value })}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400">
-                    <option>Double Bed A/C</option>
-                    <option>Double Bed</option>
-                    <option>Three Bed</option>
-                    <option>Four Bed A/C</option>
-                  </select>
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                {[["Weekday Price (₹)", "nonSeasonPrice", "1200"], ["Weekend Price (₹)", "weekendPrice", "1600"], ["Peak Price (₹)", "seasonPrice", "2000"]].map(([lbl, key, ph]) => (
-                  <div key={key}>
-                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">{lbl}</label>
-                    <input required type="number" value={roomForm[key]}
-                      onChange={e => setRoomForm({ ...roomForm, [key]: e.target.value })}
-                      placeholder={ph}
-                      className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                  </div>
-                ))}
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Status</label>
-                <select value={roomForm.status} onChange={e => setRoomForm({ ...roomForm, status: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400">
-                  <option>Available</option><option>Occupied</option><option>Maintenance</option>
-                </select>
-              </div>
-              <button type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-sm">
-                {editingRoom ? "Update Room" : "Create Room"}
-              </button>
-            </form>
-          </Modal>
-        )}
-      </AnimatePresence>
-
-      {/* Payment Modal */}
-      <AnimatePresence>
-        {payModal && (
-          <Modal title="Record Payment" isOpen={payModal} onClose={() => setPayModal(false)}>
-            <form onSubmit={handlePaySubmit} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Guest Name</label>
-                <input required type="text" value={payForm.guestName}
-                  onChange={e => setPayForm({ ...payForm, guestName: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Amount (₹)</label>
-                  <input required type="number" min="1" value={payForm.amount}
-                    onChange={e => setPayForm({ ...payForm, amount: e.target.value })}
-                    placeholder="e.g. 2600"
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Method</label>
-                  <select value={payForm.method} onChange={e => setPayForm({ ...payForm, method: e.target.value })}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400">
-                    <option>Cash</option><option>UPI</option><option>Card</option><option>Net Banking</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Status</label>
-                <select value={payForm.status} onChange={e => setPayForm({ ...payForm, status: e.target.value })}
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400">
-                  <option>Paid</option><option>Pending</option><option>Refunded</option>
-                </select>
-              </div>
-              <button type="submit" disabled={paySaving}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-sm disabled:opacity-60">
-                {paySaving ? "Saving…" : "💾 Record Payment"}
-              </button>
-            </form>
-          </Modal>
-        )}
-      </AnimatePresence>
 
       {/* Offline Booking Modal */}
       <AnimatePresence>
         {offlineModal && (
-          <Modal title="➕ Add Offline Booking" isOpen={offlineModal} onClose={() => setOfflineModal(false)}>
+          <Modal title="Add Offline Booking" isOpen={offlineModal} onClose={() => setOfflineModal(false)}>
             <form onSubmit={handleOfflineSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Customer Name *</label>
-                <input required type="text" value={offlineForm.name}
-                  onChange={e => setOfflineForm({ ...offlineForm, name: e.target.value })}
-                  placeholder="Full name"
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Guest Name *</label>
+                <input required type="text" value={offlineForm.name} onChange={e => setOfflineForm({...offlineForm, name: e.target.value})}
+                  placeholder="Full name" className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Phone *</label>
-                  <input required type="text" value={offlineForm.phone}
-                    onChange={e => setOfflineForm({ ...offlineForm, phone: e.target.value })}
-                    placeholder="9876543210"
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                  <input required type="text" value={offlineForm.phone} onChange={e => setOfflineForm({...offlineForm, phone: e.target.value})}
+                    placeholder="9876543210" className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Email</label>
-                  <input type="email" value={offlineForm.email}
-                    onChange={e => setOfflineForm({ ...offlineForm, email: e.target.value })}
-                    placeholder="optional"
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Room Type *</label>
-                  <select value={offlineForm.roomType} onChange={e => setOfflineForm({ ...offlineForm, roomType: e.target.value })}
+                  <select value={offlineForm.roomType} onChange={e => setOfflineForm({...offlineForm, roomType: e.target.value})}
                     className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400">
-                    <option>Double Bed</option><option>Double Bed A/C</option><option>Three Bed</option><option>Four Bed A/C</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Guests</label>
-                  <input type="number" min="1" max="40" value={offlineForm.guests}
-                    onChange={e => setOfflineForm({ ...offlineForm, guests: e.target.value })}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Check-In Date *</label>
-                  <input required type="date" min={todayStr} value={offlineForm.checkIn}
-                    onChange={e => setOfflineForm({ ...offlineForm, checkIn: e.target.value })}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Check-In Time *</label>
-                  <input required type="time" value={offlineForm.checkInTime}
-                    onChange={e => setOfflineForm({ ...offlineForm, checkInTime: e.target.value })}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Check-Out Date *</label>
-                  <input required type="date" min={offlineForm.checkIn || todayStr} value={offlineForm.checkOut}
-                    onChange={e => setOfflineForm({ ...offlineForm, checkOut: e.target.value })}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Check-Out Time *</label>
-                  <input required type="time" value={offlineForm.checkOutTime}
-                    onChange={e => setOfflineForm({ ...offlineForm, checkOutTime: e.target.value })}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Advance Paid (₹)</label>
-                  <input type="number" min="0" value={offlineForm.advancePaid}
-                    onChange={e => setOfflineForm({ ...offlineForm, advancePaid: e.target.value })}
-                    placeholder="0"
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Payment Method</label>
-                  <select value={offlineForm.paymentMethod} onChange={e => setOfflineForm({ ...offlineForm, paymentMethod: e.target.value })}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400">
-                    <option>Cash</option><option>UPI</option><option>Card</option><option>Net Banking</option>
+                    <option value="Non-AC">Double Bed Non-AC</option>
+                    <option value="AC">Double Bed AC</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Suite AC">Suite Room</option>
                   </select>
                 </div>
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Special Notes</label>
-                <input type="text" value={offlineForm.message}
-                  onChange={e => setOfflineForm({ ...offlineForm, message: e.target.value })}
-                  placeholder="e.g. Early check-in requested"
-                  className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Check-in Date *</label>
+                  <input required type="date" min={todayStr} value={offlineForm.checkIn} onChange={e => setOfflineForm({...offlineForm, checkIn: e.target.value})}
+                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Check-in Time *</label>
+                  <input required type="time" value={offlineForm.checkInTime} onChange={e => setOfflineForm({...offlineForm, checkInTime: e.target.value})}
+                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Check-out Date *</label>
+                  <input required type="date" min={offlineForm.checkIn || todayStr} value={offlineForm.checkOut} onChange={e => setOfflineForm({...offlineForm, checkOut: e.target.value})}
+                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Check-out Time *</label>
+                  <input required type="time" value={offlineForm.checkOutTime} onChange={e => setOfflineForm({...offlineForm, checkOutTime: e.target.value})}
+                    className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                </div>
               </div>
               <button type="submit" disabled={offlineSaving}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-sm disabled:opacity-60">
-                {offlineSaving ? "Adding Offline Booking…" : "💾 Confirm Offline Booking"}
+                {offlineSaving ? "Adding…" : "Confirm Offline Booking"}
               </button>
             </form>
           </Modal>

@@ -42,8 +42,8 @@ export default function AdminRooms() {
 
   const typeBadge = (type) => {
     if (type === "AC" || type?.includes("A/C")) return "bg-blue-50 text-blue-700 border-blue-200";
-    if (type === "Suite AC" || type?.includes("Suite")) return "bg-violet-50 text-violet-700 border-violet-200";
-    if (type === "Villa") return "bg-emerald-50 text-emerald-700 border-emerald-200";
+    if (type === "Four Bed AC") return "bg-amber-50 text-amber-700 border-amber-200";
+    if (type === "Three Bed") return "bg-emerald-50 text-emerald-700 border-emerald-200";
     return "bg-slate-100 text-slate-600 border-slate-200";
   };
 
@@ -107,7 +107,7 @@ export default function AdminRooms() {
                   </span>
                   <span className="text-blue-600 font-extrabold text-sm">
                     ₹{room.price?.toLocaleString("en-IN")}
-                    <span className="text-[10px] text-slate-400 font-normal">/night</span>
+                    <span className="text-[10px] text-slate-400 font-normal">/day</span>
                   </span>
                 </div>
 

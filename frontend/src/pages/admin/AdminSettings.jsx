@@ -165,10 +165,10 @@ export default function AdminSettings() {
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Room Pricing</p>
                 <div className="space-y-1 text-xs text-slate-600 font-medium">
                   {[
-                    ["Non-AC Rooms",    "₹1,500/night"],
-                    ["AC Rooms",        "₹2,000/night"],
-                    ["Villa Room 110",  "₹2,500/night"],
-                    ["Suite Rooms",     "₹10,000/night"],
+                    ["Double Bed Non-AC",  "₹1,300/night"],
+                    ["Double Bed A/C",     "₹1,600/night"],
+                    ["Three Bed",          "₹1,800/night"],
+                    ["Four Bed A/C",       "₹2,800/night"],
                   ].map(([label, price]) => (
                     <div key={label} className="flex justify-between">
                       <span>{label}</span>
