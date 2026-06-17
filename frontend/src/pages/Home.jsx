@@ -690,7 +690,7 @@ export default function Home() {
                         </div>
                         {/* Info */}
                         <div className="p-3 flex flex-col gap-2 flex-1">
-                          <h3 className="font-extrabold text-slate-800 text-sm leading-tight">{ROOM_DISPLAY_NAME[room.type] || room.type}</h3>
+                          <h3 className="font-extrabold text-slate-800 text-sm leading-tight pr-10">{ROOM_DISPLAY_NAME[room.type] || room.type}</h3>
                           <p className="text-[10px] text-slate-400 font-medium">{room.badge}</p>
                           <div className="flex items-baseline gap-1 mt-auto">
                             <span className="text-lg font-extrabold text-slate-800">₹ {room.price?.toLocaleString("en-IN")}</span>

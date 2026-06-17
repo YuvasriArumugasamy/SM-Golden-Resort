@@ -60,10 +60,10 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2.5 text-xs">
             {[
-              "Double Bed Non-AC — ₹1,300/night",
-              "Double Bed A/C — ₹1,600/night",
-              "Three Bed — ₹1,800/night",
-              "Four Bed A/C — ₹2,800/night",
+              "Double Bed Non-AC — ₹1,500/day",
+              "Double Bed A/C — ₹2,000/day",
+              "Villa — ₹2,500/day",
+              "Suite Room — ₹10,000/day",
             ].map(item => (
               <li key={item} className="flex items-center gap-1.5 text-blue-100 font-medium">
                 <span className="text-white shrink-0">→</span> {item}
