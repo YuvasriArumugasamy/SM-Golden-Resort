@@ -6,7 +6,7 @@ const WhatsAppButton = () => {
       href="https://wa.me/919443710440?text=Hi,%20I%20want%20to%20book%20a%20room%20at%20SM%20Golden%20Resorts"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-20 right-4 z-40 flex items-center justify-center w-13 h-13 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-transform duration-300 hover:scale-110 active:scale-95 group lg:bottom-6 lg:right-6 lg:w-14 lg:h-14"
+      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-transform duration-300 hover:scale-110 active:scale-95 group"
       aria-label="Contact us on WhatsApp"
     >
       {/* Outer Pulse rings */}

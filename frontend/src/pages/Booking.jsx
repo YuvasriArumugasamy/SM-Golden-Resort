@@ -451,10 +451,10 @@ export default function Booking() {
 
                                 {/* Price */}
                                 <div className="mt-4 pt-3 border-t border-slate-100 flex items-baseline gap-1">
-                                  <span className="text-xl font-extrabold text-slate-800">
-                                    ₹ {room.price?.toLocaleString("en-IN")}
+                                  <span className="text-xl font-extrabold text-slate-800 whitespace-nowrap">
+                                    ₹{room.price?.toLocaleString("en-IN")}
                                   </span>
-                                  <span className="text-xs text-slate-400 font-medium">/ day</span>
+                                  <span className="text-xs text-slate-400 font-medium whitespace-nowrap">/ day</span>
                                 </div>
 
                                 {/* Selected tick */}

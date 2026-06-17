@@ -693,8 +693,8 @@ export default function Home() {
                           <h3 className="font-extrabold text-slate-800 text-sm leading-tight pr-10">{ROOM_DISPLAY_NAME[room.type] || room.type}</h3>
                           <p className="text-[10px] text-slate-400 font-medium">{room.badge}</p>
                           <div className="flex items-baseline gap-1 mt-auto">
-                            <span className="text-lg font-extrabold text-slate-800">₹ {room.price?.toLocaleString("en-IN")}</span>
-                            <span className="text-[10px] text-slate-400 font-medium">/ day</span>
+                            <span className="text-lg font-extrabold text-slate-800 whitespace-nowrap">₹{room.price?.toLocaleString("en-IN")}</span>
+                            <span className="text-[10px] text-slate-400 font-medium whitespace-nowrap">/ day</span>
                           </div>
                           <button
                             onClick={() => navigate("/booking", {
