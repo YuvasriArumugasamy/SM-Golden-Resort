@@ -283,10 +283,12 @@ export default function Home() {
   const faqsRef      = useRef(null);
 
   useEffect(() => {
+    // Show fallback immediately, then update if API responds
+    setRooms(fallbackRooms);
+    setRoomsLoading(false);
     api.get("/api/rooms")
-      .then(r => setRooms(r.data?.length ? r.data : fallbackRooms))
-      .catch(() => setRooms(fallbackRooms))
-      .finally(() => setRoomsLoading(false));
+      .then(r => { if (r.data?.length) setRooms(r.data); })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
