@@ -38,6 +38,8 @@ const getAllRooms = async (req, res) => {
 const seedRooms = async () => {
   try {
     await Room.deleteMany({});
+    // Drop and recreate index to avoid duplicate key errors
+    await Room.collection.dropIndexes().catch(() => {});
     await Room.insertMany(roomsData);
     console.log(`✅ ${roomsData.length} rooms seeded successfully`);
   } catch (error) {
