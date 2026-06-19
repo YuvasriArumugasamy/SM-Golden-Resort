@@ -65,17 +65,24 @@ app.use((err, req, res, next) => {
 // ─── Seed Default Admin ───────────────────────────────────────
 const seedAdmin = async () => {
   try {
-    const identifier = process.env.ADMIN_USERNAME || process.env.ADMIN_EMAIL;
-    const isUsername = !!process.env.ADMIN_USERNAME;
+    const adminUsername = process.env.ADMIN_USERNAME?.toLowerCase().trim();
+    const adminEmail    = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+    const adminPassword = process.env.ADMIN_PASSWORD;
 
-    // Always delete and re-create to ensure password is up to date
+    if (!adminPassword) {
+      console.error("❌ ADMIN_PASSWORD not set in .env");
+      return;
+    }
+
+    // Always delete and re-create to ensure credentials are up to date
     await Admin.deleteMany({});
-    const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+    const hashedPassword = await bcrypt.hash(adminPassword, 10);
     await Admin.create({
-      ...(isUsername ? { username: identifier?.toLowerCase() } : { email: identifier?.toLowerCase() }),
+      username: adminUsername || null,
+      email:    adminEmail    || null,
       password: hashedPassword,
     });
-    console.log(`✅ Admin seeded: ${identifier}`);
+    console.log(`✅ Admin seeded — username: ${adminUsername || "N/A"}, email: ${adminEmail || "N/A"}`);
   } catch (error) {
     console.error("Admin seeding error:", error);
   }
