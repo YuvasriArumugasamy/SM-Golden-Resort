@@ -4,15 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../hooks/useAuth";
 import {
   LayoutDashboard, BedDouble, CalendarDays,
-  Settings, LogOut, Menu, X, ExternalLink, Users,
+  Settings, LogOut, Menu, X, ExternalLink, Users, Bell,
 } from "lucide-react";
 
 const navItems = [
-  { path: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { path: "/admin/rooms",     label: "Rooms",     icon: BedDouble },
-  { path: "/admin/bookings",  label: "Bookings",  icon: CalendarDays },
-  { path: "/admin/guests",    label: "Guests",    icon: Users },
-  { path: "/admin/settings",  label: "Settings",  icon: Settings },
+  { path: "/admin/dashboard", label: "Dashboard",    icon: LayoutDashboard },
+  { path: "/admin/rooms",     label: "Rooms",        icon: BedDouble },
+  { path: "/admin/bookings",  label: "Bookings",     icon: CalendarDays },
+  { path: "/admin/guests",    label: "Guests",       icon: Users },
+  { path: "/admin/settings",  label: "Settings",     icon: Settings },
 ];
 
 const AdminLayout = ({ children }) => {

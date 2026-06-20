@@ -5,7 +5,7 @@ import {
   LayoutDashboard, BedDouble, CalendarDays, Users, CreditCard,
   Settings, LogOut, ExternalLink, RefreshCw, Plus, Trash2,
   CheckCircle2, XCircle, Clock, X, MessageCircle, TrendingUp,
-  Eye, EyeOff, Lock, Shield, Phone, MapPin,
+  Eye, EyeOff, Lock, Shield, Phone, MapPin, Bell, Trash,
 } from "lucide-react";
 import api from "../../api/axios";
 import AdminLayout from "../../components/AdminLayout";
@@ -297,6 +297,85 @@ function BookingMgmt({ bookings, onConfirm, onCancel, onWhatsApp, onDelete, onAd
   );
 }
 
+/* ══════════ NOTIFICATIONS ══════════ */
+function NotificationsView({ bookings }) {
+  const [notifications, setNotifications] = useState(() => {
+    const stored = localStorage.getItem("smgolden_notifications");
+    if (stored) return JSON.parse(stored);
+    return bookings.map(b => ({
+      id: b._id,
+      title: "🔥 New Paid Booking",
+      message: `${b.guestName} booked ${b.roomName || b.roomType}.`,
+      time: new Date(b.createdAt || Date.now()).toLocaleString("en-IN"),
+      read: false,
+    }));
+  });
+
+  useEffect(() => {
+    const newNotifs = bookings.map(b => ({
+      id: b._id,
+      title: "🔥 New Paid Booking",
+      message: `${b.guestName} booked ${b.roomName || b.roomType}.`,
+      time: new Date(b.createdAt || Date.now()).toLocaleString("en-IN"),
+      read: false,
+    }));
+    setNotifications(newNotifs);
+  }, [bookings]);
+
+  const handleClearAll = () => {
+    setNotifications([]);
+    localStorage.removeItem("smgolden_notifications");
+  };
+
+  const handleDelete = (id) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-slate-500">{notifications.length} notification{notifications.length !== 1 ? "s" : ""}</p>
+        {notifications.length > 0 && (
+          <button onClick={handleClearAll}
+            className="flex items-center gap-1.5 text-xs font-bold text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg border border-red-200 transition-all">
+            <Trash2 className="w-3.5 h-3.5" /> Clear All
+          </button>
+        )}
+      </div>
+
+      {notifications.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-12 text-center">
+          <Bell className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+          <p className="text-slate-400 font-medium">No notifications yet.</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {notifications.map((n, i) => (
+            <motion.div key={n.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.04 }}
+              className="bg-white rounded-2xl border border-amber-200 shadow-sm p-4 flex items-start justify-between gap-4 hover:shadow-md transition-all">
+              <div className="flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0 mt-0.5">
+                  <Bell className="w-4 h-4 text-amber-600" />
+                </div>
+                <div>
+                  <p className="font-extrabold text-slate-800 text-sm">{n.title}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{n.message}</p>
+                  <p className="text-[10px] text-slate-400 mt-1">{n.time}</p>
+                </div>
+              </div>
+              <button onClick={() => handleDelete(n.id)}
+                className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all shrink-0">
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </motion.div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ══════════ SETTINGS ══════════ */
 function InlineSettings() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -477,12 +556,13 @@ export default function AdminDashboard() {
   };
 
   const NAV_TABS = [
-    { id: "overview",  label: "Dashboard",  icon: LayoutDashboard },
-    { id: "bookings",  label: "Bookings",   icon: CalendarDays },
-    { id: "settings",  label: "Settings",   icon: Settings },
+    { id: "overview",       label: "Dashboard",     icon: LayoutDashboard },
+    { id: "bookings",       label: "Bookings",      icon: CalendarDays },
+    { id: "notifications",  label: "Notifications", icon: Bell },
+    { id: "settings",       label: "Settings",      icon: Settings },
   ];
 
-  const titles = { overview: "Overview", bookings: "Bookings", settings: "Settings" };
+  const titles = { overview: "Overview", bookings: "Bookings", notifications: "Notifications", settings: "Settings" };
 
   return (
     <AdminLayout>
@@ -506,9 +586,10 @@ export default function AdminDashboard() {
           </div>
 
           {/* Content */}
-          {activeTab === "overview"  && <Overview stats={stats} bookings={bookings} />}
-          {activeTab === "bookings"  && <BookingMgmt bookings={bookings} onConfirm={handleConfirm} onCancel={handleCancel} onWhatsApp={handleWhatsApp} onDelete={handleDelete} onAddOffline={() => setOfflineModal(true)} />}
-          {activeTab === "settings"  && <InlineSettings />}
+          {activeTab === "overview"       && <Overview stats={stats} bookings={bookings} />}
+          {activeTab === "bookings"       && <BookingMgmt bookings={bookings} onConfirm={handleConfirm} onCancel={handleCancel} onWhatsApp={handleWhatsApp} onDelete={handleDelete} onAddOffline={() => setOfflineModal(true)} />}
+          {activeTab === "notifications"  && <NotificationsView bookings={bookings} />}
+          {activeTab === "settings"       && <InlineSettings />}
         </div>
       )}
 
