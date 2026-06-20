@@ -705,18 +705,20 @@ export default function Home() {
                               : "hover:shadow-xl hover:-translate-y-1"
                           }`}>
 
-                          {/* Photo */}
-                          <div className="relative overflow-hidden" style={{ height: "220px" }}>
-                            <img
-                              src={ROOM_TYPE_IMAGE[room.type] || FALLBACK}
-                              alt={room.type}
-                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                            />
-                            {isSelected && (
-                              <div className="absolute top-3 right-3 bg-amber-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
-                                ✓ Selected
-                              </div>
-                            )}
+                          {/* Photo — inside card with padding & rounded */}
+                          <div className="px-4 pt-4">
+                            <div className="relative overflow-hidden rounded-2xl" style={{ height: "200px" }}>
+                              <img
+                                src={ROOM_TYPE_IMAGE[room.type] || FALLBACK}
+                                alt={room.type}
+                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                              />
+                              {isSelected && (
+                                <div className="absolute top-2 right-2 bg-amber-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
+                                  ✓ Selected
+                                </div>
+                              )}
+                            </div>
                           </div>
 
                           {/* Info */}
