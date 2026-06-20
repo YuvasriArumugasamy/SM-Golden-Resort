@@ -227,6 +227,9 @@ export default function Booking() {
 
   const today = new Date().toISOString().split("T")[0];
 
+  // Scroll to top when booking page loads
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, []);
+
   const fetchRooms = () => {
     setLoadingRooms(true);
     setRoomsError(false);
