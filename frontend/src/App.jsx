@@ -22,6 +22,8 @@ import AdminRooms from "./pages/admin/AdminRooms";
 import AdminGuests from "./pages/admin/AdminGuests";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminNotifications from "./pages/admin/AdminNotifications";
+import AdminReports from "./pages/admin/AdminReports";
+import AdminPayments from "./pages/admin/AdminPayments";
 
 const PageWrapper = ({ children }) => (
   <motion.div
@@ -70,6 +72,8 @@ const AppLayout = () => {
             <Route path="/admin/guests"         element={<ProtectedRoute><AdminGuests /></ProtectedRoute>} />
             <Route path="/admin/settings"       element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
             <Route path="/admin/notifications"  element={<ProtectedRoute><AdminNotifications /></ProtectedRoute>} />
+            <Route path="/admin/reports"        element={<ProtectedRoute><AdminReports /></ProtectedRoute>} />
+            <Route path="/admin/payments"       element={<ProtectedRoute><AdminPayments /></ProtectedRoute>} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
