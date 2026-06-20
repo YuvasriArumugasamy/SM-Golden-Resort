@@ -677,42 +677,57 @@ export default function Home() {
                 ).sort((a, b) => a.price - b.price);
                 return (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {uniqueRooms.map((room, ri) => (
-                      <motion.div key={room.roomId}
-                        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: ri * 0.07 }}
-                        className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all flex flex-col">
-                        {/* Single photo */}
-                        <div className="h-40 sm:h-48 overflow-hidden bg-slate-100">
-                          <img
-                            src={ROOM_TYPE_IMAGE[room.type] || FALLBACK}
-                            alt={room.type}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        {/* Info */}
-                        <div className="p-3 flex flex-col gap-2 flex-1">
-                          <h3 className="font-extrabold text-slate-800 text-sm leading-tight pr-10">{ROOM_DISPLAY_NAME[room.type] || room.type}</h3>
-                          <p className="text-[10px] text-slate-400 font-medium">{room.badge}</p>
-                          <div className="flex items-baseline gap-1 mt-auto">
-                            <span className="text-lg font-extrabold text-slate-800 whitespace-nowrap">₹{room.price?.toLocaleString("en-IN")}</span>
-                            <span className="text-[10px] text-slate-400 font-medium whitespace-nowrap">/ day</span>
+                    {uniqueRooms.map((room, ri) => {
+                      const isSelected = selectedRoomId === room.roomId;
+                      return (
+                        <motion.div key={room.roomId}
+                          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: ri * 0.07 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => setSelectedRoomId(room.roomId)}
+                          className={`bg-white rounded-2xl overflow-hidden shadow-sm flex flex-col cursor-pointer transition-all duration-200 ${
+                            isSelected
+                              ? "border-2 border-blue-500 shadow-blue-200 shadow-lg ring-2 ring-blue-400/30"
+                              : "border border-slate-200 hover:shadow-md hover:-translate-y-1"
+                          }`}>
+                          {/* Photo */}
+                          <div className="h-52 sm:h-48 overflow-hidden bg-slate-100 relative">
+                            <img
+                              src={ROOM_TYPE_IMAGE[room.type] || FALLBACK}
+                              alt={room.type}
+                              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                            />
+                            {isSelected && (
+                              <div className="absolute top-2 right-2 bg-blue-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow">
+                                ✓ Selected
+                              </div>
+                            )}
                           </div>
-                          <button
-                            onClick={() => navigate("/booking", {
-                              state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests }
-                            })}
-                            disabled={!room.available}
-                            className={`w-full py-2.5 rounded-xl text-xs font-extrabold transition-all ${
-                              room.available
-                                ? "bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
-                                : "bg-slate-100 text-slate-400 cursor-not-allowed"
-                            }`}>
-                            {room.available ? "Book Now" : "Sold Out"}
-                          </button>
-                        </div>
-                      </motion.div>
-                    ))}
+                          {/* Info */}
+                          <div className="p-3 flex flex-col gap-2 flex-1">
+                            <h3 className="font-extrabold text-slate-800 text-sm leading-tight">{ROOM_DISPLAY_NAME[room.type] || room.type}</h3>
+                            <p className="text-[10px] text-slate-400 font-medium">{room.badge}</p>
+                            <div className="flex items-baseline gap-1 mt-auto">
+                              <span className="text-lg font-extrabold text-slate-800 whitespace-nowrap">₹{room.price?.toLocaleString("en-IN")}</span>
+                              <span className="text-[10px] text-slate-400 font-medium whitespace-nowrap">/ day</span>
+                            </div>
+                            <motion.button
+                              whileTap={{ scale: 0.95 }}
+                              onClick={e => { e.stopPropagation(); navigate("/booking", {
+                                state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests }
+                              });}}
+                              disabled={!room.available}
+                              className={`w-full py-2.5 rounded-xl text-xs font-extrabold transition-all ${
+                                room.available
+                                  ? "bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                                  : "bg-slate-100 text-slate-400 cursor-not-allowed"
+                              }`}>
+                              {room.available ? "Book Now" : "Sold Out"}
+                            </motion.button>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 );
               })()}
