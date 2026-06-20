@@ -15,53 +15,101 @@ const DISPLAY_NAME = {
 
 /* ── Edit Modal ── */
 function EditModal({ room, isOpen, onClose, onSave }) {
-  const [price, setPrice] = useState(room?.price || "");
-  const [available, setAvailable] = useState(room?.available ?? true);
+  const [form, setForm] = useState({
+    roomNumber: "",
+    roomType: "Double Bed",
+    weekdayPrice: "",
+    weekendPrice: "",
+    peakPrice: "",
+    status: "Available",
+  });
 
   useEffect(() => {
-    if (room) { setPrice(room.price); setAvailable(room.available); }
+    if (room) {
+      setForm({
+        roomNumber:   room.roomId || "",
+        roomType:     DISPLAY_NAME[room.type] || room.type || "Double Bed",
+        weekdayPrice: room.price || "",
+        weekendPrice: room.price || "",
+        peakPrice:    room.price || "",
+        status:       room.available ? "Available" : "Unavailable",
+      });
+    }
   }, [room]);
 
   if (!isOpen || !room) return null;
+
+  const inputCls = "w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 bg-white";
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={onClose}>
       <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-        className="bg-white rounded-2xl w-full max-w-sm shadow-2xl"
+        className="bg-white rounded-2xl w-full max-w-md shadow-2xl"
         onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-          <h2 className="font-extrabold text-slate-800">Edit Room #{room.roomId}</h2>
+          <h2 className="font-extrabold text-slate-800 text-lg">Edit Room</h2>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center">
             <X className="w-4 h-4" />
           </button>
         </div>
         <div className="p-6 space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Room Name</label>
-            <div className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm bg-slate-50 text-slate-500">{room.name}</div>
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Price / Day (₹)</label>
-            <input type="number" value={price} onChange={e => setPrice(e.target.value)}
-              className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Availability</label>
-            <div className="flex gap-3">
-              <button onClick={() => setAvailable(true)}
-                className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all ${
-                  available ? "bg-emerald-500 text-white border-emerald-500" : "bg-white text-slate-500 border-slate-200"
-                }`}>Available</button>
-              <button onClick={() => setAvailable(false)}
-                className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all ${
-                  !available ? "bg-red-500 text-white border-red-500" : "bg-white text-slate-500 border-slate-200"
-                }`}>Unavailable</button>
+          {/* Room Number + Room Type */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Room Number</label>
+              <input type="text" value={form.roomNumber} onChange={e => setForm({...form, roomNumber: e.target.value})}
+                className={inputCls} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Room Type</label>
+              <select value={form.roomType} onChange={e => setForm({...form, roomType: e.target.value})}
+                className={inputCls}>
+                <option>Double Bed</option>
+                <option>Double Bed AC</option>
+                <option>Villa</option>
+                <option>Suite Room</option>
+              </select>
             </div>
           </div>
-          <button onClick={() => onSave(room.roomId, { price: Number(price), available })}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-sm">
-            Save Changes
+
+          {/* Weekday + Weekend Price */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Weekday Price (Mon-Thu) (₹)</label>
+              <input type="number" value={form.weekdayPrice} onChange={e => setForm({...form, weekdayPrice: e.target.value})}
+                className={inputCls} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Weekend Price (Fri-Sun) (₹)</label>
+              <input type="number" value={form.weekendPrice} onChange={e => setForm({...form, weekendPrice: e.target.value})}
+                className={inputCls} />
+            </div>
+          </div>
+
+          {/* Peak Season Price */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Peak Season Price (₹)</label>
+            <input type="number" value={form.peakPrice} onChange={e => setForm({...form, peakPrice: e.target.value})}
+              className={inputCls} />
+          </div>
+
+          {/* Status */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Status</label>
+            <select value={form.status} onChange={e => setForm({...form, status: e.target.value})}
+              className={inputCls}>
+              <option>Available</option>
+              <option>Unavailable</option>
+            </select>
+          </div>
+
+          <button onClick={() => onSave(room.roomId, {
+            price: Number(form.weekdayPrice),
+            available: form.status === "Available",
+          })}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-sm mt-2">
+            Update Room
           </button>
         </div>
       </motion.div>
