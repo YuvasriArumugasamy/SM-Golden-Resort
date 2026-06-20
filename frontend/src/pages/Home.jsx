@@ -660,7 +660,7 @@ export default function Home() {
                   "AC":           "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
                   "Three Bed":    "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
                   "Four Bed AC":  "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
-                  "Villa":        "/WhatsApp Image 2026-06-14 at 09.15.41.jpeg",
+                  "Villa":        "/WhatsApp Image 2026-06-14 at 07.53.15 (1).jpeg",
                   "Suite AC":     "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
                 };
                 const ROOM_DISPLAY_NAME = {
