@@ -35,7 +35,7 @@ export default function Navbar() {
           <img
             src="/logo.jpeg"
             alt="SM Golden Resorts Logo"
-            className="w-10 h-10 object-contain rounded-full"
+            className="w-10 h-10 object-contain rounded-xl"
           />
           <div className="hidden sm:block">
             <span className="block text-sm font-extrabold text-[#1C2B4A] leading-none font-jakarta">

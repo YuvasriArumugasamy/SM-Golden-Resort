@@ -168,7 +168,7 @@ const AdminLayout = ({ children }) => {
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg overflow-hidden">
+            <div className="w-7 h-7 rounded-xl overflow-hidden">
               <img src="/logo.jpeg" alt="SM" className="w-full h-full object-cover" />
             </div>
             <span className="text-white font-extrabold text-sm">SM Golden Resorts</span>
