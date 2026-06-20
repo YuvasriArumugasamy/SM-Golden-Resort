@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Check, MapPin, Phone, MessageCircle, ChevronDown,
-  ArrowRight, CheckCircle2, Clock, Calendar,
+  ArrowRight, CheckCircle2, Clock, Calendar, Download,
 } from "lucide-react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
@@ -324,12 +324,29 @@ export default function Booking() {
       })()
     : "000000";
 
+  const pdfRef = useRef(null);
+
+  const handleDownloadPDF = async () => {
+    const element = pdfRef.current;
+    if (!element) return;
+    const html2pdf = (await import("html2pdf.js")).default;
+    html2pdf(element, {
+      margin: 0.5,
+      filename: `SMGoldenResorts-Booking-${bookingId6}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+    });
+  };
+
   if (step === 3) return (
     <div className="min-h-screen bg-[#f0f4f8] flex items-center justify-center px-4 py-10">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", duration: 0.5 }}
-        className="bg-white rounded-3xl border border-slate-200 shadow-xl max-w-lg w-full overflow-hidden">
+      <div className="w-full max-w-lg space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", duration: 0.5 }}
+          ref={pdfRef}
+          className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
 
         {/* Green top bar */}
         <div className="bg-emerald-500 px-6 py-4 flex items-center gap-3">
@@ -437,7 +454,14 @@ export default function Booking() {
             </a>
           </div>
         </div>
-      </motion.div>
+        </motion.div>
+
+        {/* Download PDF button — outside the card */}
+        <button onClick={handleDownloadPDF}
+          className="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-2xl text-sm transition-all shadow-sm">
+          <Download className="w-4 h-4" /> Download Booking Receipt (PDF)
+        </button>
+      </div>
     </div>
   );
 
