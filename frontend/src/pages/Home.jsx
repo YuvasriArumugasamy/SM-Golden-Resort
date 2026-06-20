@@ -701,8 +701,8 @@ export default function Home() {
                           onClick={() => setSelectedRoomId(room.roomId)}
                           className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-200 group ${
                             isSelected
-                              ? "ring-2 ring-amber-400 shadow-amber-200 shadow-lg border-t-4 border-t-blue-600"
-                              : "hover:shadow-xl hover:-translate-y-1 hover:border-t-4 hover:border-t-blue-700 border-t-4 border-t-transparent"
+                              ? "border-2 border-blue-500 border-t-4 border-t-blue-700 shadow-blue-200 shadow-lg"
+                              : "border border-slate-200 hover:border-blue-400 hover:border-t-4 hover:border-t-blue-700 hover:shadow-xl hover:-translate-y-1"
                           }`}>
 
                           {/* Photo — inside card with padding & rounded */}
