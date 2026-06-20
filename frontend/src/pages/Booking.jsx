@@ -369,7 +369,7 @@ export default function Booking() {
             )}
             <div className="col-span-2">
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Room Type</p>
-              <p className="font-extrabold text-slate-800 text-sm">{selectedRoom?.type || createdBooking.roomType}</p>
+              <p className="font-extrabold text-slate-800 text-sm">{selectedRoom?.type || createdBooking?.roomType || "—"}</p>
             </div>
             <div>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Check-In</p>
@@ -401,18 +401,27 @@ export default function Booking() {
 
           {/* Price Breakdown */}
           <div className="border-t border-slate-100 pt-4 space-y-2 text-sm">
-            <div className="flex justify-between text-slate-500">
-              <span>Room Charges ({nights} Night{nights > 1 ? "s" : ""})</span>
-              <span>₹{base.toLocaleString("en-IN")}</span>
-            </div>
-            <div className="flex justify-between text-slate-500">
-              <span>GST (12%)</span>
-              <span>₹{gst.toLocaleString("en-IN")}</span>
-            </div>
-            <div className="flex justify-between font-extrabold text-slate-800 text-base pt-1 border-t border-slate-100">
-              <span>Total Amount</span>
-              <span className="text-blue-600">₹{total.toLocaleString("en-IN")}</span>
-            </div>
+            {(() => {
+              const displayTotal = createdBooking?.totalPrice || total || 0;
+              const displayGst   = Math.round(displayTotal * 0.12 / 1.12);
+              const displayBase  = displayTotal - displayGst;
+              return (
+                <>
+                  <div className="flex justify-between text-slate-500">
+                    <span>Room Charges ({nights} Night{nights > 1 ? "s" : ""})</span>
+                    <span>₹{displayBase.toLocaleString("en-IN")}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-500">
+                    <span>GST (12%)</span>
+                    <span>₹{displayGst.toLocaleString("en-IN")}</span>
+                  </div>
+                  <div className="flex justify-between font-extrabold text-slate-800 text-base pt-1 border-t border-slate-100">
+                    <span>Total Amount</span>
+                    <span className="text-blue-600">₹{displayTotal.toLocaleString("en-IN")}</span>
+                  </div>
+                </>
+              );
+            })()}
           </div>
 
           {/* Buttons */}
