@@ -767,13 +767,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* REVIEWS — Elfsight Google Reviews Widget */}
+            {/* REVIEWS — Google Reviews via Elfsight */}
             <div ref={reviewsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-4">
               <div className="text-center space-y-1 mb-4">
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TESTIMONIALS</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Guest <span className="text-blue-600 italic">Reviews</span></h2>
               </div>
-              {/* Elfsight Google Reviews Widget */}
               <div className="elfsight-app-9aed98a4-50a0-461b-8b92-9236e77aafcd" data-elfsight-app-lazy></div>
             </div>
 
