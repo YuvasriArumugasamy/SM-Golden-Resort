@@ -310,13 +310,15 @@ export default function Booking() {
     }
   };
 
-  /* ── 6-digit booking ID ── */
+  /* ── 6-digit numeric booking ID ── */
   const bookingId6 = createdBooking?._id
     ? (() => {
         try {
-          return String(parseInt(createdBooking._id.slice(-6), 16)).padStart(6, "0").slice(-6);
+          // Use last 8 chars of mongo ID, convert to number, take last 6 digits
+          const num = parseInt(createdBooking._id.slice(-8), 16);
+          return String(Math.abs(num) % 1000000).padStart(6, "0");
         } catch {
-          return createdBooking._id.slice(-6).toUpperCase();
+          return "000000";
         }
       })()
     : "000000";
