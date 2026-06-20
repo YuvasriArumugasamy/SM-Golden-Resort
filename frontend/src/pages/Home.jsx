@@ -773,7 +773,7 @@ export default function Home() {
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TESTIMONIALS</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Guest <span className="text-blue-600 italic">Reviews</span></h2>
               </div>
-              <div className="elfsight-app-9aed98a4-50a0-461b-8b92-9236e77aafcd" data-elfsight-app-lazy></div>
+              <div className="elfsight-app-9aed98a4-50a0-461b-8b92-9236e77aafcd"></div>
             </div>
 
             {/* FAQs */}
