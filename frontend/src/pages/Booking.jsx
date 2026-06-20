@@ -199,11 +199,11 @@ export default function Booking() {
   const navigate = useNavigate();
   const passed   = location.state || {};
 
-  const [rooms,          setRooms]          = useState([]);
-  const [loadingRooms,   setLoadingRooms]   = useState(true);
+  const [rooms,          setRooms]          = useState(fallbackRooms);
+  const [loadingRooms,   setLoadingRooms]   = useState(false);
   const [roomsError,     setRoomsError]     = useState(false);
   const [step,           setStep]           = useState(1);
-  const [roomId,         setRoomId]         = useState(passed.roomId || "");
+  const [roomId,         setRoomId]         = useState(passed.roomId || fallbackRooms[0]?.roomId || "");
   const [checkIn,        setCheckIn]        = useState(
     passed.checkIn ? new Date(passed.checkIn).toISOString().split("T")[0] : ""
   );
