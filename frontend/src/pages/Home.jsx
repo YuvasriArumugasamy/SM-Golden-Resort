@@ -714,7 +714,7 @@ export default function Home() {
                                 className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                               />
                               {isSelected && (
-                                <div className="absolute top-2 right-2 bg-amber-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
+                                <div className="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
                                   ✓ Selected
                                 </div>
                               )}
