@@ -180,29 +180,6 @@ function Overview({ stats, bookings }) {
         </motion.div>
       </div>
 
-      {/* Quick Actions */}
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
-        className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-        <h3 className="font-extrabold text-slate-800 text-sm mb-4">Quick Actions</h3>
-        <div className="flex flex-wrap gap-3">
-          <Link to="/admin/bookings"
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition-all">
-            <CalendarDays className="w-3.5 h-3.5" /> Manage Bookings
-          </Link>
-          <Link to="/admin/rooms"
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition-all">
-            <BedDouble className="w-3.5 h-3.5" /> View Rooms
-          </Link>
-          <Link to="/admin/guests"
-            className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-slate-50 shadow-sm transition-all">
-            <Users className="w-3.5 h-3.5" /> Guest Records
-          </Link>
-          <Link to="/admin/settings"
-            className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 text-xs font-bold px-5 py-2.5 rounded-xl hover:bg-slate-50 shadow-sm transition-all">
-            <Settings className="w-3.5 h-3.5" /> Settings
-          </Link>
-        </div>
-      </motion.div>
     </div>
   );
 }
