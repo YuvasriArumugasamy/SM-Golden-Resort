@@ -223,6 +223,7 @@ export default function Booking() {
   const [showSpecial,    setShowSpecial]    = useState(false);
   const [bookingLoading, setBookingLoading] = useState(false);
   const [createdBooking, setCreatedBooking] = useState(null);
+  const pdfRef = useRef(null);
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -306,14 +307,7 @@ export default function Booking() {
     }
   };
 
-  if (loadingRooms) return (
-    <div className="min-h-screen bg-[#f0f4f8] flex items-center justify-center">
-      <LoadingSpinner />
-    </div>
-  );
-
-  /* ── Success ── */
-  /* ── Generate 6-digit booking ID from mongo _id ── */
+  /* ── 6-digit booking ID ── */
   const bookingId6 = createdBooking?._id
     ? (() => {
         try {
@@ -323,8 +317,6 @@ export default function Booking() {
         }
       })()
     : "000000";
-
-  const pdfRef = useRef(null);
 
   const handleDownloadPDF = async () => {
     const element = pdfRef.current;
@@ -338,6 +330,14 @@ export default function Booking() {
       jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
     });
   };
+
+  if (loadingRooms) return (
+    <div className="min-h-screen bg-[#f0f4f8] flex items-center justify-center">
+      <LoadingSpinner />
+    </div>
+  );
+
+  /* ── Success ── */
 
   if (step === 3) return (
     <div className="min-h-screen bg-[#f0f4f8] flex items-center justify-center px-4 py-10">
