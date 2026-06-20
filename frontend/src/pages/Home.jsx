@@ -752,54 +752,14 @@ export default function Home() {
               </div>
             </div>
 
-            {/* REVIEWS */}
+            {/* REVIEWS — Elfsight Google Reviews Widget */}
             <div ref={reviewsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TESTIMONIALS</p>
-                  <h2 className="text-2xl font-extrabold text-slate-800">Guest <span className="text-blue-600 italic">Reviews</span></h2>
-                </div>
-                <div className="flex gap-1.5">
-                  <button onClick={() => setReviewIdx(p => Math.max(0, p - 1))} disabled={reviewIdx === 0}
-                          className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 disabled:opacity-30 transition-all outline-none focus:outline-none">
-                    <ChevronLeft className="w-4 h-4 text-slate-500" />
-                  </button>
-                  <button onClick={() => setReviewIdx(p => Math.min(REVIEWS.length - 1, p + 1))} disabled={reviewIdx === REVIEWS.length - 1}
-                          className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 disabled:opacity-30 transition-all outline-none focus:outline-none">
-                    <ChevronRight className="w-4 h-4 text-slate-500" />
-                  </button>
-                </div>
+              <div className="text-center space-y-1 mb-4">
+                <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TESTIMONIALS</p>
+                <h2 className="text-2xl font-extrabold text-slate-800">Guest <span className="text-blue-600 italic">Reviews</span></h2>
               </div>
-              <AnimatePresence mode="wait">
-                <motion.div key={reviewIdx}
-                  initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -15 }} transition={{ duration: 0.2 }}
-                  className="border border-slate-200 rounded-xl p-5 bg-white">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(REVIEWS[reviewIdx].name)}&background=e2e8f0&color=475569&size=40&bold=true&font-size=0.4`}
-                           alt={REVIEWS[reviewIdx].name} className="w-10 h-10 rounded-full" />
-                      <div>
-                        <p className="font-semibold text-slate-800 text-sm">{REVIEWS[reviewIdx].name}</p>
-                        <p className="text-[10px] text-slate-400">{REVIEWS[reviewIdx].time}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-5 h-5 rounded-full border border-slate-200 flex items-center justify-center bg-white shadow-sm">
-                        <span className="text-[8px] font-extrabold text-blue-600">G</span>
-                      </div>
-                      <Stars n={REVIEWS[reviewIdx].rating} />
-                    </div>
-                  </div>
-                  <p className="text-sm text-slate-600 leading-relaxed">{REVIEWS[reviewIdx].review}</p>
-                </motion.div>
-              </AnimatePresence>
-              <div className="flex justify-center gap-1.5">
-                {REVIEWS.map((_, i) => (
-                  <button key={i} onClick={() => setReviewIdx(i)}
-                          className={`h-1.5 rounded-full transition-all outline-none focus:outline-none ${i === reviewIdx ? "w-5 bg-blue-500" : "w-1.5 bg-slate-300"}`} />
-                ))}
-              </div>
+              {/* Elfsight Google Reviews Widget */}
+              <div className="elfsight-app-9aed98a4-50a0-461b-8b92-9236e77aafcd" data-elfsight-app-lazy></div>
             </div>
 
             {/* FAQs */}
