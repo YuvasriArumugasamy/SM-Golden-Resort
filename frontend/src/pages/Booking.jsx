@@ -313,46 +313,114 @@ export default function Booking() {
   );
 
   /* ── Success ── */
+  /* ── Generate 6-digit booking ID from mongo _id ── */
+  const bookingId6 = createdBooking?._id
+    ? String(parseInt(createdBooking._id.slice(-6), 16)).padStart(6, "0").slice(-6)
+    : "000000";
+
   if (step === 3 && createdBooking) return (
-    <div className="min-h-screen bg-[#f0f4f8] flex items-center justify-center px-4 py-16">
-      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-        className="bg-white rounded-3xl border border-slate-200 shadow-xl max-w-md w-full p-8 text-center space-y-5">
-        <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto border-2 border-emerald-300">
-          <CheckCircle2 className="w-9 h-9 text-emerald-600" />
-        </div>
-        <div>
-          <h2 className="text-2xl font-extrabold text-slate-800">Booking Confirmed!</h2>
-          <p className="text-sm text-slate-500 mt-1">Thank you {firstName}, your reservation has been registered.</p>
-        </div>
-        <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5 text-left space-y-3 text-sm">
-          <div className="flex justify-between border-b border-slate-100 pb-2">
-            <span className="text-slate-400 font-medium">Booking ID</span>
-            <span className="font-extrabold text-slate-800 font-mono text-xs">{createdBooking._id?.slice(-8).toUpperCase()}</span>
+    <div className="min-h-screen bg-[#f0f4f8] flex items-center justify-center px-4 py-10">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", duration: 0.5 }}
+        className="bg-white rounded-3xl border border-slate-200 shadow-xl max-w-lg w-full overflow-hidden">
+
+        {/* Green top bar */}
+        <div className="bg-emerald-500 px-6 py-4 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-5 h-5 text-white" />
           </div>
-          {[
-            ["Guest",     `${firstName} ${lastName}`.trim()],
-            ["Phone",     `+91 ${phone}`],
-            ["Room",      selectedRoom?.name || createdBooking.roomName],
-            ["Check-in",  new Date(checkIn + "T00:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })],
-            ["Check-out", new Date(checkOut + "T00:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })],
-            ["Duration",  `${nights} Night${nights > 1 ? "s" : ""}`],
-            ["Total",     `₹${total.toLocaleString("en-IN")}`],
-          ].map(([k, v]) => (
-            <div key={k} className="flex justify-between">
-              <span className="text-slate-400 font-medium">{k}</span>
-              <span className="font-bold text-slate-800">{v}</span>
-            </div>
-          ))}
+          <div>
+            <p className="text-white font-extrabold text-sm">Booking Confirmed!</p>
+            <p className="text-emerald-100 text-xs mt-0.5">
+              Your advance has been confirmed! Show your Booking ID at reception.
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col sm:flex-row gap-3 pt-1">
-          <Link to="/" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all text-center">
-            Back to Home
-          </Link>
-          <a href={`https://wa.me/919443710420?text=Hi!%20I%20booked%20a%20stay%20(ID:%20${createdBooking._id?.slice(-8).toUpperCase()}).%20Please%20confirm!`}
-            target="_blank" rel="noreferrer"
-            className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
-            <MessageCircle className="w-4 h-4" /> Confirm on WhatsApp
-          </a>
+
+        <div className="px-6 py-5 space-y-5">
+          {/* Booking ID */}
+          <div className="flex items-center justify-between py-3 border-b border-slate-100">
+            <span className="text-slate-500 text-sm font-medium">Booking ID</span>
+            <span className="font-extrabold text-slate-800 text-lg tracking-widest">{bookingId6}</span>
+          </div>
+
+          {/* Guest Details Grid */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Guest Name</p>
+              <p className="font-extrabold text-slate-800 text-sm">{`${firstName} ${lastName}`.trim()}</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Phone</p>
+              <p className="font-extrabold text-slate-800 text-sm">+91 {phone}</p>
+            </div>
+            {email && (
+              <div className="col-span-2">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Email</p>
+                <p className="font-semibold text-slate-700 text-sm">{email}</p>
+              </div>
+            )}
+            <div className="col-span-2">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Room Type</p>
+              <p className="font-extrabold text-slate-800 text-sm">{selectedRoom?.type || createdBooking.roomType}</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Check-In</p>
+              <p className="font-extrabold text-slate-800 text-sm">
+                {new Date(checkIn + "T00:00:00").toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Check-Out</p>
+              <p className="font-extrabold text-slate-800 text-sm">
+                {new Date(checkOut + "T00:00:00").toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Nights</p>
+              <p className="font-extrabold text-slate-800 text-sm">{nights}</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Rooms × Guests</p>
+              <p className="font-extrabold text-slate-800 text-sm">{roomCount} × {guests}</p>
+            </div>
+            <div className="col-span-2">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Booked On</p>
+              <p className="font-semibold text-slate-700 text-sm">
+                {new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
+              </p>
+            </div>
+          </div>
+
+          {/* Price Breakdown */}
+          <div className="border-t border-slate-100 pt-4 space-y-2 text-sm">
+            <div className="flex justify-between text-slate-500">
+              <span>Room Charges ({nights} Night{nights > 1 ? "s" : ""})</span>
+              <span>₹{base.toLocaleString("en-IN")}</span>
+            </div>
+            <div className="flex justify-between text-slate-500">
+              <span>GST (12%)</span>
+              <span>₹{gst.toLocaleString("en-IN")}</span>
+            </div>
+            <div className="flex justify-between font-extrabold text-slate-800 text-base pt-1 border-t border-slate-100">
+              <span>Total Amount</span>
+              <span className="text-blue-600">₹{total.toLocaleString("en-IN")}</span>
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-1">
+            <Link to="/"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all text-center">
+              Back to Home
+            </Link>
+            <a href={`https://wa.me/919443710420?text=Hi!%20I%20booked%20a%20stay%20at%20SM%20Golden%20Resorts.%20Booking%20ID:%20${bookingId6}.%20Please%20confirm!`}
+              target="_blank" rel="noreferrer"
+              className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+              <MessageCircle className="w-4 h-4" /> Confirm on WhatsApp
+            </a>
+          </div>
         </div>
       </motion.div>
     </div>
