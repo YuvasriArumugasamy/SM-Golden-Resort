@@ -8,11 +8,12 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { path: "/admin/dashboard", label: "Dashboard",    icon: LayoutDashboard },
-  { path: "/admin/rooms",     label: "Rooms",        icon: BedDouble },
-  { path: "/admin/bookings",  label: "Bookings",     icon: CalendarDays },
-  { path: "/admin/guests",    label: "Guests",       icon: Users },
-  { path: "/admin/settings",  label: "Settings",     icon: Settings },
+  { path: "/admin/dashboard",      label: "Dashboard",    icon: LayoutDashboard },
+  { path: "/admin/rooms",          label: "Rooms",        icon: BedDouble },
+  { path: "/admin/bookings",       label: "Bookings",     icon: CalendarDays },
+  { path: "/admin/guests",         label: "Guests",       icon: Users },
+  { path: "/admin/settings",       label: "Settings",     icon: Settings },
+  { path: "/admin/notifications",  label: "Notifications",icon: Bell },
 ];
 
 const AdminLayout = ({ children }) => {

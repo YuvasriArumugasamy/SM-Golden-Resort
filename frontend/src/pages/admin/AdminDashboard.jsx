@@ -573,18 +573,6 @@ export default function AdminDashboard() {
           {/* Header */}
           <PageHeader title={titles[activeTab]} onRefresh={() => fetchData(true)} refreshing={refreshing} />
 
-          {/* Sub nav */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm px-4 py-2.5 flex gap-1 overflow-x-auto">
-            {NAV_TABS.map(({ id, label, icon: Icon }) => (
-              <button key={id} onClick={() => setActiveTab(id)}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                  activeTab === id ? "bg-blue-600 text-white shadow-sm" : "text-slate-500 hover:bg-slate-100"
-                }`}>
-                <Icon className="w-3.5 h-3.5" /> {label}
-              </button>
-            ))}
-          </div>
-
           {/* Content */}
           {activeTab === "overview"       && <Overview stats={stats} bookings={bookings} />}
           {activeTab === "bookings"       && <BookingMgmt bookings={bookings} onConfirm={handleConfirm} onCancel={handleCancel} onWhatsApp={handleWhatsApp} onDelete={handleDelete} onAddOffline={() => setOfflineModal(true)} />}
