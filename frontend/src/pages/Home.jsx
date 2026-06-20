@@ -699,10 +699,10 @@ export default function Home() {
                           transition={{ delay: ri * 0.07 }}
                           whileTap={{ scale: 0.97 }}
                           onClick={() => setSelectedRoomId(room.roomId)}
-                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-200 ${
+                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-200 group ${
                             isSelected
-                              ? "ring-2 ring-amber-400 shadow-amber-200 shadow-lg"
-                              : "hover:shadow-xl hover:-translate-y-1"
+                              ? "ring-2 ring-amber-400 shadow-amber-200 shadow-lg border-t-4 border-t-blue-600"
+                              : "hover:shadow-xl hover:-translate-y-1 hover:border-t-4 hover:border-t-blue-700 border-t-4 border-t-transparent"
                           }`}>
 
                           {/* Photo — inside card with padding & rounded */}
@@ -751,9 +751,9 @@ export default function Home() {
                                 state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests }
                               });}}
                               disabled={!room.available}
-                              className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-all shadow-sm mt-1 ${
+                              className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-colors shadow-sm mt-1 ${
                                 room.available
-                                  ? "bg-amber-500 hover:bg-amber-600 text-white shadow-amber-200"
+                                  ? "bg-blue-600 text-white"
                                   : "bg-slate-100 text-slate-400 cursor-not-allowed"
                               }`}>
                               {room.available ? "Book Now" : "Sold Out"}
