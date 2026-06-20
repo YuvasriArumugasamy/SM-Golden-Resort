@@ -315,10 +315,16 @@ export default function Booking() {
   /* ── Success ── */
   /* ── Generate 6-digit booking ID from mongo _id ── */
   const bookingId6 = createdBooking?._id
-    ? String(parseInt(createdBooking._id.slice(-6), 16)).padStart(6, "0").slice(-6)
+    ? (() => {
+        try {
+          return String(parseInt(createdBooking._id.slice(-6), 16)).padStart(6, "0").slice(-6);
+        } catch {
+          return createdBooking._id.slice(-6).toUpperCase();
+        }
+      })()
     : "000000";
 
-  if (step === 3 && createdBooking) return (
+  if (step === 3) return (
     <div className="min-h-screen bg-[#f0f4f8] flex items-center justify-center px-4 py-10">
       <motion.div
         initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
