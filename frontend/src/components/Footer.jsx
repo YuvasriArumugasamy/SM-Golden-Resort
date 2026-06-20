@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="sm:col-span-2 md:col-span-1">
           <div className="flex items-center gap-3 mb-4">
             <img
-              src="/Gemini_Generated_Image_1938en1938en1938.png"
+              src="/logo.jpeg"
               alt="SM Golden Resorts Logo"
               className="w-12 h-12 object-contain rounded-full border-2 border-white/30"
             />

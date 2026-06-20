@@ -56,8 +56,8 @@ const AdminLayout = ({ children }) => {
         {/* Logo */}
         <div className="px-5 py-5 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow shrink-0">
-              <span className="text-blue-700 font-extrabold text-sm">SM</span>
+            <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 shadow">
+              <img src="/logo.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>
@@ -113,8 +113,8 @@ const AdminLayout = ({ children }) => {
               {/* Drawer Header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center shadow shrink-0">
-                    <span className="text-blue-700 font-extrabold text-xs">SM</span>
+                  <div className="w-9 h-9 rounded-xl overflow-hidden shrink-0 shadow">
+                    <img src="/logo.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>
@@ -168,8 +168,8 @@ const AdminLayout = ({ children }) => {
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-white flex items-center justify-center">
-              <span className="text-blue-700 font-extrabold text-[10px]">SM</span>
+            <div className="w-7 h-7 rounded-lg overflow-hidden">
+              <img src="/logo.jpeg" alt="SM" className="w-full h-full object-cover" />
             </div>
             <span className="text-white font-extrabold text-sm">SM Golden Resorts</span>
           </div>

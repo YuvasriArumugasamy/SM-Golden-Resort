@@ -33,7 +33,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img
-            src="/Gemini_Generated_Image_1938en1938en1938.png"
+            src="/logo.jpeg"
             alt="SM Golden Resorts Logo"
             className="w-10 h-10 object-contain rounded-full"
           />
