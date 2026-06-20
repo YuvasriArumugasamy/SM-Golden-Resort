@@ -676,50 +676,82 @@ export default function Home() {
                   arr.findIndex(r => r.price === room.price) === idx
                 ).sort((a, b) => a.price - b.price);
                 return (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     {uniqueRooms.map((room, ri) => {
                       const isSelected = selectedRoomId === room.roomId;
+                      const badgeColor = {
+                        "Non-AC":   "border-amber-400 text-amber-700 bg-amber-50",
+                        "AC":       "border-blue-400 text-blue-700 bg-blue-50",
+                        "Villa":    "border-emerald-400 text-emerald-700 bg-emerald-50",
+                        "Suite AC": "border-purple-400 text-purple-700 bg-purple-50",
+                      }[room.type] || "border-slate-300 text-slate-600 bg-slate-50";
+
+                      const badgeLabel = {
+                        "Non-AC":   "NON-A/C",
+                        "AC":       "A/C",
+                        "Villa":    "VILLA",
+                        "Suite AC": "SUITE",
+                      }[room.type] || room.badge?.toUpperCase();
+
                       return (
                         <motion.div key={room.roomId}
-                          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: ri * 0.07 }}
                           whileTap={{ scale: 0.97 }}
                           onClick={() => setSelectedRoomId(room.roomId)}
-                          className={`bg-white rounded-2xl overflow-hidden shadow-sm flex flex-col cursor-pointer transition-all duration-200 ${
+                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-200 ${
                             isSelected
-                              ? "border-2 border-blue-500 shadow-blue-200 shadow-lg ring-2 ring-blue-400/30"
-                              : "border border-slate-200 hover:shadow-md hover:-translate-y-1"
+                              ? "ring-2 ring-amber-400 shadow-amber-200 shadow-lg"
+                              : "hover:shadow-xl hover:-translate-y-1"
                           }`}>
+
                           {/* Photo */}
-                          <div className="h-52 sm:h-48 overflow-hidden bg-slate-100 relative">
+                          <div className="relative overflow-hidden" style={{ height: "220px" }}>
                             <img
                               src={ROOM_TYPE_IMAGE[room.type] || FALLBACK}
                               alt={room.type}
-                              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                             />
                             {isSelected && (
-                              <div className="absolute top-2 right-2 bg-blue-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow">
+                              <div className="absolute top-3 right-3 bg-amber-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
                                 ✓ Selected
                               </div>
                             )}
                           </div>
+
                           {/* Info */}
-                          <div className="p-3 flex flex-col gap-2 flex-1">
-                            <h3 className="font-extrabold text-slate-800 text-sm leading-tight">{ROOM_DISPLAY_NAME[room.type] || room.type}</h3>
-                            <p className="text-[10px] text-slate-400 font-medium">{room.badge}</p>
-                            <div className="flex items-baseline gap-1 mt-auto">
-                              <span className="text-lg font-extrabold text-slate-800 whitespace-nowrap">₹{room.price?.toLocaleString("en-IN")}</span>
-                              <span className="text-[10px] text-slate-400 font-medium whitespace-nowrap">/ day</span>
+                          <div className="px-5 pt-4 pb-5 flex flex-col gap-3 flex-1 text-center">
+                            {/* Name */}
+                            <h3 className="font-extrabold text-slate-800 text-lg leading-tight">
+                              {ROOM_DISPLAY_NAME[room.type] || room.type}
+                            </h3>
+
+                            {/* Badge */}
+                            <div className="flex justify-center">
+                              <span className={`text-xs font-extrabold px-4 py-1 rounded-full border tracking-wider ${badgeColor}`}>
+                                {badgeLabel}
+                              </span>
                             </div>
+
+                            {/* Price */}
+                            <div className="flex items-baseline justify-center gap-1 mt-1">
+                              <span className="text-slate-500 text-sm font-medium">₹</span>
+                              <span className="text-3xl font-extrabold text-slate-800 whitespace-nowrap">
+                                {room.price?.toLocaleString("en-IN")}
+                              </span>
+                              <span className="text-slate-400 text-sm font-medium whitespace-nowrap">/ day</span>
+                            </div>
+
+                            {/* Book Now */}
                             <motion.button
                               whileTap={{ scale: 0.95 }}
                               onClick={e => { e.stopPropagation(); navigate("/booking", {
                                 state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests }
                               });}}
                               disabled={!room.available}
-                              className={`w-full py-2.5 rounded-xl text-xs font-extrabold transition-all ${
+                              className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-all shadow-sm mt-1 ${
                                 room.available
-                                  ? "bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                                  ? "bg-amber-500 hover:bg-amber-600 text-white shadow-amber-200"
                                   : "bg-slate-100 text-slate-400 cursor-not-allowed"
                               }`}>
                               {room.available ? "Book Now" : "Sold Out"}
