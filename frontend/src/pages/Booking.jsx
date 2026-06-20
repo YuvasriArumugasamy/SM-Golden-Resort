@@ -470,6 +470,14 @@ export default function Booking() {
 
   return (
     <div className="min-h-screen bg-[#f0f4f8] font-jakarta">
+      {/* Back to Home */}
+      <div className="bg-white border-b border-slate-200 px-4 py-2.5">
+        <div className="max-w-5xl mx-auto">
+          <Link to="/" className="flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors w-fit">
+            <span className="text-lg leading-none">←</span> Back to Home
+          </Link>
+        </div>
+      </div>
       <StepBar step={step} />
       <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 items-start">
