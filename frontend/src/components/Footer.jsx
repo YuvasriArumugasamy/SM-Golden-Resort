@@ -98,7 +98,7 @@ export default function Footer() {
 
       {/* ── Bottom bar ── */}
       <div className="border-t border-white/20 pt-5 pb-6 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-3 pb-16 lg:pb-0">
+        <div className="max-w-7xl mx-auto flex flex-col items-center gap-3">
 
           {/* Decorative dots */}
           <div className="flex items-center gap-2">
