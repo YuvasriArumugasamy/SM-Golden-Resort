@@ -266,6 +266,10 @@ export default function Home() {
   const [showGuestsModal, setShowGuestsModal] = useState(false);
   const [galleryOpen, setGalleryOpen]   = useState(false);
   const [galleryIdx, setGalleryIdx]     = useState(0);
+  const [apiGallery, setApiGallery]     = useState([]);
+
+  // Combined gallery: API photos first, then static fallback
+  const displayGallery = apiGallery.length > 0 ? [...apiGallery, ...GALLERY] : GALLERY;
   const [showAllFac, setShowAllFac]     = useState(false);
   const [activeTab, setActiveTab]       = useState("overview");
   const [roomImgIdx, setRoomImgIdx]     = useState({});
@@ -288,6 +292,14 @@ export default function Home() {
     setRoomsLoading(false);
     api.get("/api/rooms")
       .then(r => { if (r.data?.length) setRooms(r.data); })
+      .catch(() => {});
+    // Load gallery photos from API — update gallery if available
+    api.get("/api/gallery")
+      .then(r => {
+        if (r.data?.length) {
+          setApiGallery(r.data.map(p => ({ label: p.label, src: p.url })));
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -611,7 +623,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-slate-500 text-sm leading-relaxed">
-                  SM Golden Resorts is a peaceful retreat next to Old Falls, Courtallam. With 20 well-maintained rooms — Double Bed, Double Bed A/C, Three Bed, and Four Bed A/C — it's ideal for families, groups, and honeymooners. Enjoy free parking, kitchen access, pet-friendly stays, and 24-hour assistance surrounded by nature.
+                  SM Golden Resorts is a peaceful resort near Old Falls, Courtallam, Tamil Nadu. Located just 0.38 km from Old Falls Courtallam, we offer the best Courtallam resort booking experience for families, couples, and groups. With 11 well-maintained rooms — Double Bed Non-AC, Double Bed AC, Villa, and Suite — SM Golden Resorts Courtallam is your perfect nature escape. Enjoy free parking, kitchen access, pet-friendly stays, and 24-hour assistance.
                 </p>
                 <a href="mailto:smgoldenresorts@gmail.com" className="mt-2 block text-sm text-slate-400">smgoldenresorts@gmail.com</a>
               </div>
