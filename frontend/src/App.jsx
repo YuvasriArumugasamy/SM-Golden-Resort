@@ -26,18 +26,19 @@ import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminReports from "./pages/admin/AdminReports";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminGallery from "./pages/admin/AdminGallery";
-import AdminGallery from "./pages/admin/AdminGallery";
 
-const PageWrapper = ({ children }) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.25, ease: "easeInOut" }}
-  >
-    {children}
-  </motion.div>
-);
+const PageWrapper = ({ children }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const AppLayout = () => {
   const location = useLocation();
@@ -77,7 +78,6 @@ const AppLayout = () => {
             <Route path="/admin/notifications"  element={<ProtectedRoute><AdminNotifications /></ProtectedRoute>} />
             <Route path="/admin/reports"        element={<ProtectedRoute><AdminReports /></ProtectedRoute>} />
             <Route path="/admin/payments"       element={<ProtectedRoute><AdminPayments /></ProtectedRoute>} />
-            <Route path="/admin/gallery"        element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
             <Route path="/admin/gallery"        element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
 
             {/* Fallback */}
