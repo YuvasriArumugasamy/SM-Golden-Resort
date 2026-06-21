@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
+import SplashScreen from "./components/SplashScreen";
 
 // Pages
 import Home from "./pages/Home";
@@ -89,8 +90,11 @@ const AppLayout = () => {
 };
 
 export default function App() {
+  const [splashDone, setSplashDone] = React.useState(false);
+
   return (
     <AuthProvider>
+      {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} />}
       <BrowserRouter>
         <AppLayout />
       </BrowserRouter>
