@@ -60,13 +60,13 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2.5 text-xs">
             {[
-              ["Double Bed Non-AC", "₹1,500/day"],
-              ["Double Bed A/C", "₹2,000/day"],
+              ["Non-AC Room", "₹1,500/day"],
+              ["AC Room", "₹2,000/day"],
               ["Villa", "₹2,500/day"],
               ["Suite Room", "₹10,000/day"],
             ].map(([name, price]) => (
               <li key={name} className="flex items-center justify-between text-blue-100 font-medium gap-2">
-                <span className="flex items-center gap-1.5"><span className="text-white shrink-0">→</span> {name}</span>
+                <span className="flex items-center gap-1.5 whitespace-nowrap"><span className="text-white shrink-0">→</span> {name}</span>
                 <span className="text-white font-bold whitespace-nowrap shrink-0">{price}</span>
               </li>
             ))}

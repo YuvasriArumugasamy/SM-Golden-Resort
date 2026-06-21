@@ -779,16 +779,34 @@ export default function Home() {
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">LOCATION</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Find <span className="text-blue-600 italic">Us Here</span></h2>
               </div>
-              <div className="rounded-xl overflow-hidden border border-slate-200 h-[280px]">
-                <iframe title="SM Golden Resorts Location"
-                  src="https://maps.google.com/maps?q=Old+Falls+Courtallam+Tamil+Nadu&output=embed"
-                  width="100%" height="100%" style={{ border: 0 }} loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade" />
+
+              {/* Google Maps Embed — SM Golden Resorts, Old Falls, Courtallam */}
+              <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm" style={{ height: "320px" }}>
+                <iframe
+                  title="SM Golden Resorts Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.7!2d77.2766!3d9.1667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06c9b6c1a1a1a1%3A0x1a1a1a1a1a1a1a1a!2sSM+Golden+Resorts%2C+Old+Falls+Main+Road%2C+Courtallam%2C+Tamil+Nadu+627802!5e0!3m2!1sen!2sin!4v1234567890!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
+
+              {/* Get Directions button */}
+              <a
+                href="https://www.google.com/maps/search/SM+Golden+Resorts+Courtallam+Old+Falls/@9.1667,77.2766,15z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-2xl transition-all shadow-sm">
+                <MapPin className="w-4 h-4" />
+                Get Directions on Google Maps
+              </a>
+
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-base font-bold text-slate-800">Nearby Places</h3>
-                  <button className="text-sm text-blue-600 font-medium outline-none focus:outline-none">Show More</button>
                 </div>
                 <div className="divide-y divide-slate-100">
                   {NEARBY.map(([name, dist]) => (
