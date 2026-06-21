@@ -463,8 +463,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 pb-4 border-b border-slate-100 mt-0">
-          <div className="hidden md:flex items-center gap-1 text-xs font-bold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 self-start mt-1">
+        <div className="hidden md:flex flex-row items-start justify-between gap-3 pb-4 border-b border-slate-100 mt-0">
+          <div className="flex items-center gap-1 text-xs font-bold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 self-start mt-1">
             <span>IN</span><span className="text-slate-400 mx-1">INR</span><span>₹</span>
           </div>
         </div>
@@ -597,11 +597,11 @@ export default function Home() {
       </AnimatePresence>
 
       {/* ══ 4. TWO COLUMN LAYOUT ══ */}
-      <div className="max-w-[1280px] mx-auto px-4 py-6">
+      <div className="max-w-[1280px] mx-auto px-4 pt-2 pb-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 items-start">
 
           {/* ─── LEFT ─── */}
-          <div className="space-y-10 min-w-0">
+          <div className="space-y-6 min-w-0">
 
             {/* OVERVIEW */}
             <div ref={overviewRef} className="scroll-mt-[110px] space-y-5">
@@ -642,7 +642,7 @@ export default function Home() {
             </div>
 
             {/* ROOMS */}
-            <div ref={roomsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-6">
+            <div ref={roomsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-4 space-y-6">
               <div className="text-center space-y-1">
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TARIFF</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Our <span className="text-blue-600 italic">Rooms & Prices</span></h2>
