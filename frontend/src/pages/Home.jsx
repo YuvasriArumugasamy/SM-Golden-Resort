@@ -597,7 +597,7 @@ export default function Home() {
       </AnimatePresence>
 
       {/* ══ 4. TWO COLUMN LAYOUT ══ */}
-      <div className="max-w-[1280px] mx-auto px-4 pt-2 pb-6">
+      <div className="max-w-[1280px] mx-auto px-4 pt-2 pb-2">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 items-start">
 
           {/* ─── LEFT ─── */}
@@ -811,7 +811,7 @@ export default function Home() {
             </div>
 
             {/* FAQs */}
-            <div ref={faqsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 pb-8 space-y-4">
+            <div ref={faqsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-4 pb-2 space-y-4">
               <div className="text-center space-y-1 mb-2">
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">FAQ</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Frequently <span className="text-blue-600 italic">Asked Questions</span></h2>
