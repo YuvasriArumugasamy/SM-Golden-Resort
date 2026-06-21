@@ -16,23 +16,18 @@ import { roomsData as fallbackRooms } from "../utils/roomData";
 
 /* ── Static data ─────────────────────────── */
 const GALLERY = [
-  { label: "Resort Room",       src: "/WhatsApp Image 2026-06-14 at 07.53.04.jpeg" },
-  { label: "Room Interior",     src: "/WhatsApp Image 2026-06-14 at 07.53.09.jpeg" },
-  { label: "Room View",         src: "/WhatsApp Image 2026-06-14 at 07.53.09 (1).jpeg" },
-  { label: "Bedroom",           src: "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg" },
-  { label: "Room Facilities",   src: "/WhatsApp Image 2026-06-14 at 07.53.15 (1).jpeg" },
-  { label: "Living Area",       src: "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg" },
-  { label: "Suite Room",        src: "/WhatsApp Image 2026-06-14 at 07.53.16 (1).jpeg" },
-  { label: "Premium Room",      src: "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg" },
-  { label: "Resort Entrance",   src: "/WhatsApp Image 2026-06-14 at 07.56.05.jpeg" },
-  { label: "Resort Building",   src: "/WhatsApp Image 2026-06-14 at 09.15.41.jpeg" },
-  { label: "Deluxe Bedroom",    src: "/WhatsApp Image 2026-05-15 at 10.48.35 (1).webp" },
-  { label: "Executive Suite",   src: "/WhatsApp Image 2026-05-15 at 10.48.37.webp" },
-  { label: "Family Room",       src: "/WhatsApp Image 2026-05-15 at 10.48.39 (1).webp" },
-  { label: "Bathroom",          src: "/WhatsApp Image 2026-05-15 at 10.48.39.webp" },
-  { label: "Front Entrance",    src: "/WhatsApp Image 2026-05-15 at 10.48.40.webp" },
-  { label: "Mountain View",     src: "/WhatsApp Image 2026-05-15 at 10.48.41.webp" },
-  { label: "Aerial View",       src: "/Gemini_Generated_Image_1938en1938en1938.png" },
+  { label: "SM Golden Resorts",      src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.webp" },
+  { label: "Villa Room",             src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp" },
+  { label: "Double Bed AC Room",     src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp" },
+  { label: "Suite Room",             src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM.webp" },
+  { label: "Resort View",            src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.webp" },
+  { label: "Room Interior",          src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
+  { label: "Resort Facilities",      src: "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png" },
+  { label: "Bedroom",                src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
+  { label: "Resort Building",        src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.webp" },
+  { label: "Resort Entrance",        src: "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png" },
+  { label: "Double Bed Non-AC",      src: "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png" },
+  { label: "Premium Room",           src: "/ChatGPT Image Jun 21, 2026, 06_22_21 PM.webp" },
 ];
 
 const FACILITIES = [
@@ -668,12 +663,12 @@ export default function Home() {
                 </div>
               ) : (() => {
                 const ROOM_TYPE_IMAGE = {
-                  "Non-AC":       "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
-                  "AC":           "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
-                  "Three Bed":    "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
-                  "Four Bed AC":  "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
-                  "Villa":        "/WhatsApp Image 2026-06-14 at 07.53.15 (1).jpeg",
-                  "Suite AC":     "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
+                  "Non-AC":       "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
+                  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp",
+                  "Three Bed":    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
+                  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM.webp",
+                  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp",
+                  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM.webp",
                 };
                 const ROOM_DISPLAY_NAME = {
                   "Non-AC":      "Double Bed Non-AC",
