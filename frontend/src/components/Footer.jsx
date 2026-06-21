@@ -65,7 +65,7 @@ export default function Footer() {
               "Villa — ₹2,500/day",
               "Suite Room — ₹10,000/day",
             ].map(item => (
-              <li key={item} className="flex items-center gap-1.5 text-blue-100 font-medium">
+              <li key={item} className="flex items-center gap-1.5 text-blue-100 font-medium whitespace-nowrap">
                 <span className="text-white shrink-0">→</span> {item}
               </li>
             ))}

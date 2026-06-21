@@ -137,15 +137,15 @@ function Sidebar({ selectedRoom, checkIn, checkOut, guests, nights, roomCount, s
             <p className="font-extrabold text-slate-700 text-[11px] uppercase tracking-wide">Price Breakdown</p>
             <div className="flex justify-between text-slate-600">
               <span>₹{selectedRoom.price?.toLocaleString("en-IN")} × {nights}N × {roomCount} room{roomCount > 1 ? "s" : ""}</span>
-              <span className="font-bold text-slate-800">₹{basePrice.toLocaleString("en-IN")}</span>
+              <span className="font-bold text-slate-800 whitespace-nowrap">₹{basePrice.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between text-slate-600">
               <span>GST (12%)</span>
-              <span className="font-bold text-slate-800">₹{gst.toLocaleString("en-IN")}</span>
+              <span className="font-bold text-slate-800 whitespace-nowrap">₹{gst.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between text-base font-extrabold pt-1 border-t border-slate-100">
               <span className="text-slate-800">Total</span>
-              <span className="text-blue-600">₹{total.toLocaleString("en-IN")}</span>
+              <span className="text-blue-600 whitespace-nowrap">₹{total.toLocaleString("en-IN")}</span>
             </div>
             <p className="text-[9px] text-slate-400 italic">Inclusive of all taxes. Payment at property.</p>
           </div>
