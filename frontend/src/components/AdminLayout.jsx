@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import {
   LayoutDashboard, BedDouble, CalendarDays,
   Settings, LogOut, Menu, X, ExternalLink, Users, Bell,
-  CreditCard, PieChart,
+  CreditCard, PieChart, Image,
 } from "lucide-react";
 
 const navItems = [
@@ -15,6 +15,7 @@ const navItems = [
   { path: "/admin/guests",         label: "Guests",       icon: Users },
   { path: "/admin/payments",       label: "Payments",     icon: CreditCard },
   { path: "/admin/reports",        label: "Reports",      icon: PieChart },
+  { path: "/admin/gallery",        label: "Gallery",      icon: Image },
   { path: "/admin/settings",       label: "Settings",     icon: Settings },
   { path: "/admin/notifications",  label: "Notifications",icon: Bell },
 ];

@@ -25,6 +25,8 @@ import AdminSettings from "./pages/admin/AdminSettings";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminReports from "./pages/admin/AdminReports";
 import AdminPayments from "./pages/admin/AdminPayments";
+import AdminGallery from "./pages/admin/AdminGallery";
+import AdminGallery from "./pages/admin/AdminGallery";
 
 const PageWrapper = ({ children }) => (
   <motion.div
@@ -75,6 +77,8 @@ const AppLayout = () => {
             <Route path="/admin/notifications"  element={<ProtectedRoute><AdminNotifications /></ProtectedRoute>} />
             <Route path="/admin/reports"        element={<ProtectedRoute><AdminReports /></ProtectedRoute>} />
             <Route path="/admin/payments"       element={<ProtectedRoute><AdminPayments /></ProtectedRoute>} />
+            <Route path="/admin/gallery"        element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
+            <Route path="/admin/gallery"        element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

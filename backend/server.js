@@ -7,9 +7,10 @@ const connectDB = require("./config/db");
 const { seedRooms } = require("./controllers/roomController");
 const Admin = require("./models/Admin");
 
-const adminRoutes = require("./routes/adminRoutes");
+const adminRoutes   = require("./routes/adminRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
-const roomRoutes = require("./routes/roomRoutes");
+const roomRoutes    = require("./routes/roomRoutes");
+const galleryRoutes = require("./routes/galleryRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -42,9 +43,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ─── Routes ──────────────────────────────────────────────────
-app.use("/api/admin", adminRoutes);
-app.use("/api/bookings", bookingRoutes);
-app.use("/api/rooms", roomRoutes);
+app.use("/api/admin",   adminRoutes);
+app.use("/api/bookings",bookingRoutes);
+app.use("/api/rooms",   roomRoutes);
+app.use("/api/gallery", galleryRoutes);
 
 // Health check
 app.get("/", (req, res) => {
