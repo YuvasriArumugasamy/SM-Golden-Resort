@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://sm-golden-resort-f6fj.vercel.app/sitemap.xml

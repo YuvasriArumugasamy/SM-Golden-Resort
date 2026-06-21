@@ -12,7 +12,10 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          "html2pdf": ["html2pdf.js"],
+          "vendor-react":  ["react", "react-dom", "react-router-dom"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-charts": ["recharts"],
+          "html2pdf":      ["html2pdf.js"],
         },
       },
     },
