@@ -60,13 +60,14 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2.5 text-xs">
             {[
-              "Double Bed Non-AC — ₹1,500/day",
-              "Double Bed A/C — ₹2,000/day",
-              "Villa — ₹2,500/day",
-              "Suite Room — ₹10,000/day",
-            ].map(item => (
-              <li key={item} className="flex items-center gap-1.5 text-blue-100 font-medium whitespace-nowrap">
-                <span className="text-white shrink-0">→</span> {item}
+              ["Double Bed Non-AC", "₹1,500/day"],
+              ["Double Bed A/C", "₹2,000/day"],
+              ["Villa", "₹2,500/day"],
+              ["Suite Room", "₹10,000/day"],
+            ].map(([name, price]) => (
+              <li key={name} className="flex items-center justify-between text-blue-100 font-medium gap-2">
+                <span className="flex items-center gap-1.5"><span className="text-white shrink-0">→</span> {name}</span>
+                <span className="text-white font-bold whitespace-nowrap shrink-0">{price}</span>
               </li>
             ))}
           </ul>
@@ -97,7 +98,7 @@ export default function Footer() {
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="border-t border-white/20 pt-5 pb-6 px-4">
+      <div className="border-t border-white/20 pt-5 pb-4 px-4">
         <div className="max-w-7xl mx-auto flex flex-col items-center gap-3">
 
           {/* Decorative dots */}
