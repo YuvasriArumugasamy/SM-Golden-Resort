@@ -357,8 +357,8 @@ export default function Home() {
           <AnimatePresence mode="wait" initial={false}>
             <motion.img
               key={galleryIdx}
-              src={GALLERY[galleryIdx].src}
-              alt={GALLERY[galleryIdx].label}
+              src={displayGallery[galleryIdx]?.src}
+              alt={displayGallery[galleryIdx]?.label}
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
@@ -369,12 +369,12 @@ export default function Home() {
 
           {/* Counter — top right */}
           <div className="absolute top-3 right-3 bg-black/50 text-white text-[11px] font-bold px-2.5 py-1 rounded-full z-10">
-            {galleryIdx + 1} of {GALLERY.length}
+            {galleryIdx + 1} of {displayGallery.length}
           </div>
 
           {/* Prev Arrow — left edge, outside feel */}
           <button
-            onClick={() => setGalleryIdx(i => (i - 1 + GALLERY.length) % GALLERY.length)}
+            onClick={() => setGalleryIdx(i => (i - 1 + displayGallery.length) % displayGallery.length)}
             className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center z-10 shadow-lg transition-all"
             aria-label="Previous photo"
           >
@@ -383,7 +383,7 @@ export default function Home() {
 
           {/* Next Arrow — right edge */}
           <button
-            onClick={() => setGalleryIdx(i => (i + 1) % GALLERY.length)}
+            onClick={() => setGalleryIdx(i => (i + 1) % displayGallery.length)}
             className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center z-10 shadow-lg transition-all"
             aria-label="Next photo"
           >
@@ -392,7 +392,7 @@ export default function Home() {
 
           {/* Dot indicators */}
           <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-            {GALLERY.map((_, i) => (
+            {displayGallery.slice(0, 10).map((_, i) => (
               <button key={i} onClick={() => setGalleryIdx(i)}
                 className={`rounded-full transition-all ${i === galleryIdx ? "bg-white w-4 h-1.5" : "bg-white/50 w-1.5 h-1.5"}`} />
             ))}
@@ -400,24 +400,24 @@ export default function Home() {
         </div>
 
         {/* ── Desktop: original grid ── */}
-        <div className="hidden md:grid grid-cols-4 gap-1.5 rounded-xl overflow-hidden h-[480px] relative">
+        <div className="hidden md:grid grid-cols-4 gap-1.5 rounded-xl overflow-hidden h-[420px] relative">
           {/* Big left photo */}
-          <div className="col-span-2 relative overflow-hidden cursor-pointer group bg-slate-100"
+          <div className="col-span-2 relative overflow-hidden cursor-pointer group"
                onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}>
-            <img src={GALLERY[0].src} alt="SM Golden Resorts"
-                 className="w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-500" />
+            <img src={displayGallery[0]?.src} alt="SM Golden Resorts"
+                 className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
           </div>
           {/* Right 2×2 */}
           <div className="col-span-2 grid grid-cols-2 gap-1.5">
             {[1, 2, 3, 4].map((idx, i) => (
-              <div key={i} className="relative overflow-hidden cursor-pointer group bg-slate-100"
+              <div key={i} className="relative overflow-hidden cursor-pointer group"
                    onClick={() => { setGalleryIdx(idx); setGalleryOpen(true); }}>
-                <img src={GALLERY[idx].src} alt={GALLERY[idx].label}
-                     className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-500" />
+                <img src={displayGallery[idx]?.src} alt={displayGallery[idx]?.label}
+                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
                 {i === 3 && (
                   <div className="absolute inset-0 bg-black/45 flex items-center justify-center">
                     <div className="bg-white/95 text-slate-800 font-extrabold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow">
-                      <span>{GALLERY.length} photos</span>
+                      <span>{displayGallery.length} photos</span>
                       <ChevronRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -981,9 +981,9 @@ export default function Home() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                       className="fixed inset-0 bg-black/95 z-50 flex flex-col">
             <div className="flex items-center justify-between px-5 py-4">
-              <span className="text-white/60 text-xs font-medium">{GALLERY[galleryIdx].label}</span>
+              <span className="text-white/60 text-xs font-medium">{displayGallery[galleryIdx]?.label}</span>
               <div className="flex items-center gap-3">
-                <span className="text-white/40 text-xs">{galleryIdx + 1} / {GALLERY.length}</span>
+                <span className="text-white/40 text-xs">{galleryIdx + 1} / {displayGallery.length}</span>
                 <button onClick={() => setGalleryOpen(false)}
                         className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all outline-none focus:outline-none">
                   <X className="w-5 h-5" />
@@ -991,23 +991,23 @@ export default function Home() {
               </div>
             </div>
             <div className="flex-1 flex items-center justify-center relative px-14">
-              <button onClick={() => setGalleryIdx(p => (p - 1 + GALLERY.length) % GALLERY.length)}
+              <button onClick={() => setGalleryIdx(p => (p - 1 + displayGallery.length) % displayGallery.length)}
                       className="absolute left-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center outline-none focus:outline-none">
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <AnimatePresence mode="wait">
-                <motion.img key={galleryIdx} src={GALLERY[galleryIdx].src} alt={GALLERY[galleryIdx].label}
+                <motion.img key={galleryIdx} src={displayGallery[galleryIdx]?.src} alt={displayGallery[galleryIdx]?.label}
                   initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.18 }}
                   className="max-h-[72vh] max-w-full object-contain rounded-lg shadow-2xl" />
               </AnimatePresence>
-              <button onClick={() => setGalleryIdx(p => (p + 1) % GALLERY.length)}
+              <button onClick={() => setGalleryIdx(p => (p + 1) % displayGallery.length)}
                       className="absolute right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center outline-none focus:outline-none">
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
             <div className="flex justify-center gap-2 py-4 px-4 overflow-x-auto no-scrollbar">
-              {GALLERY.map((img, i) => (
+              {displayGallery.map((img, i) => (
                 <button key={i} onClick={() => setGalleryIdx(i)}
                         className={`shrink-0 w-16 h-11 rounded-lg overflow-hidden border-2 transition-all outline-none focus:outline-none ${
                           i === galleryIdx ? "border-white" : "border-transparent opacity-40 hover:opacity-70"
