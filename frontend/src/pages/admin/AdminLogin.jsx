@@ -84,13 +84,12 @@ export default function AdminLogin() {
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1,   opacity: 1 }}
               transition={{ delay: 0.15, type: "spring", stiffness: 200 }}
-              className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-xl"
+              className="w-16 h-16 rounded-2xl overflow-hidden mb-4 shadow-xl"
               style={{
-                background: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
                 boxShadow: "0 8px 24px rgba(59,130,246,0.4)",
               }}
             >
-              <span className="text-white font-extrabold text-xl tracking-tight">SM</span>
+              <img src="/logo.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
             </motion.div>
 
             <h1 className="text-2xl font-extrabold text-white tracking-tight">SM Golden Resorts</h1>

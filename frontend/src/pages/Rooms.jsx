@@ -13,30 +13,26 @@ import {
 const TYPE_STYLES = {
   "AC":           { bg: "bg-blue-50",    text: "text-blue-700",   border: "border-blue-200",   dot: "bg-blue-500"   },
   "Non-AC":       { bg: "bg-stone-50",   text: "text-stone-700",  border: "border-stone-200",  dot: "bg-stone-400"  },
-  "Suite AC":     { bg: "bg-amber-50",   text: "text-amber-700",  border: "border-amber-200",  dot: "bg-amber-500"  },
-  "Suite Premium":{ bg: "bg-yellow-50",  text: "text-yellow-700", border: "border-yellow-300", dot: "bg-yellow-500" },
-  "Villa":        { bg: "bg-emerald-50", text: "text-emerald-700",border: "border-emerald-200",dot: "bg-emerald-500"},
+  "Three Bed":    { bg: "bg-emerald-50", text: "text-emerald-700",border: "border-emerald-200",dot: "bg-emerald-500"},
+  "Four Bed AC":  { bg: "bg-amber-50",   text: "text-amber-700",  border: "border-amber-200",  dot: "bg-amber-500"  },
 };
 
 const AMENITY_ICONS = { WiFi: Wifi, AC: Wind, TV: Tv, "Hot Water": Droplets, Fan: Wind, "Garden View": Trees, "Mountain View": Trees };
 
 const ROOM_IMGS = [
-  "/WhatsApp Image 2026-06-14 at 07.53.04.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.09.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.09 (1).jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.15 (1).jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.16 (1).jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.56.05.jpeg",
-  "/WhatsApp Image 2026-06-14 at 09.15.41.jpeg",
-  "/WhatsApp Image 2026-05-15 at 10.48.35 (1).webp",
-  "/WhatsApp Image 2026-05-15 at 10.48.37.webp",
-  "/WhatsApp Image 2026-05-15 at 10.48.39 (1).webp",
-  "/WhatsApp Image 2026-05-15 at 10.48.39.webp",
-  "/WhatsApp Image 2026-05-15 at 10.48.40.webp",
-  "/WhatsApp Image 2026-05-15 at 10.48.41.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
 ];
 
 // Give each room a slice of images for its carousel
@@ -132,7 +128,7 @@ function RoomCarousel({ images, roomName }) {
   );
 }
 
-const FILTER_TABS = ["All", "AC", "Non-AC", "Suite AC", "Villa"];
+const FILTER_TABS = ["All", "Non-AC", "AC", "Three Bed", "Four Bed AC"];
 
 export default function Rooms() {
   const navigate = useNavigate();
@@ -172,12 +168,12 @@ export default function Rooms() {
               Rooms & Suites
             </h1>
             <p className="text-white/55 text-sm mt-3 max-w-lg mx-auto leading-relaxed">
-              11 thoughtfully designed rooms — from cozy Non-AC to premium Suite ACs with mountain views, right next to Old Falls.
+              20 thoughtfully designed rooms — Double Bed, Double Bed A/C, Three Bed, and Four Bed A/C — right next to Old Falls.
             </p>
 
             {/* Quick stats */}
             <div className="flex flex-wrap justify-center gap-3 mt-6">
-              {[["11", "Rooms"], ["₹1,500", "Starting from"], ["24/7", "Open"], ["0.38km", "To Falls"]].map(([v, l]) => (
+              {[["20", "Rooms"], ["₹1,300", "Starting from"], ["24/7", "Open"], ["0.38km", "To Falls"]].map(([v, l]) => (
                 <div key={l} className="bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-center">
                   <p className="text-gold font-extrabold text-sm font-jakarta">{v}</p>
                   <p className="text-white/50 text-[9px] font-medium uppercase tracking-wider mt-0.5">{l}</p>

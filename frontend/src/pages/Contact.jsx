@@ -95,7 +95,7 @@ export default function Contact() {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           className="bg-navy rounded-2xl p-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {[["🏨", "11 Rooms", "AC, Non-AC, Villa, Suite"], ["🐾", "Pets OK", "Animals welcome"], ["🅿️", "Free Parking", "Secure 24/7"], ["🍳", "Kitchen", "Full facility available"]].map(([icon, title, sub], i) => (
+            {[["🏨", "20 Rooms", "Double Bed, A/C, Three Bed, Four Bed A/C"], ["🐾", "Pets OK", "Animals welcome"], ["🅿️", "Free Parking", "Secure 24/7"], ["🍳", "Kitchen", "Full facility available"]].map(([icon, title, sub], i) => (
               <div key={i}>
                 <span className="text-2xl">{icon}</span>
                 <p className="text-white font-extrabold text-sm font-jakarta mt-1">{title}</p>

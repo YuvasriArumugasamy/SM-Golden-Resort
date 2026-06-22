@@ -13,12 +13,13 @@ import { roomsData as fallbackRooms } from "../utils/roomData";
 /* ── room type → single image mapping ── */
 const ROOM_TYPE_IMAGE = {
   "Non-AC":       "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp",
+  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
   "Three Bed":    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM.webp",
-  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp",
-  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM.webp",
+  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
+  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
+  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
 };
+
 const FALLBACK_IMG = "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg";
 
 /* ── Step Bar ── */

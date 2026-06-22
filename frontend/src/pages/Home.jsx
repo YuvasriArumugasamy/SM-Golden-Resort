@@ -16,18 +16,18 @@ import { roomsData as fallbackRooms } from "../utils/roomData";
 
 /* ── Static data ─────────────────────────── */
 const GALLERY = [
-  { label: "SM Golden Resorts",      src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.webp" },
-  { label: "Villa Room",             src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp" },
-  { label: "Double Bed AC Room",     src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp" },
-  { label: "Suite Room",             src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM.webp" },
-  { label: "Resort View",            src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.webp" },
+  { label: "SM Golden Resorts",      src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png" },
+  { label: "Villa Room",             src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png" },
+  { label: "Double Bed AC Room",     src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
+  { label: "Suite Room",             src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png" },
+  { label: "Resort View",            src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png" },
   { label: "Room Interior",          src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
   { label: "Resort Facilities",      src: "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png" },
   { label: "Bedroom",                src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
-  { label: "Resort Building",        src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.webp" },
+  { label: "Resort Building",        src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png" },
   { label: "Resort Entrance",        src: "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png" },
   { label: "Double Bed Non-AC",      src: "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png" },
-  { label: "Premium Room",           src: "/ChatGPT Image Jun 21, 2026, 06_22_21 PM.webp" },
+  { label: "Premium Room",           src: "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png" },
 ];
 
 const FACILITIES = [
@@ -77,39 +77,39 @@ const NEARBY = [
 // Per-room photo sets — first image is the best hero shot
 const ROOM_PHOTO_SETS = {
   "101": [
-    "/WhatsApp Image 2026-06-14 at 07.53.04.jpeg",
-    "/WhatsApp Image 2026-06-14 at 07.53.09.jpeg",
-    "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
-    "/WhatsApp Image 2026-05-15 at 10.48.37.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png",
   ],
   "102": [
-    "/WhatsApp Image 2026-05-15 at 10.48.35 (1).webp",
-    "/WhatsApp Image 2026-06-14 at 07.53.15 (1).jpeg",
-    "/WhatsApp Image 2026-06-14 at 07.53.16 (1).jpeg",
-    "/WhatsApp Image 2026-05-15 at 10.48.40.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png",
   ],
   "104": [
-    "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
-    "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
-    "/WhatsApp Image 2026-05-15 at 10.48.39 (1).webp",
-    "/WhatsApp Image 2026-05-15 at 10.48.41.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png",
   ],
   "110": [
-    "/WhatsApp Image 2026-06-14 at 09.15.41.jpeg",
-    "/WhatsApp Image 2026-06-14 at 07.56.05.jpeg",
-    "/WhatsApp Image 2026-05-15 at 10.48.39.webp",
-    "/WhatsApp Image 2026-06-14 at 07.53.09 (1).jpeg",
+    "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
+    "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png",
   ],
 };
 
 const ROOM_SLIDES = [
-  "/WhatsApp Image 2026-06-14 at 07.53.04.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.09.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.10.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg",
-  "/WhatsApp Image 2026-06-14 at 07.53.17.jpeg",
-  "/WhatsApp Image 2026-05-15 at 10.48.35 (1).webp",
-  "/WhatsApp Image 2026-05-15 at 10.48.37.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
+  "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
 ];
 
 /* ── Manage Booking Modal ── */
@@ -664,11 +664,11 @@ export default function Home() {
               ) : (() => {
                 const ROOM_TYPE_IMAGE = {
                   "Non-AC":       "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-                  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp",
+                  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
                   "Three Bed":    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-                  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM.webp",
-                  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp",
-                  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM.webp",
+                  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
+                  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
+                  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
                 };
                 const ROOM_DISPLAY_NAME = {
                   "Non-AC":      "Double Bed Non-AC",
