@@ -400,20 +400,20 @@ export default function Home() {
         </div>
 
         {/* ── Desktop: original grid ── */}
-        <div className="hidden md:grid grid-cols-4 gap-1.5 rounded-xl overflow-hidden h-[400px] relative">
+        <div className="hidden md:grid grid-cols-4 gap-1.5 rounded-xl overflow-hidden h-[480px] relative">
           {/* Big left photo */}
-          <div className="col-span-2 relative overflow-hidden cursor-pointer group"
+          <div className="col-span-2 relative overflow-hidden cursor-pointer group bg-slate-100"
                onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}>
             <img src={GALLERY[0].src} alt="SM Golden Resorts"
-                 className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
+                 className="w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-500" />
           </div>
           {/* Right 2×2 */}
           <div className="col-span-2 grid grid-cols-2 gap-1.5">
             {[1, 2, 3, 4].map((idx, i) => (
-              <div key={i} className="relative overflow-hidden cursor-pointer group"
+              <div key={i} className="relative overflow-hidden cursor-pointer group bg-slate-100"
                    onClick={() => { setGalleryIdx(idx); setGalleryOpen(true); }}>
                 <img src={GALLERY[idx].src} alt={GALLERY[idx].label}
-                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
+                     className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-500" />
                 {i === 3 && (
                   <div className="absolute inset-0 bg-black/45 flex items-center justify-center">
                     <div className="bg-white/95 text-slate-800 font-extrabold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow">
