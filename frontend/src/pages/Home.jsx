@@ -22,6 +22,7 @@ const GALLERY = [
   { label: "Double Bed AC Room - SM Golden Resorts Courtallam",             src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
   { label: "Suite Room SM Golden Resorts Courtallam Tamil Nadu",            src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png" },
   { label: "Resort Garden View Near Old Falls Courtallam",                  src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png" },
+  { label: "SM Golden Resorts Resort Exterior Mountain View",               src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png" },
   { label: "SM Golden Resorts Courtallam - Resort Exterior View",           src: "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png" },
   { label: "Bedroom Interior SM Golden Resorts Old Falls Courtallam",       src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
   { label: "SM Golden Resorts Building with Western Ghats Mountain View",   src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png" },
@@ -29,6 +30,7 @@ const GALLERY = [
   { label: "Premium Room at SM Golden Resorts Near Old Falls",              src: "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png" },
   { label: "SM Golden Resorts Courtallam Resort Photo",                     src: "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" },
   { label: "New AC Room View SM Golden Resorts Courtallam 2026",            src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
+  { label: "SM Golden Resorts Resort and Mountain Courtallam",              src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png" },
 ];
 
 const FACILITIES = [
