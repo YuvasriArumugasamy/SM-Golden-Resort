@@ -26,6 +26,7 @@ import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminReports from "./pages/admin/AdminReports";
 import AdminPayments from "./pages/admin/AdminPayments";
 import AdminGallery from "./pages/admin/AdminGallery";
+import Gallery from "./pages/Gallery";
 
 const PageWrapper = ({ children }) => {
   return (
@@ -62,6 +63,9 @@ const AppLayout = () => {
             {/* Public */}
             <Route path="/"        element={<PageWrapper><Home /></PageWrapper>} />
             <Route path="/booking" element={<PageWrapper><Booking /></PageWrapper>} />
+
+            {/* Gallery */}
+            <Route path="/gallery" element={<PageWrapper><Gallery /></PageWrapper>} />
 
             {/* Redirect old pages to home */}
             <Route path="/rooms"   element={<Navigate to="/" replace />} />

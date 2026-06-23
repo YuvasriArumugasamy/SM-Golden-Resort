@@ -28,6 +28,8 @@ const GALLERY = [
   { label: "Resort Entrance",        src: "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png" },
   { label: "Double Bed Non-AC",      src: "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png" },
   { label: "Premium Room",           src: "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png" },
+  { label: "Resort Photo",           src: "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" },
+  { label: "New Room View",          src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
 ];
 
 const FACILITIES = [
@@ -397,6 +399,14 @@ export default function Home() {
                 className={`rounded-full transition-all ${i === galleryIdx ? "bg-white w-4 h-1.5" : "bg-white/50 w-1.5 h-1.5"}`} />
             ))}
           </div>
+
+          {/* View all photos — bottom right */}
+          <button
+            onClick={() => navigate("/gallery")}
+            className="absolute bottom-3 right-3 bg-black/60 text-white text-[11px] font-bold px-3 py-1.5 rounded-full z-10 flex items-center gap-1"
+          >
+            {displayGallery.length} photos <ChevronRight className="w-3 h-3" />
+          </button>
         </div>
 
         {/* ── Desktop: original grid ── */}
@@ -416,10 +426,12 @@ export default function Home() {
                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
                 {i === 3 && (
                   <div className="absolute inset-0 bg-black/45 flex items-center justify-center">
-                    <div className="bg-white/95 text-slate-800 font-extrabold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); navigate("/gallery"); }}
+                      className="bg-white/95 text-slate-800 font-extrabold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow">
                       <span>{displayGallery.length} photos</span>
                       <ChevronRight className="w-4 h-4" />
-                    </div>
+                    </button>
                   </div>
                 )}
               </div>

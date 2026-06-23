@@ -43,7 +43,7 @@ export default function Footer() {
             Quick Links
           </h4>
           <ul className="space-y-2.5 text-xs">
-            {[{ p: "/", l: "Home" }, { p: "/booking", l: "Book Online" }].map(link => (
+            {[{ p: "/", l: "Home" }, { p: "/gallery", l: "Gallery" }, { p: "/booking", l: "Book Online" }].map(link => (
               <li key={link.p}>
                 <Link to={link.p} className="text-blue-100 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
                   <span className="text-white">→</span> {link.l}
