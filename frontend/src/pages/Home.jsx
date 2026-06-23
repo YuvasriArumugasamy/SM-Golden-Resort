@@ -818,7 +818,7 @@ export default function Home() {
                               disabled={!room.available}
                               className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-colors shadow-sm mt-1 ${
                                 room.available
-                                  ? "bg-blue-600 text-white"
+                                  ? "bg-emerald-600 hover:bg-emerald-700 text-white"
                                   : "bg-slate-100 text-slate-400 cursor-not-allowed"
                               }`}>
                               {room.available ? "Book Now" : "Sold Out"}
@@ -985,7 +985,7 @@ export default function Home() {
                   </div>
                 ) : null}
                 <button onClick={handleBook}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow outline-none focus:outline-none">
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow outline-none focus:outline-none">
                   {selRoom ? "Book Now" : "Select Room"}
                 </button>
               </div>
@@ -1025,7 +1025,7 @@ export default function Home() {
           </div>
           {selRoom && (
             <button onClick={handleBook}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none">
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none">
               Book Now →
             </button>
           )}

@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer
       className="text-white font-jakarta"
-      style={{ background: "linear-gradient(135deg, #1e40af 0%, #1d4ed8 50%, #2563eb 100%)" }}
+      style={{ background: "linear-gradient(135deg, #0F2557 0%, #1a3470 50%, #0F2557 100%)" }}
     >
       {/* ── Main Footer ── */}
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
