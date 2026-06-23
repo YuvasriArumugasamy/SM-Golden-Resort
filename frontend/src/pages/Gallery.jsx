@@ -181,35 +181,7 @@ export default function Gallery() {
             DESKTOP VIEW
         ───────────────────────────────────────────────────── */}
 
-        {/* ── SECTION 1: Three equal portrait strips (top reference) ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="hidden md:grid grid-cols-3 gap-2 rounded-2xl overflow-hidden"
-          style={{ height: "340px" }}
-        >
-          {photos.slice(0, 3).map((photo, i) => (
-            <div
-              key={i}
-              className="relative overflow-hidden cursor-pointer group"
-              onClick={() => openAt(i)}
-            >
-              <img
-                src={photo.src}
-                alt={photo.label}
-                className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
-              {/* Label on hover */}
-              <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent">
-                <p className="text-white text-xs font-semibold">{photo.label}</p>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* ── SECTION 2: 1 big left + 2×2 right grid (bottom reference) ── */}
+        {/* ── SECTION 1: 1 big left + 2×2 right grid ── */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -220,11 +192,11 @@ export default function Gallery() {
           {/* Big left photo */}
           <div
             className="col-span-2 relative overflow-hidden cursor-pointer group"
-            onClick={() => openAt(3)}
+            onClick={() => openAt(0)}
           >
             <img
-              src={photos[3]?.src}
-              alt={photos[3]?.label}
+              src={photos[0]?.src}
+              alt={photos[0]?.label}
               className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
@@ -232,7 +204,7 @@ export default function Gallery() {
 
           {/* Right 2×2 */}
           <div className="col-span-2 grid grid-cols-2 gap-2">
-            {[4, 5, 6, 7].map((photoIdx, i) => (
+            {[1, 2, 3, 4].map((photoIdx, i) => (
               <div
                 key={i}
                 className="relative overflow-hidden cursor-pointer group"
@@ -262,8 +234,8 @@ export default function Gallery() {
           </div>
         </motion.div>
 
-        {/* ── SECTION 3: Remaining photos — 5-col grid ── */}
-        {photos.length > 8 && (
+        {/* ── SECTION 2: Remaining photos — 5-col grid ── */}
+        {photos.length > 5 && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -274,11 +246,11 @@ export default function Gallery() {
               More Photos
             </p>
             <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-              {photos.slice(8).map((photo, i) => (
+              {photos.slice(5).map((photo, i) => (
                 <div
                   key={i}
                   className="relative aspect-[4/3] overflow-hidden rounded-xl cursor-pointer group"
-                  onClick={() => openAt(i + 8)}
+                  onClick={() => openAt(i + 5)}
                 >
                   <img
                     src={photo.src}
