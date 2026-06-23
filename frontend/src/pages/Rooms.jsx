@@ -336,11 +336,11 @@ export default function Rooms() {
             <h3 className="text-xl font-extrabold text-white font-jakarta">Can't decide? Call us directly!</h3>
             <p className="text-white/50 text-sm mt-2">Our team will help you pick the perfect room for your needs.</p>
             <div className="flex flex-wrap justify-center gap-3 mt-5">
-              <a href="tel:9443710420"
+              <a href="tel:9003549849"
                 className="flex items-center gap-2 bg-gold hover:bg-gold/90 text-white font-extrabold px-6 py-3 rounded-xl text-sm transition-all shadow">
-                📞 9443710420
+                📞 9003549849
               </a>
-              <a href="https://wa.me/919443710420?text=Hi%20I%20want%20to%20know%20about%20rooms%20at%20SM%20Golden%20Resorts"
+              <a href="https://wa.me/919003549849?text=Hi%20I%20want%20to%20know%20about%20rooms%20at%20SM%20Golden%20Resorts"
                 target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-6 py-3 rounded-xl text-sm transition-all shadow">
                 💬 WhatsApp Us

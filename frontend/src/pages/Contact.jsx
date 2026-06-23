@@ -45,13 +45,13 @@ export default function Contact() {
             <h3 className="font-extrabold text-navy font-jakarta mb-1">Call Direct</h3>
             <p className="text-[11px] text-slate-400 mb-5 font-medium">Fastest way to book your stay</p>
             <div className="space-y-2.5 w-full">
-              <a href="tel:9443710420"
-                className="flex items-center justify-center gap-2 w-full bg-navy hover:bg-navy-light text-white font-bold py-3 rounded-xl transition-all text-sm shadow-sm hover:shadow">
-                <Phone className="w-4 h-4" /> 9443710420
-              </a>
               <a href="tel:9003549849"
                 className="flex items-center justify-center gap-2 w-full bg-navy hover:bg-navy-light text-white font-bold py-3 rounded-xl transition-all text-sm shadow-sm hover:shadow">
                 <Phone className="w-4 h-4" /> 9003549849
+              </a>
+              <a href="tel:9443710420"
+                className="flex items-center justify-center gap-2 w-full bg-navy hover:bg-navy-light text-white font-bold py-3 rounded-xl transition-all text-sm shadow-sm hover:shadow">
+                <Phone className="w-4 h-4" /> 9443710420
               </a>
             </div>
           </motion.div>
@@ -64,7 +64,7 @@ export default function Contact() {
             </div>
             <h3 className="font-extrabold text-navy font-jakarta mb-1">WhatsApp</h3>
             <p className="text-[11px] text-slate-400 mb-5 font-medium">Quick replies within minutes</p>
-            <a href="https://wa.me/919443710420?text=Hi,%20I%20want%20to%20book%20a%20room%20at%20SM%20Golden%20Resorts"
+            <a href="https://wa.me/919003549849?text=Hi,%20I%20want%20to%20book%20a%20room%20at%20SM%20Golden%20Resorts"
               target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-xl transition-all text-sm shadow-sm hover:shadow">
               💬 Chat on WhatsApp

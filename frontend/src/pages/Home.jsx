@@ -992,13 +992,13 @@ export default function Home() {
             </div>
             <div className="border border-slate-200 rounded-2xl p-4 bg-white space-y-2.5">
               <p className="text-xs font-semibold text-slate-500 mb-1">Contact Directly</p>
-              <a href="tel:9443710420" className="flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition-all">
-                <Phone className="w-3.5 h-3.5" /> 9443710420
-              </a>
               <a href="tel:9003549849" className="flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition-all">
                 <Phone className="w-3.5 h-3.5" /> 9003549849
               </a>
-              <a href="https://wa.me/919443710420?text=Hi%20I%20want%20to%20book%20at%20SM%20Golden%20Resorts"
+              <a href="tel:9443710420" className="flex items-center gap-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition-all">
+                <Phone className="w-3.5 h-3.5" /> 9443710420
+              </a>
+              <a href="https://wa.me/919003549849?text=Hi%20I%20want%20to%20book%20at%20SM%20Golden%20Resorts"
                  target="_blank" rel="noopener noreferrer"
                  className="flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition-all">
                 <span>💬</span> Chat on WhatsApp

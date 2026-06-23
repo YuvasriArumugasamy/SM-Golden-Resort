@@ -84,13 +84,13 @@ export default function Footer() {
               <span>Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu</span>
             </li>
             <li>
-              <a href="tel:9443710420" className="flex items-center gap-2 text-blue-100 hover:text-white transition-colors font-medium">
-                <Phone className="w-3.5 h-3.5 text-white" /> 9443710420
+              <a href="tel:9003549849" className="flex items-center gap-2 text-blue-100 hover:text-white transition-colors font-medium">
+                <Phone className="w-3.5 h-3.5 text-white" /> 9003549849
               </a>
             </li>
             <li>
-              <a href="tel:9003549849" className="flex items-center gap-2 text-blue-100 hover:text-white transition-colors font-medium">
-                <Phone className="w-3.5 h-3.5 text-white" /> 9003549849
+              <a href="tel:9443710420" className="flex items-center gap-2 text-blue-100 hover:text-white transition-colors font-medium">
+                <Phone className="w-3.5 h-3.5 text-white" /> 9443710420
               </a>
             </li>
           </ul>

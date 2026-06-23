@@ -88,10 +88,10 @@ function Sidebar({ selectedRoom, checkIn, checkOut, guests, nights, roomCount, s
             <MapPin className="w-3.5 h-3.5 text-red-400 shrink-0 mt-0.5" />
             <span className="font-medium">Old Falls Main Road, Courtallam, Tamil Nadu – 627 802</span>
           </div>
-          <a href="tel:9443710420" className="flex items-center gap-2 text-blue-600 font-bold hover:underline">
-            <Phone className="w-3.5 h-3.5 text-blue-500" /> +91 94437 10420
+          <a href="tel:9003549849" className="flex items-center gap-2 text-blue-600 font-bold hover:underline">
+            <Phone className="w-3.5 h-3.5 text-blue-500" /> +91 90035 49849
           </a>
-          <a href="https://wa.me/919443710420" target="_blank" rel="noreferrer"
+          <a href="https://wa.me/919003549849" target="_blank" rel="noreferrer"
             className="flex items-center gap-2 text-emerald-600 font-bold hover:underline">
             <MessageCircle className="w-3.5 h-3.5 text-emerald-500" /> WhatsApp Us
           </a>
@@ -180,11 +180,11 @@ function Sidebar({ selectedRoom, checkIn, checkOut, guests, nights, roomCount, s
         </div>
         <p className="text-xs text-amber-700 font-medium">Prefer to book over the phone? Call or WhatsApp us directly.</p>
         <div className="grid grid-cols-2 gap-2">
-          <a href="https://wa.me/919443710420" target="_blank" rel="noreferrer"
+          <a href="https://wa.me/919003549849" target="_blank" rel="noreferrer"
             className="flex items-center justify-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold py-2.5 rounded-xl transition-all">
             <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
           </a>
-          <a href="tel:9443710420"
+          <a href="tel:9003549849"
             className="flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 rounded-xl transition-all">
             <Phone className="w-3.5 h-3.5" /> Call Now
           </a>
@@ -455,7 +455,7 @@ export default function Booking() {
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all text-center">
               Back to Home
             </Link>
-            <a href={`https://wa.me/919443710420?text=Hi!%20I%20booked%20a%20stay%20at%20SM%20Golden%20Resorts.%20Booking%20ID:%20${bookingId6}.%20Please%20confirm!`}
+            <a href={`https://wa.me/919003549849?text=Hi!%20I%20booked%20a%20stay%20at%20SM%20Golden%20Resorts.%20Booking%20ID:%20${bookingId6}.%20Please%20confirm!`}
               target="_blank" rel="noreferrer"
               className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
               <MessageCircle className="w-4 h-4" /> Confirm on WhatsApp

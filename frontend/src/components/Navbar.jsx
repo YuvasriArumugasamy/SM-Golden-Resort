@@ -66,7 +66,7 @@ export default function Navbar() {
 
         {/* Desktop right actions */}
         <div className="hidden md:flex items-center gap-2 shrink-0">
-          <a href="tel:9443710420"
+          <a href="tel:9003549849"
              className="flex items-center gap-1.5 text-xs font-medium text-slate-600 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-all">
             <Phone className="w-3.5 h-3.5" /> Call
           </a>
@@ -101,11 +101,11 @@ export default function Navbar() {
                 </NavLink>
               ))}
               <div className="pt-2 flex gap-2 border-t border-slate-100 mt-2">
-                <a href="tel:9443710420"
+                <a href="tel:9003549849"
                    className="flex-1 text-center text-xs font-semibold bg-slate-900 text-white py-2.5 rounded-lg">
-                  📞 9443710420
+                  📞 9003549849
                 </a>
-                <a href="https://wa.me/919443710420" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/919003549849" target="_blank" rel="noopener noreferrer"
                    className="flex-1 text-center text-xs font-semibold bg-emerald-500 text-white py-2.5 rounded-lg">
                   💬 WhatsApp
                 </a>
