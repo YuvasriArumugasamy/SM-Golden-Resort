@@ -265,7 +265,8 @@ export default function Home() {
   const [galleryIdx, setGalleryIdx]     = useState(0);
   const [apiGallery, setApiGallery]     = useState([]);
 
-  // Combined gallery: static first (best hero shots), then API photos
+  // Hero grid always uses curated static photos — API photos added only to lightbox
+  const heroGallery = GALLERY;
   const displayGallery = apiGallery.length > 0 ? [...GALLERY, ...apiGallery] : GALLERY;
   const [showAllFac, setShowAllFac]     = useState(false);
   const [activeTab, setActiveTab]       = useState("overview");
@@ -414,7 +415,7 @@ export default function Home() {
           {/* Big left photo */}
           <div className="col-span-2 relative overflow-hidden cursor-pointer group"
                onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}>
-            <img src={displayGallery[0]?.src} alt="SM Golden Resorts"
+            <img src={heroGallery[0]?.src} alt="SM Golden Resorts"
                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
           </div>
           {/* Right 2×2 */}
@@ -422,7 +423,7 @@ export default function Home() {
             {[1, 2, 3, 4].map((idx, i) => (
               <div key={i} className="relative overflow-hidden cursor-pointer group"
                    onClick={() => { setGalleryIdx(idx); setGalleryOpen(true); }}>
-                <img src={displayGallery[idx]?.src} alt={displayGallery[idx]?.label}
+                <img src={heroGallery[idx]?.src} alt={heroGallery[idx]?.label}
                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
                 {i === 3 && (
                   <div className="absolute inset-0 bg-black/45 flex items-center justify-center">
