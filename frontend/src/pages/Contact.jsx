@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Phone, MapPin, MessageCircle, Clock, Mail, CheckCircle2 } from "lucide-react";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 const CARD_VARIANTS = {
   hidden: { opacity: 0, y: 20 },
@@ -148,6 +149,7 @@ export default function Contact() {
         </motion.div>
 
       </div>
+      <WhatsAppButton />
     </div>
   );
 }

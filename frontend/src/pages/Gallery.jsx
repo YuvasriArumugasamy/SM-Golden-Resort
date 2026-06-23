@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Images } from "lucide-react";
 import api from "../api/axios";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 /* ── Static fallback photos ── */
 const STATIC_GALLERY = [
@@ -269,10 +270,12 @@ export default function Gallery() {
         )}
       </div>
 
+      {/* WhatsApp button — hidden when lightbox is open */}
+      {!lightboxOpen && <WhatsAppButton />}
+
       {/* ══ LIGHTBOX ══ */}
       <AnimatePresence>
-        {lightboxOpen && (
-          <motion.div
+        {lightboxOpen && (          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
