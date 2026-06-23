@@ -271,10 +271,10 @@ export default function Home() {
 
   // Best 5 photos for hero grid — hardcoded, never overridden by API
   const HERO_5 = [
-    { label: "SM Golden Resorts",  src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png" },
-    { label: "Double Bed AC Room", src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
-    { label: "Resort View",        src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png" },
-    { label: "Suite Room",         src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png" },
+    { label: "Double Bed AC Room", src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png" },
+    { label: "Bedroom",            src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
+    { label: "Resort Greenery",    src: "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png" },
+    { label: "Living Area",        src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
     { label: "Resort Building",    src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png" },
   ];
   const [showAllFac, setShowAllFac]     = useState(false);
@@ -419,34 +419,70 @@ export default function Home() {
           </button>
         </div>
 
-        {/* ── Desktop: original grid ── */}
-        <div className="hidden md:grid grid-cols-4 gap-1.5 rounded-xl overflow-hidden h-[420px] relative">
-          {/* Big left photo */}
-          <div className="col-span-2 relative overflow-hidden cursor-pointer group"
-               onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}>
-            <img src={HERO_5[0]?.src} alt="SM Golden Resorts"
-                 className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
+        {/* ── Desktop: 1 big left + 2×2 right grid (reference exact) ── */}
+        <div className="hidden md:grid grid-cols-4 grid-rows-2 gap-1.5 rounded-xl overflow-hidden h-[420px] relative">
+
+          {/* Left big photo — spans 2 cols × 2 rows */}
+          <div
+            className="col-span-2 row-span-2 relative overflow-hidden cursor-pointer group"
+            onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}
+          >
+            <img
+              src={HERO_5[0]?.src}
+              alt="SM Golden Resorts"
+              className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
-          {/* Right 2×2 */}
-          <div className="col-span-2 grid grid-cols-2 gap-1.5">
-            {[1, 2, 3, 4].map((idx, i) => (
-              <div key={i} className="relative overflow-hidden cursor-pointer group"
-                   onClick={() => { setGalleryIdx(idx); setGalleryOpen(true); }}>
-                <img src={HERO_5[idx]?.src} alt={HERO_5[idx]?.label}
-                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
-                {i === 3 && (
-                  <div className="absolute inset-0 bg-black/45 flex items-center justify-center">
-                    <button
-                      onClick={(e) => { e.stopPropagation(); navigate("/gallery"); }}
-                      className="bg-white/95 text-slate-800 font-extrabold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow">
-                      <span>{displayGallery.length} photos</span>
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
+
+          {/* Right top-left */}
+          <div
+            className="relative overflow-hidden cursor-pointer group"
+            onClick={() => { setGalleryIdx(1); setGalleryOpen(true); }}
+          >
+            <img src={HERO_5[1]?.src} alt={HERO_5[1]?.label}
+                 className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
+
+          {/* Right top-right */}
+          <div
+            className="relative overflow-hidden cursor-pointer group"
+            onClick={() => { setGalleryIdx(2); setGalleryOpen(true); }}
+          >
+            <img src={HERO_5[2]?.src} alt={HERO_5[2]?.label}
+                 className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+          </div>
+
+          {/* Right bottom-left */}
+          <div
+            className="relative overflow-hidden cursor-pointer group"
+            onClick={() => { setGalleryIdx(3); setGalleryOpen(true); }}
+          >
+            <img src={HERO_5[3]?.src} alt={HERO_5[3]?.label}
+                 className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+          </div>
+
+          {/* Right bottom-right — "N photos →" overlay */}
+          <div
+            className="relative overflow-hidden cursor-pointer group"
+            onClick={() => { setGalleryIdx(4); setGalleryOpen(true); }}
+          >
+            <img src={HERO_5[4]?.src} alt={HERO_5[4]?.label}
+                 className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <button
+                onClick={(e) => { e.stopPropagation(); navigate("/gallery"); }}
+                className="bg-white/90 hover:bg-white text-slate-800 font-extrabold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transition-all"
+              >
+                <span>{displayGallery.length} photos</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
         </div>
       </section>
 
