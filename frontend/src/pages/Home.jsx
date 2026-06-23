@@ -572,10 +572,11 @@ export default function Home() {
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <button
                 onClick={(e) => { e.stopPropagation(); setGalleryIdx(0); setGalleryOpen(true); }}
-                className="bg-white/90 hover:bg-white text-slate-800 font-extrabold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transition-all"
+                className="bg-black/80 hover:bg-black text-white font-bold text-sm px-5 py-2.5 rounded-full flex items-center gap-2 shadow-lg transition-all border border-white/30"
+                style={{ backdropFilter: "blur(4px)" }}
               >
                 <span>{displayGallery.length} photos</span>
-                <ChevronRight className="w-4 h-4" />
+                <span className="text-base">→</span>
               </button>
             </div>
           </div>
