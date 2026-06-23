@@ -268,6 +268,15 @@ export default function Home() {
   // Hero grid always uses curated static photos — API photos added only to lightbox
   const heroGallery = GALLERY;
   const displayGallery = apiGallery.length > 0 ? [...GALLERY, ...apiGallery] : GALLERY;
+
+  // Best 5 photos for hero grid — hardcoded, never overridden by API
+  const HERO_5 = [
+    { label: "SM Golden Resorts",  src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png" },
+    { label: "Double Bed AC Room", src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
+    { label: "Resort View",        src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png" },
+    { label: "Suite Room",         src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png" },
+    { label: "Resort Building",    src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png" },
+  ];
   const [showAllFac, setShowAllFac]     = useState(false);
   const [activeTab, setActiveTab]       = useState("overview");
   const [roomImgIdx, setRoomImgIdx]     = useState({});
@@ -415,7 +424,7 @@ export default function Home() {
           {/* Big left photo */}
           <div className="col-span-2 relative overflow-hidden cursor-pointer group"
                onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}>
-            <img src={heroGallery[0]?.src} alt="SM Golden Resorts"
+            <img src={HERO_5[0]?.src} alt="SM Golden Resorts"
                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
           </div>
           {/* Right 2×2 */}
@@ -423,7 +432,7 @@ export default function Home() {
             {[1, 2, 3, 4].map((idx, i) => (
               <div key={i} className="relative overflow-hidden cursor-pointer group"
                    onClick={() => { setGalleryIdx(idx); setGalleryOpen(true); }}>
-                <img src={heroGallery[idx]?.src} alt={heroGallery[idx]?.label}
+                <img src={HERO_5[idx]?.src} alt={HERO_5[idx]?.label}
                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500" />
                 {i === 3 && (
                   <div className="absolute inset-0 bg-black/45 flex items-center justify-center">
