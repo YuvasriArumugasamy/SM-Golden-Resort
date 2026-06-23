@@ -278,7 +278,7 @@ export default function Home() {
     { label: "Resort Interior Corridor SM Golden Resorts Courtallam",   src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
     { label: "SM Golden Resorts Building with Mountain View Courtallam", src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
   ];
-  const [showAllFac, setShowAllFac]     = useState(false);
+  const [showAmenitiesModal, setShowAmenitiesModal] = useState(false);
   const [activeTab, setActiveTab]       = useState("overview");
   const [roomImgIdx, setRoomImgIdx]     = useState({});
   const [reviewIdx, setReviewIdx]       = useState(0);
@@ -355,7 +355,7 @@ export default function Home() {
     { id: "faqs",      label: "FAQs",      ref: faqsRef      },
   ];
 
-  const visibleFacilities = showAllFac ? FACILITIES : FACILITIES.slice(0, 8);
+  const visibleFacilities = FACILITIES.slice(0, 8);
 
   const fmtDate = (d) => d ? d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "2-digit" }) : "";
 
@@ -699,11 +699,16 @@ export default function Home() {
                     );
                   })}
                 </div>
-                <button onClick={() => setShowAllFac(!showAllFac)}
-                        className="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 outline-none focus:outline-none">
-                  {showAllFac ? "Show less" : `Show all ${FACILITIES.length} Amenities`}
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showAllFac ? "rotate-180" : ""}`} />
-                </button>
+                {/* Center-aligned popup button */}
+                <div className="flex justify-center mt-5">
+                  <button
+                    onClick={() => setShowAmenitiesModal(true)}
+                    className="flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700 border border-blue-200 hover:border-blue-400 bg-blue-50 hover:bg-blue-100 px-5 py-2 rounded-xl transition-all outline-none focus:outline-none"
+                  >
+                    Show all {FACILITIES.length} Amenities
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -1083,6 +1088,62 @@ export default function Home() {
 
       {/* Manage Booking Modal */}
       <ManageBookingModal isOpen={manageModalOpen} onClose={() => setManageModalOpen(false)} />
+
+      {/* ══ AMENITIES MODAL ══ */}
+      <AnimatePresence>
+        {showAmenitiesModal && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setShowAmenitiesModal(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 24 }}
+              transition={{ type: "spring", duration: 0.35 }}
+              className="fixed inset-0 z-50 flex items-center justify-center px-4 pointer-events-none"
+            >
+              <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg pointer-events-auto overflow-hidden">
+                {/* Header */}
+                <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-100">
+                  <h2 className="text-xl font-extrabold text-slate-900">Amenities</h2>
+                  <button
+                    onClick={() => setShowAmenitiesModal(false)}
+                    className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-all outline-none"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                {/* All amenities — 3-col grid */}
+                <div className="px-6 py-5 grid grid-cols-1 sm:grid-cols-3 gap-x-4 gap-y-4 max-h-[60vh] overflow-y-auto">
+                  {FACILITIES.map((f, i) => {
+                    const Icon = f.icon;
+                    return (
+                      <div key={i} className="flex items-center gap-3 py-1">
+                        <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                          <Icon className="w-4.5 h-4.5 text-slate-600" />
+                        </div>
+                        <span className="text-sm text-slate-700 font-medium">{f.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Footer */}
+                <div className="px-6 pb-5 pt-3 border-t border-slate-100">
+                  <button
+                    onClick={() => setShowAmenitiesModal(false)}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all outline-none"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* WhatsApp button — hidden when gallery lightbox is open */}
       {!galleryOpen && <WhatsAppButton />}
