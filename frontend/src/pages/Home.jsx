@@ -284,14 +284,7 @@ export default function Home() {
   const [openFaq, setOpenFaq]           = useState(null);
   const [manageModalOpen, setManageModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (galleryOpen) {
-      document.body.classList.add("gallery-open");
-    } else {
-      document.body.classList.remove("gallery-open");
-    }
-    return () => document.body.classList.remove("gallery-open");
-  }, [galleryOpen]);
+  const guests = adults + children + infants;
 
   const overviewRef  = useRef(null);
   const amenitiesRef = useRef(null);
