@@ -109,3 +109,8 @@ button:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
   line-height: 2rem !important;
   margin: 2px !important;
 }
+
+/* Hide WhatsApp floating button when gallery lightbox is open */
+body.gallery-open .whatsapp-float {
+  display: none !important;
+}
