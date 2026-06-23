@@ -271,11 +271,11 @@ export default function Home() {
 
   // Best 5 photos for hero grid — hardcoded, never overridden by API
   const HERO_5 = [
-    { label: "Double Bed AC Room", src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png" },
-    { label: "Bedroom",            src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
-    { label: "Resort Greenery",    src: "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png" },
-    { label: "Living Area",        src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
-    { label: "Resort Building",    src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png" },
+    { label: "Double Bed AC Room", src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
+    { label: "Bedroom",            src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
+    { label: "Room Entrance",      src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png" },
+    { label: "Resort Interior",    src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
+    { label: "Resort & Mountains", src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
   ];
   const [showAllFac, setShowAllFac]     = useState(false);
   const [activeTab, setActiveTab]       = useState("overview");
