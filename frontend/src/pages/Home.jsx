@@ -265,8 +265,8 @@ export default function Home() {
   const [galleryIdx, setGalleryIdx]     = useState(0);
   const [apiGallery, setApiGallery]     = useState([]);
 
-  // Combined gallery: API photos first, then static fallback
-  const displayGallery = apiGallery.length > 0 ? [...apiGallery, ...GALLERY] : GALLERY;
+  // Combined gallery: static first (best hero shots), then API photos
+  const displayGallery = apiGallery.length > 0 ? [...GALLERY, ...apiGallery] : GALLERY;
   const [showAllFac, setShowAllFac]     = useState(false);
   const [activeTab, setActiveTab]       = useState("overview");
   const [roomImgIdx, setRoomImgIdx]     = useState({});
