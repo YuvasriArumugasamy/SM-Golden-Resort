@@ -13,6 +13,7 @@ import {
 import api from "../api/axios";
 import toast from "react-hot-toast";
 import { roomsData as fallbackRooms } from "../utils/roomData";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 /* ── Static data ─────────────────────────── */
 const GALLERY = [
@@ -1082,6 +1083,9 @@ export default function Home() {
 
       {/* Manage Booking Modal */}
       <ManageBookingModal isOpen={manageModalOpen} onClose={() => setManageModalOpen(false)} />
+
+      {/* WhatsApp button — hidden when gallery lightbox is open */}
+      {!galleryOpen && <WhatsAppButton />}
 
     </div>
   );

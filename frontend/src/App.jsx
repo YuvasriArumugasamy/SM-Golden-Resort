@@ -90,9 +90,9 @@ const AppLayout = () => {
         </AnimatePresence>
       </div>
 
-      {/* Footer & WhatsApp — only on Home */}
+      {/* Footer & WhatsApp — only on non-admin, non-booking pages */}
       {!hideChrome && <Footer />}
-      {!hideChrome && <WhatsAppButton />}
+      {!hideChrome && !isHomePage && <WhatsAppButton />}
     </div>
   );
 };
