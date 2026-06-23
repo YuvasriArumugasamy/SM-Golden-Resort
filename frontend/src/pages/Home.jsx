@@ -17,20 +17,20 @@ import WhatsAppButton from "../components/WhatsAppButton";
 
 /* ── Static data ─────────────────────────── */
 const GALLERY = [
-  { label: "SM Golden Resorts",      src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png" },
-  { label: "Villa Room",             src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png" },
-  { label: "Double Bed AC Room",     src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
-  { label: "Suite Room",             src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png" },
-  { label: "Resort View",            src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png" },
-  { label: "Room Interior",          src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
-  { label: "Resort Facilities",      src: "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png" },
-  { label: "Bedroom",                src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
-  { label: "Resort Building",        src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png" },
-  { label: "Resort Entrance",        src: "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png" },
-  { label: "Double Bed Non-AC",      src: "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png" },
-  { label: "Premium Room",           src: "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png" },
-  { label: "Resort Photo",           src: "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" },
-  { label: "New Room View",          src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
+  { label: "SM Golden Resorts Courtallam - Resort Exterior View",          src: "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png" },
+  { label: "Villa Room at SM Golden Resorts Old Falls Courtallam",          src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png" },
+  { label: "Double Bed AC Room - SM Golden Resorts Courtallam",             src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
+  { label: "Suite Room SM Golden Resorts Courtallam Tamil Nadu",            src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png" },
+  { label: "Resort Garden View Near Old Falls Courtallam",                  src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png" },
+  { label: "Resort Corridor Interior SM Golden Resorts Courtallam",         src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
+  { label: "Resort Common Area SM Golden Resorts Courtallam",               src: "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png" },
+  { label: "Bedroom Interior SM Golden Resorts Old Falls Courtallam",       src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
+  { label: "SM Golden Resorts Building with Western Ghats Mountain View",   src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png" },
+  { label: "Resort Entrance SM Golden Resorts Courtallam",                  src: "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png" },
+  { label: "Double Bed Non-AC Room SM Golden Resorts Courtallam",           src: "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png" },
+  { label: "Premium Room at SM Golden Resorts Near Old Falls",              src: "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png" },
+  { label: "SM Golden Resorts Courtallam Resort Photo",                     src: "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" },
+  { label: "New AC Room View SM Golden Resorts Courtallam 2026",            src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
 ];
 
 const FACILITIES = [
@@ -272,11 +272,11 @@ export default function Home() {
 
   // Best 5 photos for hero grid — hardcoded, never overridden by API
   const HERO_5 = [
-    { label: "Double Bed AC Room", src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
-    { label: "Bedroom",            src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
-    { label: "Room Entrance",      src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png" },
-    { label: "Resort Interior",    src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
-    { label: "Resort & Mountains", src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
+    { label: "SM Golden Resorts Courtallam AC Room with Blue Curtains", src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
+    { label: "Double Bed AC Room at SM Golden Resorts Courtallam",      src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
+    { label: "Room Entrance View SM Golden Resorts Old Falls Courtallam", src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png" },
+    { label: "Resort Interior Corridor SM Golden Resorts Courtallam",   src: "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png" },
+    { label: "SM Golden Resorts Building with Mountain View Courtallam", src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
   ];
   const [showAllFac, setShowAllFac]     = useState(false);
   const [activeTab, setActiveTab]       = useState("overview");
