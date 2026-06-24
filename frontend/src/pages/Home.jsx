@@ -834,7 +834,7 @@ export default function Home() {
                   arr.findIndex(r => r.price === room.price) === idx
                 ).sort((a, b) => a.price - b.price);
                 return (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 overflow-hidden">
                     {uniqueRooms.map((room, ri) => {
                       const isSelected = selectedRoomId === room.roomId;
                       const badgeColor = {
@@ -853,15 +853,15 @@ export default function Home() {
 
                       return (
                         <motion.div key={room.roomId}
-                          initial={{ opacity: 0, x: ri % 2 === 0 ? -80 : 80, scale: 0.95 }}
+                          initial={{ opacity: 0, x: ri % 2 === 0 ? -40 : 40, scale: 0.96 }}
                           whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                          viewport={{ once: true, amount: 0.15 }}
+                          viewport={{ once: true, amount: 0.1 }}
                           transition={{
                             type: "spring",
-                            stiffness: 80,
-                            damping: 18,
-                            mass: 0.8,
-                            delay: ri * 0.12,
+                            stiffness: 100,
+                            damping: 20,
+                            mass: 0.6,
+                            delay: ri * 0.1,
                           }}
                           whileTap={{ scale: 0.97 }}
                           onClick={() => setSelectedRoomId(room.roomId)}
