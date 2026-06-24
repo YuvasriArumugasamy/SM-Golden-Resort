@@ -665,31 +665,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Mobile: date + guests row — BELOW tabs */}
-          <div className="lg:hidden flex gap-2 py-2.5 border-t border-slate-100">
-            <div className="flex-1 border border-slate-200 rounded-2xl px-3 py-2.5 flex items-center gap-2 bg-white shadow-sm">
-              <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
-              <DatePicker
-                selectsRange startDate={checkIn} endDate={checkOut}
-                onChange={([s, e]) => {
-                  setCheckIn(s);
-                  setCheckOut(e);
-                  if (s && e) {
-                    setTimeout(() => setShowGuestsModal(true), 300);
-                  }
-                }}
-                minDate={new Date()} dateFormat="dd MMM yy"
-                className="text-sm font-medium text-slate-700 bg-transparent outline-none w-full"
-                placeholderText="Check-in – Check-out"
-              />
-            </div>
-            <button
-              onClick={() => setShowGuestsModal(true)}
-              className="border border-slate-200 rounded-2xl px-4 py-2.5 flex items-center gap-2 bg-white shadow-sm min-w-[120px] outline-none focus:outline-none">
-              <Users className="w-4 h-4 text-slate-400 shrink-0" />
-              <span className="text-sm font-medium text-slate-700">{guests} Guests</span>
-            </button>
-          </div>
+          {/* Mobile: date + guests row — hidden on mobile */}
 
         </div>
       </div>
