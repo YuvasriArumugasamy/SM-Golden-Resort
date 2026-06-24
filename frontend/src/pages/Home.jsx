@@ -859,13 +859,13 @@ export default function Home() {
                           onClick={() => setSelectedRoomId(room.roomId)}
                           className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-300 group relative ${
                             isSelected
-                              ? "border-2 border-amber-400 shadow-amber-100 shadow-lg -translate-y-1"
-                              : "border border-slate-200 hover:border-amber-300 hover:shadow-xl hover:-translate-y-1"
+                              ? "border-2 border-blue-500 shadow-blue-100 shadow-lg -translate-y-1"
+                              : "border border-slate-200 hover:border-blue-300 hover:shadow-xl hover:-translate-y-1"
                           }`}>
 
                           {/* Top color bar — slides in on hover */}
                           <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-3xl transition-all duration-300 ${
-                            isSelected ? "bg-amber-400" : "bg-transparent group-hover:bg-amber-400"
+                            isSelected ? "bg-blue-600" : "bg-transparent group-hover:bg-blue-600"
                           }`} />
 
                           {/* Photo — inside card with padding & rounded */}
@@ -888,7 +888,7 @@ export default function Home() {
                           <div className="px-5 pt-4 pb-5 flex flex-col gap-3 flex-1 text-center">
                             {/* Name */}
                             <h3 className={`font-extrabold text-lg leading-tight transition-colors duration-300 ${
-                              isSelected ? "text-amber-600" : "text-slate-800 group-hover:text-amber-600"
+                              isSelected ? "text-blue-600" : "text-slate-800 group-hover:text-blue-600"
                             }`}>
                               {ROOM_DISPLAY_NAME[room.type] || room.type}
                             </h3>
@@ -906,7 +906,7 @@ export default function Home() {
                             <div className="flex items-baseline justify-center gap-1 mt-1">
                               <span className="text-slate-500 text-sm font-medium">₹</span>
                               <span className={`text-3xl font-extrabold whitespace-nowrap transition-colors duration-300 ${
-                                isSelected ? "text-amber-600" : "text-slate-800 group-hover:text-amber-600"
+                                isSelected ? "text-blue-600" : "text-slate-800 group-hover:text-blue-600"
                               }`}>
                                 {room.price?.toLocaleString("en-IN")}
                               </span>
@@ -922,7 +922,7 @@ export default function Home() {
                               disabled={!room.available}
                               className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-all duration-300 shadow-sm mt-1 ${
                                 room.available
-                                  ? "bg-blue-600 hover:bg-amber-500 text-white"
+                                  ? "bg-blue-600 hover:bg-blue-700 text-white"
                                   : "bg-slate-100 text-slate-400 cursor-not-allowed"
                               }`}>
                               {room.available ? "Book Now" : "Sold Out"}
