@@ -857,11 +857,16 @@ export default function Home() {
                           transition={{ delay: ri * 0.07 }}
                           whileTap={{ scale: 0.97 }}
                           onClick={() => setSelectedRoomId(room.roomId)}
-                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-200 group ${
+                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-300 group relative ${
                             isSelected
-                              ? "border-2 border-blue-500 border-t-4 border-t-blue-700 shadow-blue-200 shadow-lg"
-                              : "border border-slate-200 hover:border-blue-400 hover:border-t-4 hover:border-t-blue-700 hover:shadow-xl hover:-translate-y-1"
+                              ? "border-2 border-amber-400 shadow-amber-100 shadow-lg -translate-y-1"
+                              : "border border-slate-200 hover:border-amber-300 hover:shadow-xl hover:-translate-y-1"
                           }`}>
+
+                          {/* Top color bar — slides in on hover */}
+                          <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-3xl transition-all duration-300 ${
+                            isSelected ? "bg-amber-400" : "bg-transparent group-hover:bg-amber-400"
+                          }`} />
 
                           {/* Photo — inside card with padding & rounded */}
                           <div className="px-4 pt-4">
@@ -869,7 +874,7 @@ export default function Home() {
                               <img
                                 src={ROOM_TYPE_IMAGE[room.type] || FALLBACK}
                                 alt={room.type}
-                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                               />
                               {isSelected && (
                                 <div className="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
@@ -882,13 +887,17 @@ export default function Home() {
                           {/* Info */}
                           <div className="px-5 pt-4 pb-5 flex flex-col gap-3 flex-1 text-center">
                             {/* Name */}
-                            <h3 className="font-extrabold text-slate-800 text-lg leading-tight">
+                            <h3 className={`font-extrabold text-lg leading-tight transition-colors duration-300 ${
+                              isSelected ? "text-amber-600" : "text-slate-800 group-hover:text-amber-600"
+                            }`}>
                               {ROOM_DISPLAY_NAME[room.type] || room.type}
                             </h3>
 
                             {/* Badge */}
                             <div className="flex justify-center">
-                              <span className={`text-xs font-extrabold px-4 py-1 rounded-full border tracking-wider ${badgeColor}`}>
+                              <span className={`text-xs font-extrabold px-4 py-1 rounded-full border tracking-wider transition-colors duration-300 ${
+                                isSelected || true ? badgeColor : badgeColor
+                              }`}>
                                 {badgeLabel}
                               </span>
                             </div>
@@ -896,7 +905,9 @@ export default function Home() {
                             {/* Price */}
                             <div className="flex items-baseline justify-center gap-1 mt-1">
                               <span className="text-slate-500 text-sm font-medium">₹</span>
-                              <span className="text-3xl font-extrabold text-slate-800 whitespace-nowrap">
+                              <span className={`text-3xl font-extrabold whitespace-nowrap transition-colors duration-300 ${
+                                isSelected ? "text-amber-600" : "text-slate-800 group-hover:text-amber-600"
+                              }`}>
                                 {room.price?.toLocaleString("en-IN")}
                               </span>
                               <span className="text-slate-400 text-sm font-medium whitespace-nowrap">/ day</span>
@@ -909,9 +920,9 @@ export default function Home() {
                                 state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests }
                               });}}
                               disabled={!room.available}
-                              className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-colors shadow-sm mt-1 ${
+                              className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-all duration-300 shadow-sm mt-1 ${
                                 room.available
-                                  ? "bg-blue-600 hover:bg-blue-700 text-white"
+                                  ? "bg-blue-600 hover:bg-amber-500 text-white"
                                   : "bg-slate-100 text-slate-400 cursor-not-allowed"
                               }`}>
                               {room.available ? "Book Now" : "Sold Out"}
