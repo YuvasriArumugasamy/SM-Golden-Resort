@@ -2,123 +2,88 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function SplashScreen({ onDone }) {
-  const [visible, setVisible] = useState(true);
+  const [phase, setPhase] = useState("in"); // "in" | "out"
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-      setTimeout(onDone, 700);
-    }, 3200);
-    return () => clearTimeout(timer);
+    // Show for 2.8s then fade out
+    const t1 = setTimeout(() => setPhase("out"), 2800);
+    const t2 = setTimeout(onDone, 3500);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [onDone]);
 
   return (
     <AnimatePresence>
-      {visible && (
+      {phase !== "done" && (
         <motion.div
+          key="splash"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          animate={{ opacity: phase === "out" ? 0 : 1 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] overflow-hidden"
+          className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center overflow-hidden"
         >
-          {/* ── Background photo with slow Ken Burns zoom ── */}
+
+          {/* ── Animated bed icon image ── */}
           <motion.div
-            initial={{ scale: 1 }}
-            animate={{ scale: 1.08 }}
-            transition={{ duration: 3.5, ease: "easeOut" }}
-            className="absolute inset-0"
+            initial={{ scale: 0.7, opacity: 0, y: 30 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 140, damping: 16, delay: 0.15 }}
+            className="relative"
           >
+            {/* Pulse ring behind image */}
+            <motion.div
+              animate={{ scale: [1, 1.18, 1], opacity: [0.15, 0.3, 0.15] }}
+              transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+              className="absolute inset-0 rounded-full bg-blue-100"
+              style={{ margin: "-24px" }}
+            />
             <img
-              src="/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png"
-              alt="SM Golden Resorts Courtallam"
-              className="w-full h-full object-cover"
+              src="/WhatsApp Image 2026-06-24 at 09.16.52.jpeg"
+              alt="SM Golden Resorts"
+              className="w-52 h-52 object-contain relative z-10"
             />
           </motion.div>
 
-          {/* ── Gradient overlay ── */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.15) 100%)",
-            }}
-          />
-
-          {/* ── Center content ── */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-
-            {/* Logo */}
-            <motion.div
-              initial={{ scale: 0.6, opacity: 0, y: -20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 160, damping: 16, delay: 0.2 }}
-              className="w-24 h-24 rounded-2xl overflow-hidden shadow-2xl mb-6 border-2 border-white/30"
-              style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}
-            >
-              <img src="/logo.jpeg" alt="SM Golden Resorts Logo" className="w-full h-full object-cover" />
-            </motion.div>
-
-            {/* Resort Name */}
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="text-white font-bold text-center drop-shadow-2xl"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(1.8rem, 6vw, 3rem)",
-                textShadow: "0 4px 20px rgba(0,0,0,0.6)",
-              }}
+          {/* ── Text ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.55 }}
+            className="text-center mt-6 space-y-1.5"
+          >
+            <h1
+              className="text-slate-900 font-extrabold"
+              style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem, 5vw, 2rem)" }}
             >
               SM Golden Resorts
-            </motion.h1>
-
-            {/* Location */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="text-white/80 text-sm font-semibold uppercase tracking-[0.25em] mt-2"
-              style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
-            >
+            </h1>
+            <p className="text-slate-500 text-xs font-semibold uppercase tracking-[0.25em]">
               Courtallam, Tamil Nadu
-            </motion.p>
-
-            {/* Tagline */}
+            </p>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.1, duration: 0.6 }}
-              className="text-white/55 text-xs mt-2 tracking-widest uppercase"
+              transition={{ delay: 0.9 }}
+              className="text-blue-600 text-[11px] font-bold uppercase tracking-widest"
             >
-              Your Perfect Nature Escape
+              Book Direct · Best Price · Exceptional Service
             </motion.p>
+          </motion.div>
 
-            {/* Shimmer loading bar */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.3 }}
-              className="mt-10 w-36 h-0.5 bg-white/20 rounded-full overflow-hidden"
-            >
-              <motion.div
-                initial={{ x: "-100%" }}
-                animate={{ x: "100%" }}
-                transition={{ duration: 1.4, ease: "easeInOut", delay: 1.4, repeat: Infinity }}
-                className="h-full w-1/2 bg-gradient-to-r from-transparent via-white/70 to-transparent rounded-full"
-              />
-            </motion.div>
-          </div>
-
-          {/* ── Bottom tagline ── */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.5 }}
-            className="absolute bottom-8 left-0 right-0 text-center text-white/40 text-[11px] tracking-[0.2em] uppercase"
+          {/* ── Shimmer progress bar ── */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mt-8 w-40 h-1 bg-slate-100 rounded-full overflow-hidden"
           >
-            Near Old Falls · Best Rates Guaranteed
-          </motion.p>
+            <motion.div
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 2.4, ease: "easeInOut", delay: 0.6 }}
+              className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
+            />
+          </motion.div>
+
         </motion.div>
       )}
     </AnimatePresence>
