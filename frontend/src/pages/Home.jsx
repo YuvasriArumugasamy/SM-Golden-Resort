@@ -59,7 +59,7 @@ const REVIEWS = [
 ];
 
 const FAQS = [
-  { q: "What types of rooms are available?", a: "We offer Single Bed Non-AC, Double Bed Non-AC, Double Bed AC, Villa Room Double Bed, and Suite Room AC — 20 rooms total." },
+  { q: "What types of rooms are available?", a: "We offer Single Bed Non-AC, Double Bed Non-AC, Double Bed AC, Villa Room Double Bed, and Suite Room AC." },
   { q: "Is kitchen facility available?", a: "Yes, kitchen facility is available. However, guests must inform us in advance so we can have it ready for you." },
   { q: "Are pets allowed?", a: "Yes, pets are allowed at SM Golden Resorts." },
   { q: "Is free parking available?", a: "Yes, free and secured parking available 24/7." },
@@ -571,7 +571,7 @@ export default function Home() {
             {/* Button — bottom right corner, no dark overlay on photo */}
             <button
               onClick={(e) => { e.stopPropagation(); setGalleryIdx(0); setGalleryOpen(true); }}
-              className="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white font-bold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transition-all border border-white/20"
+              className="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white font-bold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transition-all border-2 border-white"
               style={{ backdropFilter: "blur(4px)" }}
             >
               <span>{displayGallery.length} photos</span>
