@@ -562,23 +562,22 @@ export default function Home() {
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
           </div>
 
-          {/* Right bottom-right — "N photos →" overlay */}
+          {/* Right bottom-right — "N photos →" button — corner, no overlay */}
           <div
             className="relative overflow-hidden cursor-pointer group"
             onClick={() => { setGalleryIdx(4); setGalleryOpen(true); }}
           >
             <img src={HERO_5[4]?.src} alt={HERO_5[4]?.label}
                  className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-              <button
-                onClick={(e) => { e.stopPropagation(); setGalleryIdx(0); setGalleryOpen(true); }}
-                className="bg-black/80 hover:bg-black text-white font-bold text-sm px-5 py-2.5 rounded-full flex items-center gap-2 shadow-lg transition-all border border-white/30"
-                style={{ backdropFilter: "blur(4px)" }}
-              >
-                <span>{displayGallery.length} photos</span>
-                <span className="text-base">→</span>
-              </button>
-            </div>
+            {/* Button — bottom right corner, no dark overlay on photo */}
+            <button
+              onClick={(e) => { e.stopPropagation(); setGalleryIdx(0); setGalleryOpen(true); }}
+              className="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white font-bold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transition-all border border-white/20"
+              style={{ backdropFilter: "blur(4px)" }}
+            >
+              <span>{displayGallery.length} photos</span>
+              <span className="text-base">→</span>
+            </button>
           </div>
 
         </div>
