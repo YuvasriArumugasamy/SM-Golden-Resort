@@ -81,7 +81,14 @@ export default function Footer() {
           <ul className="space-y-3 text-xs">
             <li className="flex items-start gap-2 text-blue-100 font-medium">
               <MapPin className="w-3.5 h-3.5 text-white shrink-0 mt-0.5" />
-              <span>Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu</span>
+              <a
+                href="https://www.google.com/maps/search/SM+Golden+Resorts+Old+Falls+Courtallam+Tamil+Nadu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu
+              </a>
             </li>
             <li>
               <a href="tel:9003549849" className="flex items-center gap-2 text-blue-100 hover:text-white transition-colors font-medium">

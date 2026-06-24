@@ -607,7 +607,14 @@ export default function Home() {
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-1.5 text-xs text-blue-100">
               <MapPin className="w-3.5 h-3.5 text-blue-200 shrink-0" />
-              <span>Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu 627802</span>
+              <a
+                href="https://www.google.com/maps/search/SM+Golden+Resorts+Old+Falls+Courtallam+Tamil+Nadu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu 627802
+              </a>
               <span className="inline-flex items-center gap-1 bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full ml-1">🌦️ 27°C</span>
             </div>
           </div>
