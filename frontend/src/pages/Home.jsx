@@ -811,9 +811,9 @@ export default function Home() {
                   "Non-AC":      "Double Bed Non-AC",
                   "AC":          "Double Bed AC",
                   "Three Bed":   "Double Bed Non-AC",
-                  "Four Bed AC": "Suite Room",
+                  "Four Bed AC": "Suite Room AC",
                   "Villa":       "Villa",
-                  "Suite AC":    "Suite Room",
+                  "Suite AC":    "Suite Room AC",
                 };
                 const FALLBACK = "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg";
                 const uniqueRooms = rooms.filter((room, idx, arr) =>

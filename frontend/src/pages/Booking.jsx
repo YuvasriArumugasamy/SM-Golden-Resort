@@ -535,9 +535,9 @@ export default function Booking() {
                           "Non-AC":       { name: "Double Bed Non-AC", sub: "Non-A/C", icon: "🛏️" },
                           "AC":           { name: "Double Bed AC",     sub: "A/C",     icon: "❄️" },
                           "Three Bed":    { name: "Double Bed Non-AC", sub: "Non-A/C", icon: "🛏️" },
-                          "Four Bed AC":  { name: "Suite Room",        sub: "A/C",     icon: "👑" },
-                          "Villa":        { name: "Villa",             sub: "Non-A/C", icon: "🏡" },
-                          "Suite AC":     { name: "Suite Room",        sub: "A/C",     icon: "👑" },
+                          "Four Bed AC":  { name: "Suite Room AC",      sub: "A/C",     icon: "👑" },
+                          "Villa":        { name: "Villa",               sub: "Non-A/C", icon: "🏡" },
+                          "Suite AC":     { name: "Suite Room AC",       sub: "A/C",     icon: "👑" },
                         };
                         return rooms
                           .filter((r, i, arr) => arr.findIndex(x => x.price === r.price) === i)
