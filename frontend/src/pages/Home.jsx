@@ -1143,25 +1143,21 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ MOBILE BOTTOM BAR ══ */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            {selRoom ? (
-              <>
-                <p className="text-[10px] text-slate-400 font-medium">Final Price (incl. taxes)</p>
-                <p className="text-base font-bold text-slate-900">₹{total.toLocaleString("en-IN")}</p>
-              </>
-            ) : null}
-          </div>
-          {selRoom && (
+      {/* ══ MOBILE BOTTOM BAR — only when room is selected ══ */}
+      {selRoom && (
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[10px] text-slate-400 font-medium">Final Price (incl. taxes)</p>
+              <p className="text-base font-bold text-slate-900">₹{total.toLocaleString("en-IN")}</p>
+            </div>
             <button onClick={handleBook}
                     className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none btn-primary">
               Book Now →
             </button>
-          )}
+          </div>
         </div>
-      </div>
+      )}
 
 
       {/* ══ GALLERY LIGHTBOX ══ */}
