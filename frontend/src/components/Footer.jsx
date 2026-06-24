@@ -9,10 +9,10 @@ export default function Footer() {
       style={{ background: "linear-gradient(135deg, #0F2557 0%, #1a3470 50%, #0F2557 100%)" }}
     >
       {/* ── Main Footer ── */}
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
 
         {/* Brand */}
-        <div className="col-span-2 md:col-span-1">
+        <div className="md:col-span-1">
           <div className="flex items-center gap-3 mb-4">
             <img
               src="/logo.jpeg"
@@ -37,40 +37,44 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Quick Links */}
-        <div>
-          <h4 className="text-white font-extrabold text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4">
-            Quick Links
-          </h4>
-          <ul className="space-y-2.5 text-xs">
-            {[{ p: "/", l: "Home" }, { p: "/booking", l: "Book Online" }].map(link => (
-              <li key={link.p}>
-                <Link to={link.p} className="text-blue-100 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
-                  <span className="text-white">→</span> {link.l}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Quick Links + Room Types stacked */}
+        <div className="space-y-6">
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-white font-extrabold text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4">
+              Quick Links
+            </h4>
+            <ul className="space-y-2.5 text-xs">
+              {[{ p: "/", l: "Home" }, { p: "/booking", l: "Book Online" }].map(link => (
+                <li key={link.p}>
+                  <Link to={link.p} className="text-blue-100 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
+                    <span className="text-white">→</span> {link.l}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {/* Room Types */}
-        <div>
-          <h4 className="text-white font-extrabold text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4">
-            Room Types
-          </h4>
-          <ul className="space-y-2.5 text-xs">
-            {[
-              ["Non-AC Room", "₹1,500/day"],
-              ["AC Room", "₹2,000/day"],
-              ["Villa", "₹2,500/day"],
-              ["Suite Room", "₹10,000/day"],
-            ].map(([name, price]) => (
-              <li key={name} className="flex items-center justify-between text-blue-100 font-medium gap-2">
-                <span className="flex items-center gap-1.5 whitespace-nowrap"><span className="text-white shrink-0">→</span> {name}</span>
-                <span className="text-white font-bold whitespace-nowrap shrink-0">{price}</span>
-              </li>
-            ))}
-          </ul>
+          {/* Room Types */}
+          <div>
+            <h4 className="text-white font-extrabold text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4">
+              Room Types
+            </h4>
+            <ul className="space-y-2.5 text-xs">
+              {[
+                ["Single Bed Non-AC", "₹1,300/day"],
+                ["Double Bed Non-AC", "₹1,500/day"],
+                ["Double Bed AC", "₹2,000/day"],
+                ["Villa Room", "₹2,500/day"],
+                ["Suite Room AC", "₹10,000/day"],
+              ].map(([name, price]) => (
+                <li key={name} className="flex items-center justify-between text-blue-100 font-medium gap-2">
+                  <span className="flex items-center gap-1.5 whitespace-nowrap"><span className="text-white shrink-0">→</span> {name}</span>
+                  <span className="text-white font-bold whitespace-nowrap shrink-0">{price}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Contact */}
