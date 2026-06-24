@@ -34,7 +34,6 @@ const GALLERY = [
 ];
 
 const FACILITIES = [
-  { name: "Pickup / Drop", icon: Car },
   { name: "Kitchen", icon: UtensilsCrossed },
   { name: "Wifi", icon: Wifi },
   { name: "Parking", icon: ParkingCircle },
@@ -610,16 +609,6 @@ export default function Home() {
               <MapPin className="w-3.5 h-3.5 text-blue-200 shrink-0" />
               <span>Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu 627802</span>
               <span className="inline-flex items-center gap-1 bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full ml-1">🌦️ 27°C</span>
-            </div>
-            <div className="flex items-center gap-2 flex-wrap justify-center">
-              <div className="flex items-center gap-1.5">
-                <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center shadow-sm">
-                  <span className="text-[9px] font-extrabold text-blue-600">G</span>
-                </div>
-                <Stars />
-                <span className="text-xs font-semibold text-white">56 Reviews</span>
-              </div>
-              <span className="text-[10px] font-bold text-blue-900 bg-white px-2 py-0.5 rounded-full">LIMITED OFFER</span>
             </div>
           </div>
         </div>
