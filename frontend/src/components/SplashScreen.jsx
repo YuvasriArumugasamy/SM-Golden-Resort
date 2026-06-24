@@ -19,7 +19,8 @@ export default function SplashScreen({ onDone }) {
           initial={{ opacity: 1 }}
           animate={{ opacity: phase === "out" ? 0 : 1 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
-          className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
+          style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1d4ed8 100%)" }}
         >
 
           {/* ── Animated bed icon image ── */}
@@ -51,19 +52,19 @@ export default function SplashScreen({ onDone }) {
             className="text-center mt-6 space-y-1.5"
           >
             <h1
-              className="text-slate-900 font-extrabold"
+              className="text-white font-extrabold"
               style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem, 5vw, 2rem)" }}
             >
               SM Golden Resorts
             </h1>
-            <p className="text-slate-500 text-xs font-semibold uppercase tracking-[0.25em]">
+            <p className="text-blue-200 text-xs font-semibold uppercase tracking-[0.25em]">
               Courtallam, Tamil Nadu
             </p>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9 }}
-              className="text-blue-600 text-[11px] font-bold uppercase tracking-widest"
+              className="text-blue-300 text-[11px] font-bold uppercase tracking-widest"
             >
               Book Direct · Best Price · Exceptional Service
             </motion.p>
@@ -74,13 +75,13 @@ export default function SplashScreen({ onDone }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-8 w-40 h-1 bg-slate-100 rounded-full overflow-hidden"
+            className="mt-8 w-40 h-1 bg-white/20 rounded-full overflow-hidden"
           >
             <motion.div
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
               transition={{ duration: 2.4, ease: "easeInOut", delay: 0.6 }}
-              className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
+              className="h-full bg-gradient-to-r from-blue-300 to-white rounded-full"
             />
           </motion.div>
 
