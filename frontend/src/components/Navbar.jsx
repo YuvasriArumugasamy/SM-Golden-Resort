@@ -72,7 +72,7 @@ export default function Navbar() {
             <Phone className="w-3.5 h-3.5" /> Call
           </a>
           <Link to="/booking"
-                className="text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg shadow-sm transition-all">
+                className="text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-sm transition-all">
             Book Now
           </Link>
         </div>

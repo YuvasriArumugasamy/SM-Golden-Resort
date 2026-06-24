@@ -281,7 +281,7 @@ function ArticlePage({ article }) {
           <p className="text-white font-extrabold text-base">🌿 Your perfect nature escape awaits!</p>
           <p className="text-blue-100 text-sm">SM Golden Resorts is just 0.38 km from Old Falls, Courtallam. Book directly for the best rates.</p>
           <Link to="/booking"
-            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-6 py-3 rounded-xl text-sm transition-all shadow-lg">
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-6 py-3 rounded-xl text-sm transition-all shadow-lg">
             Book Now – Best Rate Guaranteed <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -380,7 +380,7 @@ export default function Blog() {
             SM Golden Resorts — just 0.38 km from Old Falls. Rooms from ₹1,300/day. Free parking, kitchen, pets welcome.
           </p>
           <Link to="/booking"
-            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-7 py-3.5 rounded-xl text-sm transition-all shadow-lg">
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-7 py-3.5 rounded-xl text-sm transition-all shadow-lg">
             Book Your Stay <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>

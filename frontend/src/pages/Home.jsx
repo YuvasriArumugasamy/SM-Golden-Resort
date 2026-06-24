@@ -416,7 +416,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
             onClick={() => navigate("/booking")}
-            className="mt-8 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-8 py-3.5 rounded-full text-sm shadow-2xl transition-all"
+            className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-8 py-3.5 rounded-full text-sm shadow-2xl transition-all"
           >
             Book Your Stay
           </motion.button>
@@ -897,7 +897,7 @@ export default function Home() {
                               disabled={!room.available}
                               className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-colors shadow-sm mt-1 ${
                                 room.available
-                                  ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                                  ? "bg-blue-600 hover:bg-blue-700 text-white"
                                   : "bg-slate-100 text-slate-400 cursor-not-allowed"
                               }`}>
                               {room.available ? "Book Now" : "Sold Out"}
@@ -1064,7 +1064,7 @@ export default function Home() {
                   </div>
                 ) : null}
                 <button onClick={handleBook}
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow outline-none focus:outline-none">
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow outline-none focus:outline-none">
                   {selRoom ? "Book Now" : "Select Room"}
                 </button>
               </div>
@@ -1104,7 +1104,7 @@ export default function Home() {
           </div>
           {selRoom && (
             <button onClick={handleBook}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none">
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none">
               Book Now →
             </button>
           )}
