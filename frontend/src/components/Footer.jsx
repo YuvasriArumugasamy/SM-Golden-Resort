@@ -25,10 +25,10 @@ export default function Footer() {
             </div>
           </div>
           <p className="text-blue-100 text-xs leading-relaxed">
-            Your perfect nature escape near the iconic Courtallam Old Falls. Double Bed, A/C, Three Bed & Four Bed A/C rooms available.
+            Your perfect nature escape near the iconic Courtallam Old Falls. Single Bed, Double Bed, AC, Villa & Suite rooms available.
           </p>
           <div className="flex gap-3 mt-4">
-            {[["20", "Rooms"], ["24/7", "Open"], ["4.8★", "Rating"]].map(([v, l]) => (
+            {[["24/7", "Open"], ["4.8★", "Rating"]].map(([v, l]) => (
               <div key={l} className="text-center bg-white/15 rounded-lg px-3 py-2 border border-white/20">
                 <p className="text-white font-extrabold text-sm">{v}</p>
                 <p className="text-blue-100 text-[9px] mt-0.5">{l}</p>
