@@ -15,6 +15,25 @@ import toast from "react-hot-toast";
 import { roomsData as fallbackRooms } from "../utils/roomData";
 import WhatsAppButton from "../components/WhatsAppButton";
 
+/* ── Scroll reveal hook ── */
+function useScrollReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 /* ── Static data ─────────────────────────── */
 const GALLERY = [
   { label: "SM Golden Resorts Resort Building Mountain View Courtallam",    src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png" },
@@ -272,6 +291,7 @@ const GuestCounter = ({ label, sub, val, set, min = 0 }) => (
 /* ══════════════════════════════════════════ */
 export default function Home() {
   const navigate = useNavigate();
+  useScrollReveal();
 
   const [rooms, setRooms]               = useState([]);
   const [roomsLoading, setRoomsLoading] = useState(true);
@@ -762,11 +782,11 @@ export default function Home() {
 
             {/* OVERVIEW */}
             <div ref={overviewRef} className="scroll-mt-[110px] space-y-5">
-              <div className="text-center space-y-1">
+              <div className="text-center space-y-1 reveal">
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">ABOUT</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Our <span className="text-blue-600 italic">Resort</span></h2>
               </div>
-              <div>
+              <div className="reveal delay-1">
                 <p className="text-slate-500 text-sm leading-relaxed">
                   SM Golden Resorts is a peaceful resort near Old Falls, Courtallam, Tamil Nadu. Located just 0.38 km from Old Falls Courtallam, we offer the best Courtallam resort booking experience for families, couples, and groups. With 11 well-maintained rooms — Double Bed Non-AC, Double Bed AC, Villa, and Suite — SM Golden Resorts Courtallam is your perfect nature escape. Enjoy free parking, kitchen access, pet-friendly stays, and 24-hour assistance.
                 </p>
@@ -775,7 +795,7 @@ export default function Home() {
 
               {/* FACILITIES */}
               <div ref={amenitiesRef} className="scroll-mt-[110px]">
-                <div className="text-center space-y-1 mb-4">
+                <div className="text-center space-y-1 mb-4 reveal">
                   <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">AMENITIES</p>
                   <h2 className="text-2xl font-extrabold text-slate-800">Our <span className="text-blue-600 italic">Facilities</span></h2>
                 </div>
@@ -783,7 +803,7 @@ export default function Home() {
                   {visibleFacilities.map((f, i) => {
                     const Icon = f.icon;
                     return (
-                      <div key={i} className="flex items-center gap-2.5">
+                      <div key={i} className="flex items-center gap-2.5 facility-item reveal delay-1">
                         <Icon className="w-4 h-4 text-slate-500 shrink-0" />
                         <span className="text-sm text-slate-600 font-medium">{f.name}</span>
                       </div>
@@ -805,7 +825,7 @@ export default function Home() {
 
             {/* ROOMS */}
             <div ref={roomsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-4 space-y-6">
-              <div className="text-center space-y-1">
+              <div className="text-center space-y-1 reveal">
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TARIFF</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Our <span className="text-blue-600 italic">Rooms & Prices</span></h2>
                 <p className="text-sm text-slate-400">Best rates guaranteed when you book directly with us</p>
@@ -937,7 +957,7 @@ export default function Home() {
 
             {/* MAP */}
             <div ref={mapRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-4">
-              <div className="text-center space-y-1 mb-2">
+              <div className="text-center space-y-1 mb-2 reveal">
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">LOCATION</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Find <span className="text-blue-600 italic">Us Here</span></h2>
               </div>
@@ -1096,7 +1116,7 @@ export default function Home() {
                   </div>
                 ) : null}
                 <button onClick={handleBook}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow outline-none focus:outline-none">
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow outline-none focus:outline-none btn-primary">
                   {selRoom ? "Book Now" : "Select Room"}
                 </button>
               </div>
@@ -1136,7 +1156,7 @@ export default function Home() {
           </div>
           {selRoom && (
             <button onClick={handleBook}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none">
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none btn-primary">
               Book Now →
             </button>
           )}
