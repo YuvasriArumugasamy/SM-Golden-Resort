@@ -853,10 +853,16 @@ export default function Home() {
 
                       return (
                         <motion.div key={room.roomId}
-                          initial={{ opacity: 0, x: ri % 2 === 0 ? -60 : 60 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true, amount: 0.2 }}
-                          transition={{ duration: 0.5, delay: ri * 0.08, ease: "easeOut" }}
+                          initial={{ opacity: 0, x: ri % 2 === 0 ? -80 : 80, scale: 0.95 }}
+                          whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                          viewport={{ once: true, amount: 0.15 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 80,
+                            damping: 18,
+                            mass: 0.8,
+                            delay: ri * 0.12,
+                          }}
                           whileTap={{ scale: 0.97 }}
                           onClick={() => setSelectedRoomId(room.roomId)}
                           className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-300 group relative ${
