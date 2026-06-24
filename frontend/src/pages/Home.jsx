@@ -75,6 +75,27 @@ const NEARBY = [
   ["Thendral Cottage", "1.32 km"],
   ["Courtallam Main Waterfalls", "1.38 km"],
   ["Main Falls Arch", "1.39 km"],
+  ["Mount Zion Holidays", "1.43 km"],
+  ["AruMeena Cottage Courtallam", "0.35 km"],
+  ["Puliaruvi cafe / Tiger falls cafe", "0.35 km"],
+  ["Arumugam S", "0.36 km"],
+  ["V Veerapandian", "0.37 km"],
+  ["C Arul Rajesh", "0.38 km"],
+  ["Santhanam Resorts", "0.56 km"],
+  ["K.Karuppasamy", "0.76 km"],
+  ["Bell Season Restaurant", "0.76 km"],
+  ["செட்டியார் இட்லி கடை", "0.77 km"],
+  ["Pothigai restaurant", "0.78 km"],
+  ["VMM COTTAGE", "0.78 km"],
+  ["Malathi S", "0.79 km"],
+  ["Sri Shanmuga Hotel", "0.80 km"],
+  ["Hariharasudan Gopalan", "0.83 km"],
+  ["இன்சுவை காரைக்குடி செட்டிநாடு ஹோட்டல்", "0.83 km"],
+  ["Sri Maha", "0.83 km"],
+  ["SUGUNA Chicken", "0.83 km"],
+  ["Sathyas Hotel", "0.85 km"],
+  ["K.Kokila", "0.86 km"],
+  ["Hotel Annapoorna", "0.99 km"],
 ];
 
 // Per-room photo sets — first image is the best hero shot
@@ -279,6 +300,7 @@ export default function Home() {
     { label: "SM Golden Resorts Building with Mountain View Courtallam",     src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
   ];
   const [showAmenitiesModal, setShowAmenitiesModal] = useState(false);
+  const [showAllNearby, setShowAllNearby] = useState(false);
   const [activeTab, setActiveTab]       = useState("overview");
   const [roomImgIdx, setRoomImgIdx]     = useState({});
   const [reviewIdx, setReviewIdx]       = useState(0);
@@ -951,15 +973,29 @@ export default function Home() {
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-base font-bold text-slate-800">Nearby Places</h3>
+                  <button
+                    onClick={() => setShowAllNearby(!showAllNearby)}
+                    className="text-sm font-semibold text-blue-600 hover:text-blue-700 outline-none focus:outline-none"
+                  >
+                    {showAllNearby ? "Show Less" : "Show More"}
+                  </button>
                 </div>
                 <div className="divide-y divide-slate-100">
-                  {NEARBY.map(([name, dist]) => (
+                  {(showAllNearby ? NEARBY : NEARBY.slice(0, 7)).map(([name, dist]) => (
                     <div key={name} className="flex items-center justify-between py-3">
                       <span className="text-sm text-slate-700">• {name}</span>
                       <span className="text-sm text-slate-500 font-medium shrink-0 ml-4">{dist}</span>
                     </div>
                   ))}
                 </div>
+                {!showAllNearby && (
+                  <button
+                    onClick={() => setShowAllNearby(true)}
+                    className="mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 outline-none focus:outline-none"
+                  >
+                    Show More <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
             </div>
 
