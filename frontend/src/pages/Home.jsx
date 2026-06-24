@@ -359,8 +359,81 @@ export default function Home() {
 
   const fmtDate = (d) => d ? d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "2-digit" }) : "";
 
+  /* ── Video autoplay/pause on scroll ── */
+  const videoRef = useRef(null);
+  const videoSectionRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const section = videoSectionRef.current;
+    if (!video || !section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.muted = false;
+          video.play().catch(() => { video.muted = true; video.play(); });
+        } else {
+          video.pause();
+          video.muted = true;
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="bg-white min-h-screen font-jakarta text-slate-800">
+
+      {/* ══ 0. HERO VIDEO ══ */}
+      <section ref={videoSectionRef} className="relative w-full overflow-hidden bg-black" style={{ height: "100svh", maxHeight: "700px" }}>
+        <video
+          ref={videoRef}
+          src="/WhatsApp Video 2026-06-23 at 17.47.03.mp4"
+          className="absolute inset-0 w-full h-full object-cover"
+          loop playsInline muted preload="auto"
+        />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-white font-bold drop-shadow-2xl"
+            style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.2rem, 8vw, 5rem)", textShadow: "0 4px 24px rgba(0,0,0,0.6)" }}
+          >
+            SM Golden Resorts
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-white/80 font-semibold mt-3 tracking-widest uppercase text-sm md:text-base"
+            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
+          >
+            Old Falls, Courtallam · Tamil Nadu
+          </motion.p>
+          <motion.button
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            onClick={() => navigate("/booking")}
+            className="mt-8 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-8 py-3.5 rounded-full text-sm shadow-2xl transition-all"
+          >
+            Book Your Stay
+          </motion.button>
+        </div>
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span className="text-white/60 text-xs font-medium uppercase tracking-widest">Scroll</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}
+            className="w-5 h-5 border-2 border-white/60 rounded-full flex items-center justify-center"
+          >
+            <div className="w-1.5 h-1.5 bg-white/60 rounded-full" />
+          </motion.div>
+        </motion.div>
+      </section>
 
       {/* ══ 1. PHOTO GRID ══ */}
       <section className="w-full max-w-[1280px] mx-auto px-3 pt-3">
