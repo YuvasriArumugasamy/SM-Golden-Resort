@@ -59,11 +59,11 @@ const REVIEWS = [
 ];
 
 const FAQS = [
-  { q: "What types of rooms are available?", a: "We offer Double Bed Non-AC (₹1,300), Double Bed A/C (₹1,600), Three Bed (₹1,800), and Four Bed A/C (₹2,800) — 20 rooms total." },
-  { q: "Is kitchen facility available?", a: "Yes, full kitchen facility available for all guests." },
+  { q: "What types of rooms are available?", a: "We offer Single Bed Non-AC, Double Bed Non-AC, Double Bed AC, Villa Room Double Bed, and Suite Room AC — 20 rooms total." },
+  { q: "Is kitchen facility available?", a: "Yes, kitchen facility is available. However, guests must inform us in advance so we can have it ready for you." },
   { q: "Are pets allowed?", a: "Yes, pets are allowed at SM Golden Resorts." },
   { q: "Is free parking available?", a: "Yes, free and secured parking available 24/7." },
-  { q: "What are check-in and check-out times?", a: "Check-in: 11:00 AM | Check-out: 10:00 AM. Early/late subject to availability." },
+  { q: "What are check-in and check-out times?", a: "Check-in and Check-out available 24 hours. You can arrive and depart at any time — we are open around the clock." },
   { q: "How far is Old Falls?", a: "Old Falls is just 0.38 km — a short walk from the resort." },
 ];
 
