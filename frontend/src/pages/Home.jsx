@@ -975,7 +975,7 @@ export default function Home() {
                   <h3 className="text-base font-bold text-slate-800">Nearby Places</h3>
                   <button
                     onClick={() => setShowAllNearby(!showAllNearby)}
-                    className="text-sm font-semibold text-blue-600 hover:text-blue-700 outline-none focus:outline-none"
+                    className="text-sm font-semibold text-blue-600 hover:text-blue-700 underline outline-none focus:outline-none"
                   >
                     {showAllNearby ? "Show Less" : "Show More"}
                   </button>
@@ -991,7 +991,7 @@ export default function Home() {
                 {!showAllNearby && (
                   <button
                     onClick={() => setShowAllNearby(true)}
-                    className="mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 outline-none focus:outline-none"
+                    className="mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700 underline flex items-center gap-1 outline-none focus:outline-none"
                   >
                     Show More <ChevronDown className="w-3.5 h-3.5" />
                   </button>
