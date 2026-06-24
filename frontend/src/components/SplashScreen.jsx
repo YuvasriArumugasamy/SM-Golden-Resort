@@ -40,7 +40,7 @@ export default function SplashScreen({ onDone }) {
             <img
               src="/WhatsApp Image 2026-06-24 at 09.16.52.jpeg"
               alt="SM Golden Resorts"
-              className="w-52 h-52 object-contain relative z-10"
+              className="w-52 h-52 object-cover rounded-full relative z-10 border-4 border-white/20"
             />
           </motion.div>
 
