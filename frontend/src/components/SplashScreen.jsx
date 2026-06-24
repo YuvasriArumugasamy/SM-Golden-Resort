@@ -5,9 +5,9 @@ export default function SplashScreen({ onDone }) {
   const [phase, setPhase] = useState("in"); // "in" | "out"
 
   useEffect(() => {
-    // Show for 2.8s then fade out
-    const t1 = setTimeout(() => setPhase("out"), 2800);
-    const t2 = setTimeout(onDone, 3500);
+    // Show for 1s then fade out
+    const t1 = setTimeout(() => setPhase("out"), 1000);
+    const t2 = setTimeout(onDone, 1700);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [onDone]);
 
@@ -80,7 +80,7 @@ export default function SplashScreen({ onDone }) {
             <motion.div
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
-              transition={{ duration: 2.4, ease: "easeInOut", delay: 0.6 }}
+              transition={{ duration: 0.8, ease: "easeInOut", delay: 0.1 }}
               className="h-full bg-gradient-to-r from-blue-300 to-white rounded-full"
             />
           </motion.div>
