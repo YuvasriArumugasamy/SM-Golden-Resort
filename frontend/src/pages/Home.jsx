@@ -1146,13 +1146,10 @@ export default function Home() {
       {/* ══ MOBILE BOTTOM BAR — only when room is selected ══ */}
       {selRoom && (
         <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-[10px] text-slate-400 font-medium">Final Price (incl. taxes)</p>
-              <p className="text-base font-bold text-slate-900">₹{total.toLocaleString("en-IN")}</p>
-            </div>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-[10px] text-slate-400 font-medium">Final Price (incl. taxes) · ₹{total.toLocaleString("en-IN")}</p>
             <button onClick={handleBook}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow flex items-center gap-2 shrink-0 outline-none focus:outline-none btn-primary">
+                    className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg outline-none focus:outline-none btn-primary">
               Book Now →
             </button>
           </div>
