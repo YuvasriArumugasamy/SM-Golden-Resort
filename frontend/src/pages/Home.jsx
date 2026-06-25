@@ -499,24 +499,6 @@ export default function Home() {
             {galleryIdx + 1} of {displayGallery.length}
           </div>
 
-          {/* Prev Arrow — left edge, outside feel */}
-          <button
-            onClick={() => setGalleryIdx(i => (i - 1 + displayGallery.length) % displayGallery.length)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center z-10 shadow-lg transition-all"
-            aria-label="Previous photo"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-
-          {/* Next Arrow — right edge */}
-          <button
-            onClick={() => setGalleryIdx(i => (i + 1) % displayGallery.length)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 text-white flex items-center justify-center z-10 shadow-lg transition-all"
-            aria-label="Next photo"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-
           {/* Dot indicators */}
           <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
             {displayGallery.slice(0, 10).map((_, i) => (
