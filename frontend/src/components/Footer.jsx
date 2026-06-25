@@ -60,6 +60,7 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2.5 text-xs">
             {[
+              "Single Bed Non-AC",
               "Double Bed Non-AC",
               "Double Bed AC",
               "Villa Room",
