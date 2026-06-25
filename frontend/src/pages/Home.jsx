@@ -662,28 +662,29 @@ export default function Home() {
           className="rounded-2xl px-5 py-5 mb-0"
           style={{ background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 60%, #1d4ed8 100%)" }}
         >
-          {/* Title */}
+          {/* Title — logo left + text right */}
           <div className="flex flex-col items-center mb-3">
-            {/* Logo */}
-            <img
-              src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg"
-              alt="SM Golden Resorts Logo"
-              className="w-16 h-16 rounded-full object-cover border-2 border-white/30 shadow-lg mb-3"
-            />
-            <h1 className="leading-tight text-center">
-              <span
-                className="block text-white font-bold tracking-wide drop-shadow-sm"
-                style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 5vw, 2.4rem)" }}
-              >
-                SM Golden Resorts
-              </span>
-              <span
-                className="block text-blue-100 font-semibold mt-0.5"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(0.85rem, 2.5vw, 1.05rem)", letterSpacing: "0.04em" }}
-              >
-                Courtallam, Tamil Nadu
-              </span>
-            </h1>
+            <div className="flex items-center gap-3 mb-1">
+              <img
+                src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg"
+                alt="SM Golden Resorts Logo"
+                className="w-14 h-14 rounded-full object-cover border-2 border-white/30 shadow-lg shrink-0"
+              />
+              <div className="text-left">
+                <span
+                  className="block text-white font-bold tracking-wide drop-shadow-sm"
+                  style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem, 4vw, 2.2rem)" }}
+                >
+                  SM Golden Resorts
+                </span>
+                <span
+                  className="block text-blue-100 font-semibold mt-0.5"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "clamp(0.8rem, 2vw, 1rem)", letterSpacing: "0.04em" }}
+                >
+                  Courtallam, Tamil Nadu
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* Address + Rating row */}
