@@ -215,60 +215,6 @@ export default function AdminSettings() {
             </form>
           </motion.div>
 
-          {/* ── Resort Info ── */}
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                <Info className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-extrabold text-slate-800 text-sm">Resort Info</h3>
-                <p className="text-[11px] text-slate-400 mt-0.5">SM Golden Resorts details</p>
-              </div>
-            </div>
-
-            <div className="space-y-3 text-sm">
-              <div className="bg-slate-50 rounded-xl p-4 space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Resort Name</p>
-                <p className="font-extrabold text-slate-800">SM Golden Resorts</p>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-4 space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Location</p>
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-                  <p className="text-slate-600 font-medium text-xs leading-relaxed">
-                    Old Falls Main Road, Old Falls, Courtallam, Tamil Nadu
-                  </p>
-                </div>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-4 space-y-2">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Contact Numbers</p>
-                <a href="tel:9443710420" className="flex items-center gap-2 text-xs font-medium text-slate-600 hover:text-blue-600 transition-colors">
-                  <Phone className="w-3.5 h-3.5 text-blue-500" /> 9443710420
-                </a>
-                <a href="tel:9003549849" className="flex items-center gap-2 text-xs font-medium text-slate-600 hover:text-blue-600 transition-colors">
-                  <Phone className="w-3.5 h-3.5 text-blue-500" /> 9003549849
-                </a>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-4 space-y-2">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Room Pricing</p>
-                <div className="space-y-1 text-xs text-slate-600 font-medium">
-                  {[
-                    ["Double Bed Non-AC",  "₹1,300/night"],
-                    ["Double Bed A/C",     "₹1,600/night"],
-                    ["Three Bed",          "₹1,800/night"],
-                    ["Four Bed A/C",       "₹2,800/night"],
-                  ].map(([label, price]) => (
-                    <div key={label} className="flex justify-between">
-                      <span>{label}</span>
-                      <span className="font-extrabold text-slate-800">{price}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
 
         {/* Security Note */}
