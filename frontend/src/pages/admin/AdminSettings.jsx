@@ -62,7 +62,6 @@ export default function AdminSettings() {
     });
     toast.success("Test notification sent!");
   };
-
   const handleChangePassword = async (e) => {
     e.preventDefault();
     if (!currentPassword || !newPassword || !confirmPassword) {

@@ -1,9 +1,7 @@
-// Firebase messaging — browser-only, all imports are dynamic (lazy)
-// This avoids Vite/Rollup build errors for server-side imports
+// Browser Push Notifications — Native Web API only (no Firebase messaging)
+// FCM token saving to Firestore still works via firebase/firestore
 
-const VAPID_KEY = "BB_p2fHDHA9BQdHB63px2TGGqzlS9OygTax1a7TCCwZjs-T0vx73qzmjQ5h-kZowpRp6EiYkr8FSzr6RD7cUHo";
-
-/* ── Request Permission + Get FCM Token ── */
+/* ── Request browser notification permission ── */
 export async function requestPermission() {
   if (typeof window === "undefined") return null;
   if (!("Notification" in window)) return null;
@@ -12,43 +10,30 @@ export async function requestPermission() {
   if (permission !== "granted") return null;
 
   try {
-    const firebase = await import("./firebase-config");
-    const { getToken, getMessaging } = await import("firebase/messaging");
+    // Save a record to Firestore that notifications are enabled
     const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+    const { db } = await import("./firebase-config");
 
-    const messaging = getMessaging(firebase.default);
-    const token = await getToken(messaging, { vapidKey: VAPID_KEY });
-
-    if (token) {
-      await addDoc(collection(firebase.db, "fcm_tokens"), {
-        token,
-        device: navigator.userAgent,
-        createdAt: serverTimestamp(),
-      });
-      return token;
-    }
-  } catch (err) {
-    console.error("FCM token error:", err);
-  }
-  return null;
-}
-
-/* ── Listen foreground messages ── */
-export async function listenForegroundMessages() {
-  if (typeof window === "undefined") return;
-  try {
-    const firebase = await import("./firebase-config");
-    const { onMessage, getMessaging } = await import("firebase/messaging");
-
-    const messaging = getMessaging(firebase.default);
-    onMessage(messaging, (payload) => {
-      const title = payload.notification?.title || "SM Golden Resorts 🏨";
-      const body  = payload.notification?.body  || "புது Booking வந்துச்சு!";
-      if (Notification.permission === "granted") {
-        new Notification(title, { body, icon: "/logo.jpeg" });
-      }
+    await addDoc(collection(db, "notification_devices"), {
+      device: navigator.userAgent,
+      enabledAt: serverTimestamp(),
+      url: window.location.origin,
     });
   } catch (err) {
-    console.error("FCM listen error:", err);
+    console.warn("Firestore save skipped:", err?.message);
   }
+
+  return "granted";
+}
+
+/* ── Show a local browser notification ── */
+export function showNotification(title, body, icon = "/logo.jpeg") {
+  if (typeof window === "undefined") return;
+  if (Notification.permission !== "granted") return;
+  new Notification(title, { body, icon });
+}
+
+/* ── Placeholder for foreground messages (no FCM needed) ── */
+export function listenForegroundMessages() {
+  // No-op: browser native notifications are shown via showNotification()
 }
