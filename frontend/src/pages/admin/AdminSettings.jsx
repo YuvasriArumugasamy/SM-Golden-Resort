@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import AdminLayout from "../../components/AdminLayout";
 import api from "../../api/axios";
 import toast from "react-hot-toast";
 import {
   Lock, Eye, EyeOff, Shield, RefreshCw, ExternalLink,
-  CheckCircle2, Info, Phone, MapPin
+  CheckCircle2, Info, Phone, MapPin, Bell
 } from "lucide-react";
 
 export default function AdminSettings() {
@@ -16,6 +16,49 @@ export default function AdminSettings() {
   const [showNew,         setShowNew]         = useState(false);
   const [showConfirm,     setShowConfirm]     = useState(false);
   const [loading,         setLoading]         = useState(false);
+
+  // Push Notification state
+  const [notifPermission, setNotifPermission] = useState("default");
+  const [notifLoading,    setNotifLoading]    = useState(false);
+
+  useEffect(() => {
+    if ("Notification" in window) {
+      setNotifPermission(Notification.permission);
+    }
+  }, []);
+
+  const handleEnableAlerts = async () => {
+    if (!("Notification" in window)) {
+      toast.error("Your browser doesn't support notifications"); return;
+    }
+    setNotifLoading(true);
+    try {
+      const permission = await Notification.requestPermission();
+      setNotifPermission(permission);
+      if (permission === "granted") {
+        toast.success("Push notifications enabled! ✅");
+      } else if (permission === "denied") {
+        toast.error("Notifications blocked. Please allow in browser settings.");
+      } else {
+        toast.error("Notification permission dismissed.");
+      }
+    } catch {
+      toast.error("Failed to request permission.");
+    } finally {
+      setNotifLoading(false);
+    }
+  };
+
+  const handleTestNotification = () => {
+    if (notifPermission !== "granted") {
+      toast.error("Please enable notifications first"); return;
+    }
+    new Notification("SM Golden Resorts 🏨", {
+      body: "Test: New booking received! Check your dashboard.",
+      icon: "/logo.jpeg",
+    });
+    toast.success("Test notification sent!");
+  };
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
@@ -74,6 +117,51 @@ export default function AdminSettings() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          {/* ── Push Notifications ── */}
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="lg:col-span-2 bg-blue-50 rounded-2xl border border-blue-100 shadow-sm p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
+                  <Bell className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-slate-800 text-sm">Push Notifications</h3>
+                  <p className="text-slate-500 text-xs mt-0.5 max-w-md">
+                    Receive instant alerts on this device when a new booking is requested or paid.
+                  </p>
+                  <p className={`text-xs font-bold mt-1.5 ${
+                    notifPermission === "granted" ? "text-emerald-600" :
+                    notifPermission === "denied"  ? "text-red-500" :
+                    "text-amber-600"
+                  }`}>
+                    Status: {
+                      notifPermission === "granted" ? "✅ Enabled" :
+                      notifPermission === "denied"  ? "❌ Denied" :
+                      "⚠️ Not set"
+                    }
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 shrink-0">
+                <button
+                  onClick={handleEnableAlerts}
+                  disabled={notifLoading || notifPermission === "granted"}
+                  className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-all shadow-sm"
+                >
+                  {notifLoading ? "Requesting..." : notifPermission === "granted" ? "✅ Alerts Enabled" : "Enable Alerts"}
+                </button>
+                <button
+                  onClick={handleTestNotification}
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-all shadow-sm flex items-center justify-center gap-1.5"
+                >
+                  <Bell className="w-3.5 h-3.5" /> Test Notification
+                </button>
+              </div>
+            </div>
+          </motion.div>
 
           {/* ── Change Password ── */}
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
