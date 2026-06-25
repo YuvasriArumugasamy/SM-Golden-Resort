@@ -169,7 +169,7 @@ function ManageBookingModal({ isOpen, onClose }) {
     if (!bookingId.trim()) { setError("Please enter your Booking ID"); return; }
     setLoading(true); setError(""); setBooking(null);
     try {
-      const res = await api.get(`/api/bookings/id/${bookingId.trim()}`);
+      const res = await api.get(`/api/bookings/search?bookingId=${bookingId.trim()}`);
       setBooking(res.data);
     } catch {
       setError("Booking not found. Please check your Booking ID.");

@@ -15,6 +15,14 @@ router.post("/", createBooking);
 // GET /api/bookings/id/:shortId — Public (customer booking lookup)
 router.get("/id/:shortId", getBookingByShortId);
 
+// GET /api/bookings/search?bookingId=XXXXXX — Public (alternative)
+router.get("/search", async (req, res) => {
+  const { bookingId } = req.query;
+  if (!bookingId) return res.status(400).json({ message: "bookingId required" });
+  req.params = { shortId: bookingId };
+  return getBookingByShortId(req, res);
+});
+
 // GET /api/bookings — Protected
 router.get("/", authMiddleware, getAllBookings);
 
