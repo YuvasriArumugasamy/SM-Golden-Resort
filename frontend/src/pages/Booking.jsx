@@ -313,17 +313,9 @@ export default function Booking() {
     }
   };
 
-  /* ── 6-digit numeric booking ID ── */
+  /* ── 6-char booking ID (last 6 of _id, uppercase — same as admin display) ── */
   const bookingId6 = createdBooking?._id
-    ? (() => {
-        try {
-          // Use last 8 chars of mongo ID, convert to number, take last 6 digits
-          const num = parseInt(createdBooking._id.slice(-8), 16);
-          return String(Math.abs(num) % 1000000).padStart(6, "0");
-        } catch {
-          return "000000";
-        }
-      })()
+    ? createdBooking._id.slice(-6).toUpperCase()
     : "000000";
 
   const handleDownloadPDF = async () => {

@@ -131,7 +131,7 @@ const deleteBooking = async (req, res) => {
   }
 };
 
-// @desc    Get booking by short ID (last 6 hex digits) — Public
+// @desc    Get booking by short ID (last 6 chars of _id, uppercase) — Public
 // @route   GET /api/bookings/id/:shortId
 // @access  Public
 const getBookingByShortId = async (req, res) => {
@@ -141,15 +141,15 @@ const getBookingByShortId = async (req, res) => {
       return res.status(400).json({ message: "Invalid Booking ID" });
     }
 
-    // Find booking whose _id ends with the given shortId
+    const search = shortId.trim().toUpperCase();
+
+    // Find booking whose _id last 6 chars match (same as admin display)
     const bookings = await Booking.find({}).select(
       "guestName phone roomType roomName checkIn checkOut guests totalPrice status createdAt"
     );
 
     const match = bookings.find(b => {
-      const id = b._id.toString();
-      const generated = String(Math.abs(parseInt(id.slice(-8), 16)) % 1000000).padStart(6, "0");
-      return generated === shortId.trim();
+      return b._id.toString().slice(-6).toUpperCase() === search;
     });
 
     if (!match) {
