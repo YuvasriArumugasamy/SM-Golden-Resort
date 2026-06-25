@@ -9,10 +9,10 @@ export default function Footer() {
       style={{ background: "linear-gradient(135deg, #0F2557 0%, #1a3470 50%, #0F2557 100%)" }}
     >
       {/* ── Main Footer ── */}
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
 
         {/* Brand */}
-        <div className="md:col-span-1">
+        <div className="col-span-2 md:col-span-1">
           <div className="flex items-center gap-3 mb-4">
             <img
               src="/logo.jpeg"
@@ -37,46 +37,42 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Quick Links + Room Types stacked */}
-        <div className="space-y-6">
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-white font-extrabold text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4">
-              Quick Links
-            </h4>
-            <ul className="space-y-2.5 text-xs">
-              {[{ p: "/", l: "Home" }, { p: "/booking", l: "Book Online" }].map(link => (
-                <li key={link.p}>
-                  <Link to={link.p} className="text-blue-100 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
-                    <span className="text-white">→</span> {link.l}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Room Types */}
-          <div>
-            <h4 className="text-white font-extrabold text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4">
-              Room Types
-            </h4>
-            <ul className="space-y-2.5 text-xs">
-              {[
-                "Single Bed Non-AC",
-                "Double Bed Non-AC",
-                "Double Bed AC",
-                "Villa Room",
-                "Suite Room AC",
-              ].map((name) => (
-                <li key={name} className="text-blue-100 font-medium flex items-center gap-1.5">
-                  <span className="text-white shrink-0">→</span> {name}
-                </li>
-              ))}
-              <li className="text-white font-bold pt-1">
-                Starts from ₹1,300 / night
+        {/* Quick Links */}
+        <div>
+          <h4 className="text-white font-extrabold text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4">
+            Quick Links
+          </h4>
+          <ul className="space-y-2.5 text-xs">
+            {[{ p: "/", l: "Home" }, { p: "/booking", l: "Book Online" }].map(link => (
+              <li key={link.p}>
+                <Link to={link.p} className="text-blue-100 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
+                  <span className="text-white">→</span> {link.l}
+                </Link>
               </li>
-            </ul>
-          </div>
+            ))}
+          </ul>
+        </div>
+
+        {/* Our Rooms */}
+        <div>
+          <h4 className="text-white font-extrabold text-xs uppercase tracking-widest border-b border-white/30 pb-2 mb-4">
+            Our Rooms
+          </h4>
+          <ul className="space-y-2.5 text-xs">
+            {[
+              "Double Bed Non-AC",
+              "Double Bed AC",
+              "Villa Room",
+              "Suite Room AC",
+            ].map((name) => (
+              <li key={name} className="text-blue-100 font-medium flex items-center gap-1.5">
+                <span className="text-white shrink-0">→</span> {name}
+              </li>
+            ))}
+            <li className="text-white font-bold pt-1">
+              Starts from ₹1,300 / day
+            </li>
+          </ul>
         </div>
 
         {/* Contact */}
