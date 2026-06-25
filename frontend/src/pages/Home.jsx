@@ -703,7 +703,7 @@ export default function Home() {
       </section>
 
       {/* ══ 3. STICKY TABS + MOBILE DATE/GUESTS BAR ══ */}
-      <div className="sticky top-0 z-40 bg-white border-b border-slate-100 shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+      <div className="sticky top-0 z-40 bg-blue-50 border-b border-blue-100 shadow-[0_1px_4px_rgba(37,99,235,0.08)]">
         <div className="max-w-[1280px] mx-auto px-4">
 
           {/* Tabs row — blue pill active — FIRST */}
