@@ -270,7 +270,7 @@ export default function AdminBookings() {
                     <tr><td colSpan={7} className="py-14 text-center text-slate-400 text-sm">No bookings found.</td></tr>
                   ) : filtered.map((b, i) => (
                     <tr key={b._id} className="border-b border-slate-50 hover:bg-slate-50/60 transition-colors">
-                      <td className="py-3 px-4 font-mono text-[10px] text-blue-600 font-bold">#{b._id?.slice(-6).toUpperCase()}</td>
+                      <td className="py-3 px-4 font-mono text-[10px] text-blue-600 font-bold">#{(() => { try { const num = parseInt(b._id?.slice(-8), 16); return String(Math.abs(num) % 1000000).padStart(6, "0"); } catch { return b._id?.slice(-6); } })()}</td>
                       <td className="py-3 px-4">
                         <p className="font-extrabold text-slate-800 text-sm">{b.guestName}</p>
                         {b.email && <p className="text-[10px] text-slate-400">{b.email}</p>}

@@ -141,15 +141,19 @@ const getBookingByShortId = async (req, res) => {
       return res.status(400).json({ message: "Invalid Booking ID" });
     }
 
-    const search = shortId.trim().toUpperCase();
+    const search = shortId.trim();
 
-    // Find booking whose _id last 6 chars match (same as admin display)
+    // Find booking using same numeric formula as booking confirmation page
     const bookings = await Booking.find({}).select(
       "guestName phone roomType roomName checkIn checkOut guests totalPrice status createdAt"
     ).lean();
 
     const match = bookings.find(b => {
-      return b._id.toString().slice(-6).toUpperCase() === search;
+      try {
+        const num = parseInt(b._id.toString().slice(-8), 16);
+        const generated = String(Math.abs(num) % 1000000).padStart(6, "0");
+        return generated === search;
+      } catch { return false; }
     });
 
     if (!match) {

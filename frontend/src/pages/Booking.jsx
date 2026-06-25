@@ -313,9 +313,16 @@ export default function Booking() {
     }
   };
 
-  /* ── 6-char booking ID (last 6 of _id, uppercase — same as admin display) ── */
+  /* ── 6-digit numeric booking ID ── */
   const bookingId6 = createdBooking?._id
-    ? createdBooking._id.slice(-6).toUpperCase()
+    ? (() => {
+        try {
+          const num = parseInt(createdBooking._id.slice(-8), 16);
+          return String(Math.abs(num) % 1000000).padStart(6, "0");
+        } catch {
+          return "000000";
+        }
+      })()
     : "000000";
 
   const handleDownloadPDF = async () => {
