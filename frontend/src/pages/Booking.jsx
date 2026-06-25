@@ -344,128 +344,175 @@ export default function Booking() {
     </div>
   );
 
+  /* ── helper: format date like "07 May 2026" ── */
+  const fmtConfirmDate = d => {
+    if (!d) return "—";
+    const date = new Date(d.includes("T") ? d : d + "T00:00:00");
+    return date.toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" });
+  };
+
+  /* ── WhatsApp message (mirrors reference style) ── */
+  const guestFullName   = `${firstName} ${lastName}`.trim();
+  const roomLabel       = selectedRoom?.type || createdBooking?.roomType || "—";
+  const displayTotal    = createdBooking?.totalPrice || total || 0;
+  const displayGst      = Math.round(displayTotal * 0.12 / 1.12);
+  const displayBase     = displayTotal - displayGst;
+
+  const waText = encodeURIComponent(
+    `✅ *SM Golden Resorts – Booking Confirmed!*\n\n` +
+    `Dear ${guestFullName},\n` +
+    `Your booking has been *confirmed*. Here are your details:\n\n` +
+    `🆔 Booking ID: *${bookingId6}*\n` +
+    `🛏️ Room: *${roomLabel}*\n` +
+    `📅 Check-in: *${fmtConfirmDate(checkIn)}*\n` +
+    `📅 Check-out: *${fmtConfirmDate(checkOut)}*\n` +
+    `🌙 Nights: *${nights}*\n` +
+    `👥 Guests: *${guests}*\n` +
+    `💰 Total Amount: *₹${displayTotal.toLocaleString("en-IN")}*\n\n` +
+    `📍 SM Golden Resorts, Old Falls Main Road, Courtallam – 627 802\n\n` +
+    `We look forward to hosting you! 🙏`
+  );
+
   /* ── Success ── */
 
   if (step === 3) return (
-    <div className="min-h-screen bg-[#f0f4f8] flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-blue-50 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-lg space-y-3">
         <motion.div
-          initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", duration: 0.5 }}
+          initial={{ opacity: 0, scale: 0.96, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
           ref={pdfRef}
-          className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+          className="bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden">
 
-        {/* Green top bar */}
-        <div className="bg-emerald-500 px-6 py-4 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-            <CheckCircle2 className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <p className="text-white font-extrabold text-sm">Booking Confirmed!</p>
-            <p className="text-emerald-100 text-xs mt-0.5">
-              Your advance has been confirmed! Show your Booking ID at reception.
-            </p>
-          </div>
-        </div>
-
-        <div className="px-6 py-5 space-y-5">
-          {/* Booking ID */}
-          <div className="flex items-center justify-between py-3 border-b border-slate-100">
-            <span className="text-slate-500 text-sm font-medium">Booking ID</span>
-            <span className="font-extrabold text-slate-800 text-lg tracking-widest">{bookingId6}</span>
-          </div>
-
-          {/* Guest Details Grid */}
-          <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Guest Name</p>
-              <p className="font-extrabold text-slate-800 text-sm">{`${firstName} ${lastName}`.trim()}</p>
-            </div>
-            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Phone</p>
-              <p className="font-extrabold text-slate-800 text-sm">+91 {phone}</p>
-            </div>
-            {email && (
-              <div className="col-span-2">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Email</p>
-                <p className="font-semibold text-slate-700 text-sm">{email}</p>
+          {/* ── Header banner ── */}
+          <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 px-6 py-5">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-6 h-6 text-white" />
               </div>
-            )}
-            <div className="col-span-2">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Room Type</p>
-              <p className="font-extrabold text-slate-800 text-sm">{selectedRoom?.type || createdBooking?.roomType || "—"}</p>
+              <div>
+                <p className="text-white font-extrabold text-base leading-none">Booking Confirmed! 🎉</p>
+                <p className="text-emerald-100 text-xs mt-1">
+                  Show your Booking ID at reception. Payment at property.
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Check-In</p>
-              <p className="font-extrabold text-slate-800 text-sm">
-                {new Date(checkIn + "T00:00:00").toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
-              </p>
-            </div>
-            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Check-Out</p>
-              <p className="font-extrabold text-slate-800 text-sm">
-                {new Date(checkOut + "T00:00:00").toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
-              </p>
-            </div>
-            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Nights</p>
-              <p className="font-extrabold text-slate-800 text-sm">{nights}</p>
-            </div>
-            <div>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Rooms × Guests</p>
-              <p className="font-extrabold text-slate-800 text-sm">{roomCount} × {guests}</p>
-            </div>
-            <div className="col-span-2">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Booked On</p>
-              <p className="font-semibold text-slate-700 text-sm">
-                {new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
-              </p>
+            {/* Hotel name strip */}
+            <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-2.5 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 border-2 border-white/40">
+                <img src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
+              </div>
+              <div>
+                <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>
+                <p className="text-emerald-100 text-[11px] mt-0.5 flex items-center gap-1">
+                  <MapPin className="w-3 h-3" /> Old Falls Main Road, Courtallam – 627 802
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Price Breakdown */}
-          <div className="border-t border-slate-100 pt-4 space-y-2 text-sm">
-            {(() => {
-              const displayTotal = createdBooking?.totalPrice || total || 0;
-              const displayGst   = Math.round(displayTotal * 0.12 / 1.12);
-              const displayBase  = displayTotal - displayGst;
-              return (
-                <>
-                  <div className="flex justify-between text-slate-500">
-                    <span>Room Charges ({nights} Night{nights > 1 ? "s" : ""})</span>
-                    <span>₹{displayBase.toLocaleString("en-IN")}</span>
-                  </div>
-                  <div className="flex justify-between text-slate-500">
-                    <span>GST (12%)</span>
-                    <span>₹{displayGst.toLocaleString("en-IN")}</span>
-                  </div>
-                  <div className="flex justify-between font-extrabold text-slate-800 text-base pt-1 border-t border-slate-100">
-                    <span>Total Amount</span>
-                    <span className="text-blue-600">₹{displayTotal.toLocaleString("en-IN")}</span>
-                  </div>
-                </>
-              );
-            })()}
-          </div>
+          <div className="px-6 py-5 space-y-5">
 
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 pt-1">
-            <Link to="/"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all text-center">
-              Back to Home
-            </Link>
-            <a href={`https://wa.me/919003549849?text=Hi!%20I%20booked%20a%20stay%20at%20SM%20Golden%20Resorts.%20Booking%20ID:%20${bookingId6}.%20Please%20confirm!`}
-              target="_blank" rel="noreferrer"
-              className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
-              <MessageCircle className="w-4 h-4" /> Confirm on WhatsApp
-            </a>
+            {/* ── Booking ID badge ── */}
+            <div className="flex items-center justify-between bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl px-5 py-4">
+              <div>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Booking ID</p>
+                <p className="font-extrabold text-slate-800 text-2xl tracking-[0.2em] mt-0.5">{bookingId6}</p>
+              </div>
+              <div className="text-4xl">🎫</div>
+            </div>
+
+            {/* ── Guest info row ── */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-slate-50 rounded-xl px-4 py-3">
+                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">👤 Guest Name</p>
+                <p className="font-extrabold text-slate-800 text-sm leading-tight">{guestFullName}</p>
+              </div>
+              <div className="bg-slate-50 rounded-xl px-4 py-3">
+                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">📞 Phone</p>
+                <p className="font-extrabold text-slate-800 text-sm">+91 {phone}</p>
+              </div>
+            </div>
+
+            {/* ── Stay details ── */}
+            <div className="border border-slate-200 rounded-2xl overflow-hidden">
+              {/* Room */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100">
+                <span className="text-sm text-slate-500 font-medium flex items-center gap-2">🛏️ Room Type</span>
+                <span className="font-extrabold text-slate-800 text-sm">{roomLabel}</span>
+              </div>
+              {/* Dates */}
+              <div className="grid grid-cols-2 divide-x divide-slate-100 border-b border-slate-100">
+                <div className="px-4 py-3">
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">📅 Check-in</p>
+                  <p className="font-extrabold text-slate-800 text-sm">{fmtConfirmDate(checkIn)}</p>
+                  {checkInTime && <p className="text-xs text-slate-400 mt-0.5">{checkInTime}</p>}
+                </div>
+                <div className="px-4 py-3">
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">📅 Check-out</p>
+                  <p className="font-extrabold text-slate-800 text-sm">{fmtConfirmDate(checkOut)}</p>
+                  {checkOutTime && <p className="text-xs text-slate-400 mt-0.5">{checkOutTime}</p>}
+                </div>
+              </div>
+              {/* Nights / Rooms / Guests */}
+              <div className="grid grid-cols-3 divide-x divide-slate-100">
+                <div className="px-4 py-3 text-center">
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">🌙 Nights</p>
+                  <p className="font-extrabold text-slate-800 text-sm">{nights}</p>
+                </div>
+                <div className="px-4 py-3 text-center">
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">🚪 Rooms</p>
+                  <p className="font-extrabold text-slate-800 text-sm">{roomCount}</p>
+                </div>
+                <div className="px-4 py-3 text-center">
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">👥 Guests</p>
+                  <p className="font-extrabold text-slate-800 text-sm">{guests}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Price breakdown ── */}
+            <div className="bg-blue-50 border border-blue-100 rounded-2xl px-5 py-4 space-y-2.5">
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">💰 Price Breakdown</p>
+              <div className="flex justify-between text-sm text-slate-600">
+                <span>Room Charges ({nights} Night{nights > 1 ? "s" : ""})</span>
+                <span className="font-bold text-slate-700">₹{displayBase.toLocaleString("en-IN")}</span>
+              </div>
+              <div className="flex justify-between text-sm text-slate-600">
+                <span>GST (12%)</span>
+                <span className="font-bold text-slate-700">₹{displayGst.toLocaleString("en-IN")}</span>
+              </div>
+              <div className="flex justify-between text-base font-extrabold text-slate-800 pt-1 border-t border-blue-200">
+                <span>Total Amount</span>
+                <span className="text-blue-600">₹{displayTotal.toLocaleString("en-IN")}</span>
+              </div>
+              <p className="text-[9px] text-slate-400 italic">Payment to be made at the property. Valid ID required at check-in.</p>
+            </div>
+
+            {/* ── Booked on ── */}
+            <p className="text-center text-xs text-slate-400 font-medium">
+              Booked on {new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}
+            </p>
+
+            {/* ── Action buttons ── */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-1">
+              <Link to="/"
+                className="flex-1 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-xl text-sm transition-all text-center">
+                ← Back to Home
+              </Link>
+              <a href={`https://wa.me/919003549849?text=${waText}`}
+                target="_blank" rel="noreferrer"
+                className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                <MessageCircle className="w-4 h-4" /> Share on WhatsApp
+              </a>
+            </div>
           </div>
-        </div>
         </motion.div>
 
         {/* Download PDF button — outside the card */}
         <button onClick={handleDownloadPDF}
-          className="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 rounded-2xl text-sm transition-all shadow-sm">
+          className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-2xl text-sm transition-all shadow-md">
           <Download className="w-4 h-4" /> Download Booking Receipt (PDF)
         </button>
       </div>
