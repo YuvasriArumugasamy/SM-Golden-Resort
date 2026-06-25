@@ -6,15 +6,15 @@ const WhatsAppButton = () => {
       href="https://wa.me/919003549849?text=Hi,%20I%20want%20to%20book%20a%20room%20at%20SM%20Golden%20Resorts"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-transform duration-300 hover:scale-110 active:scale-95 group"
+      className="whatsapp-float fixed bottom-5 right-4 z-50 flex items-center justify-center w-11 h-11 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-transform duration-300 hover:scale-110 active:scale-95 group"
       aria-label="Contact us on WhatsApp"
     >
-      {/* Outer Pulse rings */}
+      {/* Pulse ring */}
       <span className="absolute inset-0 rounded-full bg-green-500 animate-ping-slow opacity-75 z-[-1]"></span>
 
       {/* WhatsApp SVG Icon */}
       <svg
-        className="w-8 h-8 text-white"
+        className="w-6 h-6 text-white"
         fill="currentColor"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
