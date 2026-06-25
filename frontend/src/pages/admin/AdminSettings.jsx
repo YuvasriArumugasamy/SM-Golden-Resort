@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import AdminLayout from "../../components/AdminLayout";
 import api from "../../api/axios";
 import toast from "react-hot-toast";
+import { requestPermission, listenForegroundMessages } from "../../notification";
 import {
   Lock, Eye, EyeOff, Shield, RefreshCw, ExternalLink,
   CheckCircle2, Info, Phone, MapPin, Bell
@@ -33,17 +34,19 @@ export default function AdminSettings() {
     }
     setNotifLoading(true);
     try {
-      const permission = await Notification.requestPermission();
-      setNotifPermission(permission);
-      if (permission === "granted") {
-        toast.success("Push notifications enabled! ✅");
-      } else if (permission === "denied") {
+      const token = await requestPermission();
+      const perm = Notification.permission;
+      setNotifPermission(perm);
+      if (perm === "granted" && token) {
+        listenForegroundMessages();
+        toast.success("Push notifications enabled! ✅ Token saved.");
+      } else if (perm === "denied") {
         toast.error("Notifications blocked. Please allow in browser settings.");
       } else {
         toast.error("Notification permission dismissed.");
       }
     } catch {
-      toast.error("Failed to request permission.");
+      toast.error("Failed to enable notifications.");
     } finally {
       setNotifLoading(false);
     }

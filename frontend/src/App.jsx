@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AnimatePresence, motion } from "framer-motion";
+import { requestPermission, listenForegroundMessages } from "./notification";
 
 // Context
 import { AuthProvider } from "./context/AuthContext";
@@ -102,6 +103,14 @@ const AppLayout = () => {
 
 export default function App() {
   const [splashDone, setSplashDone] = React.useState(false);
+
+  React.useEffect(() => {
+    // Init Firebase notifications silently (only if previously granted)
+    if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+      requestPermission().catch(() => {});
+      listenForegroundMessages();
+    }
+  }, []);
 
   return (
     <AuthProvider>
