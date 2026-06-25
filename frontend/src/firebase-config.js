@@ -1,5 +1,4 @@
-import { initializeApp } from "firebase/app";
-import { getMessaging } from "firebase/messaging";
+import { initializeApp, getApps } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -11,6 +10,8 @@ const firebaseConfig = {
   appId: "1:200819635816:web:a1b7ba3a5c4984d0e5addd"
 };
 
-const app = initializeApp(firebaseConfig);
-export const messaging = getMessaging(app);
+// Avoid duplicate app init
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+
 export const db = getFirestore(app);
+export default app;
