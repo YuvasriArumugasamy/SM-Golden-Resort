@@ -131,4 +131,46 @@ const deleteBooking = async (req, res) => {
   }
 };
 
-module.exports = { createBooking, getAllBookings, updateBookingStatus, deleteBooking };
+// @desc    Get booking by short ID (last 6 hex digits) — Public
+// @route   GET /api/bookings/id/:shortId
+// @access  Public
+const getBookingByShortId = async (req, res) => {
+  try {
+    const { shortId } = req.params;
+    if (!shortId || shortId.length < 4) {
+      return res.status(400).json({ message: "Invalid Booking ID" });
+    }
+
+    // Find booking whose _id ends with the given shortId
+    const bookings = await Booking.find({}).select(
+      "guestName phone roomType roomName checkIn checkOut guests totalPrice status createdAt"
+    );
+
+    const match = bookings.find(b => {
+      const id = b._id.toString();
+      const generated = String(Math.abs(parseInt(id.slice(-8), 16)) % 1000000).padStart(6, "0");
+      return generated === shortId.trim();
+    });
+
+    if (!match) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    res.json({
+      _id: match._id,
+      guestName: match.guestName,
+      phone: match.phone,
+      roomType: match.roomType || match.roomName,
+      checkIn: match.checkIn,
+      checkOut: match.checkOut,
+      guests: match.guests,
+      totalPrice: match.totalPrice,
+      status: match.status,
+      createdAt: match.createdAt,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+module.exports = { createBooking, getAllBookings, updateBookingStatus, deleteBooking, getBookingByShortId };

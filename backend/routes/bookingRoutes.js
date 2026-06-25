@@ -5,11 +5,15 @@ const {
   getAllBookings,
   updateBookingStatus,
   deleteBooking,
+  getBookingByShortId,
 } = require("../controllers/bookingController");
 const authMiddleware = require("../middleware/authMiddleware");
 
 // POST /api/bookings — Public
 router.post("/", createBooking);
+
+// GET /api/bookings/id/:shortId — Public (customer booking lookup)
+router.get("/id/:shortId", getBookingByShortId);
 
 // GET /api/bookings — Protected
 router.get("/", authMiddleware, getAllBookings);
