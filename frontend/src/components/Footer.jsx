@@ -62,17 +62,19 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               {[
-                ["Single Bed Non-AC", "₹1,300/day"],
-                ["Double Bed Non-AC", "₹1,500/day"],
-                ["Double Bed AC", "₹2,000/day"],
-                ["Villa Room", "₹2,500/day"],
-                ["Suite Room AC", "₹10,000/day"],
-              ].map(([name, price]) => (
-                <li key={name} className="flex items-center justify-between text-blue-100 font-medium gap-2">
-                  <span className="flex items-center gap-1.5 whitespace-nowrap"><span className="text-white shrink-0">→</span> {name}</span>
-                  <span className="text-white font-bold whitespace-nowrap shrink-0">{price}</span>
+                "Single Bed Non-AC",
+                "Double Bed Non-AC",
+                "Double Bed AC",
+                "Villa Room",
+                "Suite Room AC",
+              ].map((name) => (
+                <li key={name} className="text-blue-100 font-medium flex items-center gap-1.5">
+                  <span className="text-white shrink-0">→</span> {name}
                 </li>
               ))}
+              <li className="text-white font-bold pt-1">
+                Starts from ₹1,300 / night
+              </li>
             </ul>
           </div>
         </div>
