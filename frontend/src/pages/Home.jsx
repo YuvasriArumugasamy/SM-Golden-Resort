@@ -18,13 +18,11 @@ import WhatsAppButton from "../components/WhatsAppButton";
 /* ── Scroll reveal hook ── */
 function useScrollReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale");
+    const els = document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale, .img-reveal");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
+          if (entry.isIntersecting) entry.target.classList.add("visible");
         });
       },
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
@@ -32,6 +30,31 @@ function useScrollReveal() {
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+}
+
+/* ── Counter animation hook ── */
+function useCountUp(target, duration = 1500) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        let start = 0;
+        const step = target / (duration / 16);
+        const timer = setInterval(() => {
+          start += step;
+          if (start >= target) { setCount(target); clearInterval(timer); }
+          else setCount(Math.floor(start));
+        }, 16);
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target, duration]);
+  return [count, ref];
 }
 
 /* ── Static data ─────────────────────────── */
@@ -672,7 +695,7 @@ export default function Home() {
               />
               <div className="text-left">
                 <span
-                  className="block text-white font-bold tracking-wide drop-shadow-sm"
+                  className="block text-white font-bold tracking-wide drop-shadow-sm text-gradient-animate"
                   style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.4rem, 4vw, 2.2rem)" }}
                 >
                   SM Golden Resorts
@@ -839,11 +862,11 @@ export default function Home() {
                   <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">AMENITIES</p>
                   <h2 className="text-2xl font-extrabold text-slate-800">Our <span className="text-blue-600 italic">Facilities</span></h2>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-2 stagger-children">
                   {visibleFacilities.map((f, i) => {
                     const Icon = f.icon;
                     return (
-                      <div key={i} className="flex items-center gap-2.5 facility-item reveal delay-1">
+                      <div key={i} className="flex items-center gap-2.5 facility-item reveal fade-up delay-1">
                         <Icon className="w-4 h-4 text-slate-500 shrink-0" />
                         <span className="text-sm text-slate-600 font-medium">{f.name}</span>
                       </div>
@@ -929,7 +952,7 @@ export default function Home() {
                           }}
                           whileTap={{ scale: 0.97 }}
                           onClick={() => setSelectedRoomId(room.roomId)}
-                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-300 group relative ${
+                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-300 group relative tilt-card ${
                             isSelected
                               ? "border-2 border-blue-500 shadow-blue-100 shadow-lg -translate-y-1"
                               : "border border-slate-200 hover:border-blue-300 hover:shadow-xl hover:-translate-y-1"
