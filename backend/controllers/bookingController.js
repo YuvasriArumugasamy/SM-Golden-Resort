@@ -146,7 +146,7 @@ const getBookingByShortId = async (req, res) => {
     // Find booking whose _id last 6 chars match (same as admin display)
     const bookings = await Booking.find({}).select(
       "guestName phone roomType roomName checkIn checkOut guests totalPrice status createdAt"
-    );
+    ).lean();
 
     const match = bookings.find(b => {
       return b._id.toString().slice(-6).toUpperCase() === search;
