@@ -75,8 +75,8 @@ function Sidebar({ selectedRoom, checkIn, checkOut, guests, nights, roomCount, s
       {/* Hotel card */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="bg-slate-900 px-4 py-3 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl overflow-hidden shrink-0">
-            <img src="/logo.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
+          <div className="w-9 h-9 rounded-full overflow-hidden shrink-0">
+            <img src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
           </div>
           <div>
             <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>

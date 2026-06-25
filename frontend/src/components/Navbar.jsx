@@ -33,9 +33,9 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <img
-            src="/logo.jpeg"
+            src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg"
             alt="SM Golden Resorts Logo"
-            className="w-10 h-10 object-contain rounded-xl"
+            className="w-10 h-10 object-contain rounded-full"
           />
           <div className="hidden sm:block">
             <span className="block text-sm font-extrabold text-[#1C2B4A] leading-none font-jakarta">

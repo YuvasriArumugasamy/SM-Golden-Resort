@@ -17,8 +17,8 @@ messaging.onBackgroundMessage((payload) => {
     payload.notification?.title || "SM Golden Resorts 🏨",
     {
       body: payload.notification?.body || "புது Booking வந்துச்சு!",
-      icon: "/logo.jpeg",
-      badge: "/logo.jpeg",
+      icon: "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg",
+      badge: "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg",
     }
   );
 });
