@@ -55,27 +55,41 @@ const Modal = ({ title, isOpen, onClose, children }) => {
 };
 
 /* ── Stat Card ── */
-const StatCard = ({ icon: Icon, label, value, sub, color, delay = 0, to }) => {
+const StatCard = ({ icon: Icon, label, value, sub, color = "blue", delay = 0, to }) => {
   const navigate = useNavigate();
+  const themeClasses = {
+    blue:   { bg: "from-blue-50/50 to-blue-100/30", iconBg: "bg-blue-500", iconText: "text-white", border: "border-blue-100", dot: "bg-blue-400" },
+    violet: { bg: "from-violet-50/50 to-violet-100/30", iconBg: "bg-violet-500", iconText: "text-white", border: "border-violet-100", dot: "bg-violet-400" },
+    emerald:{ bg: "from-emerald-50/50 to-emerald-100/30", iconBg: "bg-emerald-500", iconText: "text-white", border: "border-emerald-100", dot: "bg-emerald-400" },
+    amber:  { bg: "from-amber-50/50 to-amber-100/30", iconBg: "bg-amber-500", iconText: "text-white", border: "border-amber-100", dot: "bg-amber-400" },
+    rose:   { bg: "from-rose-50/50 to-rose-100/30", iconBg: "bg-rose-500", iconText: "text-white", border: "border-rose-100", dot: "bg-rose-400" },
+    orange: { bg: "from-orange-50/50 to-orange-100/30", iconBg: "bg-orange-500", iconText: "text-white", border: "border-orange-100", dot: "bg-orange-400" },
+    teal:   { bg: "from-teal-50/50 to-teal-100/30", iconBg: "bg-teal-500", iconText: "text-white", border: "border-teal-100", dot: "bg-teal-400" },
+  };
+  const theme = themeClasses[color] || themeClasses.blue;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
-      whileHover={{ scale: 1.03, y: -2 }}
+      whileHover={{ scale: 1.03, y: -4 }}
       whileTap={{ scale: 0.97 }}
       onClick={() => to && navigate(to)}
-      className={`bg-white rounded-2xl border border-slate-200 shadow-sm p-5 transition-all ${
-        to ? "cursor-pointer hover:shadow-lg hover:border-blue-300" : "hover:shadow-md"
+      className={`relative overflow-hidden bg-gradient-to-br ${theme.bg} rounded-3xl border ${theme.border} shadow-sm p-6 transition-all ${
+        to ? "cursor-pointer hover:shadow-xl" : ""
       }`}>
-      <div className="flex items-start justify-between mb-3">
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{label}</p>
-        <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
-          <Icon className="w-4 h-4" />
+      {/* Decorative background shape */}
+      <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full opacity-10 blur-2xl ${theme.iconBg}`} />
+
+      <div className="flex items-start justify-between mb-4 relative z-10">
+        <p className="text-[11px] font-extrabold text-slate-500 uppercase tracking-widest">{label}</p>
+        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${theme.iconBg} ${theme.iconText}`}>
+          <Icon className="w-5 h-5" />
         </div>
       </div>
-      <p className="text-3xl font-extrabold text-slate-800 leading-none">{value ?? "—"}</p>
-      <p className="text-[10px] text-emerald-500 font-bold mt-2 flex items-center gap-1">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+      <p className="text-4xl font-black text-slate-800 leading-none relative z-10">{value ?? "—"}</p>
+      <p className="text-[11px] text-slate-500 font-bold mt-3 flex items-center gap-1.5 relative z-10">
+        <span className={`w-1.5 h-1.5 rounded-full ${theme.dot} inline-block animate-pulse`} />
         {sub || "Real-time update"}
       </p>
     </motion.div>
@@ -120,16 +134,16 @@ function Overview({ stats, bookings }) {
     <div className="space-y-5">
       {/* Stat row 1 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={BedDouble}    label="Total Rooms"     value={stats?.totalRooms ?? 11} color="bg-blue-50 text-blue-600"       delay={0}    to="/admin/rooms" />
-        <StatCard icon={CalendarDays} label="Total Bookings"  value={total}                   color="bg-violet-50 text-violet-600"   delay={0.05} to="/admin/bookings" />
-        <StatCard icon={CheckCircle2} label="Available Rooms" value={stats?.totalRooms ?? 11} color="bg-emerald-50 text-emerald-600" delay={0.1}  to="/admin/rooms" />
-        <StatCard icon={Clock}        label="Today Check-ins" value={todayIn}                 color="bg-amber-50 text-amber-600"     delay={0.15} to="/admin/bookings" />
+        <StatCard icon={BedDouble}    label="Total Rooms"     value={stats?.totalRooms ?? 11} color="blue"       delay={0}    to="/admin/rooms" sub="Active properties" />
+        <StatCard icon={CalendarDays} label="Total Bookings"  value={total}                   color="violet"   delay={0.05} to="/admin/bookings" sub="All time bookings" />
+        <StatCard icon={CheckCircle2} label="Available Rooms" value={stats?.totalRooms ?? 11} color="emerald" delay={0.1}  to="/admin/rooms" sub="Ready for guests" />
+        <StatCard icon={Clock}        label="Today Check-ins" value={todayIn}                 color="amber"     delay={0.15} to="/admin/bookings" sub="Expected today" />
       </div>
       {/* Stat row 2 */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-        <StatCard icon={XCircle}    label="Today Check-outs" value={todayOut}   color="bg-red-50 text-red-500"        delay={0.2}  to="/admin/bookings" />
-        <StatCard icon={Clock}      label="Pending"          value={pending}    color="bg-orange-50 text-orange-600"  delay={0.25} to="/admin/bookings" />
-        <StatCard icon={TrendingUp} label="Total Revenue"    value={`₹${revenue.toLocaleString("en-IN")}`} color="bg-teal-50 text-teal-600" delay={0.3} to="/admin/payments" />
+        <StatCard icon={XCircle}    label="Today Check-outs" value={todayOut}   color="rose"        delay={0.2}  to="/admin/bookings" sub="Departing today" />
+        <StatCard icon={Clock}      label="Pending"          value={pending}    color="orange"  delay={0.25} to="/admin/bookings" sub="Awaiting confirmation" />
+        <StatCard icon={TrendingUp} label="Total Revenue"    value={`₹${revenue.toLocaleString("en-IN")}`} color="teal" delay={0.3} to="/admin/payments" sub="Overall earnings" />
       </div>
 
       {/* Revenue + Recent */}
