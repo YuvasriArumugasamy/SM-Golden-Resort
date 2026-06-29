@@ -509,7 +509,7 @@ export default function Home() {
       <section ref={videoSectionRef} className="relative w-full overflow-hidden bg-black" style={{ height: "100svh", maxHeight: "700px" }}>
         <video
           ref={videoRef}
-          src="/WhatsApp Video 2026-06-23 at 17.47.03.mp4"
+          src="/WhatsApp Video 2026-06-29 at 23.23.01.mp4"
           className="absolute inset-0 w-full h-full object-cover"
           loop autoPlay playsInline muted preload="auto"
           onLoadedData={() => setIsVideoLoaded(true)}
