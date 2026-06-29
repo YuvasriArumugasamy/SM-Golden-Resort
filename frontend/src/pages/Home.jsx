@@ -221,14 +221,15 @@ function ManageBookingModal({ isOpen, onClose }) {
         <>
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/40 backdrop-blur-md z-50"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.93, y: 24 }}
+            initial={{ opacity: 0, scale: 0.85, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.93, y: 24 }}
-            transition={{ type: "spring", duration: 0.35 }}
+            exit={{ opacity: 0, scale: 0.95, y: 15 }}
+            transition={{ type: "spring", damping: 20, stiffness: 350 }}
             onClick={e => e.stopPropagation()}
             className="fixed inset-0 z-50 flex items-center justify-center px-4 pointer-events-none"
           >
@@ -534,26 +535,31 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
             className="text-white font-bold drop-shadow-2xl"
             style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.2rem, 8vw, 5rem)", textShadow: "0 4px 24px rgba(0,0,0,0.6)" }}
           >
             SM Golden Resorts
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.4 }}
             className="text-white/80 font-semibold mt-3 tracking-widest uppercase text-sm md:text-base"
             style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
           >
             Old Falls, Courtallam · Tamil Nadu
           </motion.p>
           <motion.button
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25, delay: 0.6 }}
             onClick={() => navigate("/booking")}
-            className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-8 py-3.5 rounded-full text-sm shadow-2xl transition-all"
+            className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-8 py-3.5 rounded-full text-sm shadow-2xl transition-colors btn-glow"
           >
             Book Your Stay
           </motion.button>
@@ -616,65 +622,77 @@ export default function Home() {
         <div className="hidden md:grid grid-cols-4 grid-rows-2 gap-1.5 rounded-xl overflow-hidden h-[420px] relative">
 
           {/* Left big photo — spans 2 cols × 2 rows */}
-          <div
-            className="col-span-2 row-span-2 relative overflow-hidden cursor-pointer group"
+          <motion.div
+            whileHover={{ scale: 0.98, borderRadius: "16px" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="col-span-2 row-span-2 relative overflow-hidden cursor-pointer img-zoom"
             onClick={() => { setGalleryIdx(0); setGalleryOpen(true); }}
           >
             <img
               src={HERO_5[0]?.src}
               alt="SM Golden Resorts"
-              className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-          </div>
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-500" />
+          </motion.div>
 
           {/* Right top-left */}
-          <div
-            className="relative overflow-hidden cursor-pointer group"
+          <motion.div
+            whileHover={{ scale: 0.96, borderRadius: "12px" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="relative overflow-hidden cursor-pointer img-zoom"
             onClick={() => { setGalleryIdx(1); setGalleryOpen(true); }}
           >
             <img src={HERO_5[1]?.src} alt={HERO_5[1]?.label}
-                 className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-          </div>
+                 className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-500" />
+          </motion.div>
 
           {/* Right top-right */}
-          <div
-            className="relative overflow-hidden cursor-pointer group"
+          <motion.div
+            whileHover={{ scale: 0.96, borderRadius: "12px" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="relative overflow-hidden cursor-pointer img-zoom"
             onClick={() => { setGalleryIdx(2); setGalleryOpen(true); }}
           >
             <img src={HERO_5[2]?.src} alt={HERO_5[2]?.label}
-                 className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-          </div>
+                 className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-500" />
+          </motion.div>
 
           {/* Right bottom-left */}
-          <div
-            className="relative overflow-hidden cursor-pointer group"
+          <motion.div
+            whileHover={{ scale: 0.96, borderRadius: "12px" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="relative overflow-hidden cursor-pointer img-zoom"
             onClick={() => { setGalleryIdx(3); setGalleryOpen(true); }}
           >
             <img src={HERO_5[3]?.src} alt={HERO_5[3]?.label}
-                 className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-          </div>
+                 className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-500" />
+          </motion.div>
 
           {/* Right bottom-right — "N photos →" button — corner, no overlay */}
-          <div
-            className="relative overflow-hidden cursor-pointer group"
+          <motion.div
+            whileHover={{ scale: 0.96, borderRadius: "12px" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="relative overflow-hidden cursor-pointer img-zoom"
             onClick={() => { setGalleryIdx(4); setGalleryOpen(true); }}
           >
             <img src={HERO_5[4]?.src} alt={HERO_5[4]?.label}
-                 className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+                 className="w-full h-full object-cover" />
             {/* Button — bottom right corner, no dark overlay on photo */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={(e) => { e.stopPropagation(); setGalleryIdx(0); setGalleryOpen(true); }}
               className="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white font-bold text-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transition-all border-2 border-white"
               style={{ backdropFilter: "blur(4px)" }}
             >
               <span>{displayGallery.length} photos</span>
               <span className="text-base">→</span>
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
         </div>
       </section>
@@ -764,15 +782,16 @@ export default function Home() {
             {/* Blurred backdrop */}
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50"
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/40 backdrop-blur-md z-50"
               onClick={() => setShowGuestsModal(false)}
             />
             {/* Center card */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              initial={{ opacity: 0, scale: 0.85, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ type: "spring", damping: 20, stiffness: 350 }}
               className="fixed inset-0 z-50 flex items-center justify-center px-5 pointer-events-none"
             >
               <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm pointer-events-auto overflow-hidden">
