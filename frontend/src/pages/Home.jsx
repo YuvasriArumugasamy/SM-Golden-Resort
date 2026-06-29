@@ -392,6 +392,7 @@ export default function Home() {
 
   const [rooms, setRooms]               = useState([]);
   const [roomsLoading, setRoomsLoading] = useState(true);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [selectedRoomId, setSelectedRoomId] = useState("");
   const [checkIn, setCheckIn]           = useState(new Date());
   const [checkOut, setCheckOut]         = useState(() => { const d = new Date(); d.setDate(d.getDate() + 1); return d; });
@@ -497,29 +498,9 @@ export default function Home() {
 
   const fmtDate = (d) => d ? d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "2-digit" }) : "";
 
-  /* ── Video autoplay/pause on scroll ── */
+  /* ── Video autoplay handled natively ── */
   const videoRef = useRef(null);
   const videoSectionRef = useRef(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    const section = videoSectionRef.current;
-    if (!video || !section) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          video.muted = false;
-          video.play().catch(() => { video.muted = true; video.play(); });
-        } else {
-          video.pause();
-          video.muted = true;
-        }
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div className="bg-white min-h-screen font-jakarta text-slate-800">
@@ -530,36 +511,57 @@ export default function Home() {
           ref={videoRef}
           src="/WhatsApp Video 2026-06-23 at 17.47.03.mp4"
           className="absolute inset-0 w-full h-full object-cover"
-          loop playsInline muted preload="auto"
+          loop autoPlay playsInline muted preload="auto"
+          onLoadedData={() => setIsVideoLoaded(true)}
         />
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          {/* Top Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 150 }}
+            animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 150 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            className="mb-6 border border-[#c5a059]/40 rounded-full px-8 py-2 flex items-center justify-center bg-black/20 backdrop-blur-sm"
+          >
+            <span className="text-[#c5a059] text-xs md:text-sm font-semibold tracking-widest uppercase" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+              ✦ OLD COURTALLAM'S PREMIUM STAY ✦
+            </span>
+          </motion.div>
+
+          {/* Main Title */}
           <motion.h1
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
-            className="text-white font-bold drop-shadow-2xl"
-            style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.2rem, 8vw, 5rem)", textShadow: "0 4px 24px rgba(0,0,0,0.6)" }}
+            initial={{ opacity: 0, y: 150 }}
+            animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 150 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            className="flex flex-col items-center justify-center text-center drop-shadow-2xl"
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            SM Golden Resorts
+            <span className="text-white text-4xl md:text-5xl lg:text-6xl mb-1 md:mb-2 font-normal" style={{ textShadow: "0 4px 30px rgba(0,0,0,0.8)" }}>
+              Welcome to
+            </span>
+            <span className="text-[#d4af37] text-6xl md:text-7xl lg:text-[7rem] italic font-medium leading-tight" style={{ textShadow: "0 4px 30px rgba(0,0,0,0.8)" }}>
+              SM Golden Resorts
+            </span>
           </motion.h1>
+
+          {/* Bottom Subtitle */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.4 }}
-            className="text-white/80 font-semibold mt-3 tracking-widest uppercase text-sm md:text-base"
-            style={{ textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
+            initial={{ opacity: 0, y: 100 }}
+            animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+            className="text-white font-medium mt-6 text-sm md:text-xl lg:text-2xl drop-shadow-md max-w-2xl px-4"
+            style={{ fontFamily: "'Playfair Display', serif", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
           >
-            Old Falls, Courtallam · Tamil Nadu
+            Experience premium comfort steps away from the majestic Courtallam Falls
           </motion.p>
           <motion.button
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            whileHover={{ scale: 1.05 }}
+            initial={{ opacity: 0, y: 100 }}
+            animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+            whileHover={{ scale: 1.08, boxShadow: "0px 0px 30px rgba(37,99,235,0.8)" }}
             whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25, delay: 0.6 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
             onClick={() => navigate("/booking")}
-            className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-8 py-3.5 rounded-full text-sm shadow-2xl transition-colors btn-glow"
+            className="mt-8 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-extrabold px-10 py-4 rounded-full text-base shadow-2xl transition-all btn-glow border border-blue-400/30"
           >
             Book Your Stay
           </motion.button>
@@ -959,26 +961,20 @@ export default function Home() {
 
                       return (
                         <motion.div key={room.roomId}
-                          initial={{ opacity: 0, x: ri % 2 === 0 ? -40 : 40, scale: 0.96 }}
-                          whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                          initial={{ opacity: 0, y: 40 }}
+                          whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, amount: 0.1 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 20,
-                            mass: 0.6,
-                            delay: ri * 0.1,
-                          }}
-                          whileTap={{ scale: 0.97 }}
+                          transition={{ type: "spring", stiffness: 100, damping: 20, delay: ri * 0.1 }}
+                          whileHover={{ scale: 1.04, y: -8 }}
                           onClick={() => setSelectedRoomId(room.roomId)}
-                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-300 group relative tilt-card ${
+                          className={`bg-white rounded-3xl overflow-hidden shadow-md flex flex-col cursor-pointer transition-all duration-300 group relative ${
                             isSelected
-                              ? "border-2 border-blue-500 shadow-blue-100 shadow-lg -translate-y-1"
-                              : "border border-slate-200 hover:border-blue-300 hover:shadow-xl hover:-translate-y-1"
+                              ? "border-[2px] border-blue-600 shadow-[0_10px_30px_rgba(37,99,235,0.3)] z-10"
+                              : "border border-slate-200 hover:border-blue-600 hover:shadow-[0_10px_30px_rgba(37,99,235,0.2)]"
                           }`}>
 
                           {/* Top color bar — slides in on hover */}
-                          <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-3xl transition-all duration-300 ${
+                          <div className={`absolute top-0 left-0 right-0 h-1.5 rounded-t-3xl transition-all duration-300 ${
                             isSelected ? "bg-blue-600" : "bg-transparent group-hover:bg-blue-600"
                           }`} />
 
@@ -1001,16 +997,18 @@ export default function Home() {
                           {/* Info */}
                           <div className="px-5 pt-4 pb-5 flex flex-col gap-3 flex-1 text-center">
                             {/* Name */}
-                            <h3 className={`font-extrabold text-lg leading-tight transition-colors duration-300 ${
+                            <h3 className={`font-extrabold text-xl leading-tight transition-colors duration-300 ${
                               isSelected ? "text-blue-600" : "text-slate-800 group-hover:text-blue-600"
-                            }`}>
+                            }`} style={{ fontFamily: "'Playfair Display', serif" }}>
                               {ROOM_DISPLAY_NAME[room.type] || room.type}
                             </h3>
 
                             {/* Badge */}
                             <div className="flex justify-center">
-                              <span className={`text-xs font-extrabold px-4 py-1 rounded-full border tracking-wider transition-colors duration-300 ${
-                                isSelected || true ? badgeColor : badgeColor
+                              <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full tracking-widest transition-all duration-300 border ${
+                                room.type.includes("AC") && room.type !== "Non-AC"
+                                  ? (isSelected ? "bg-blue-600 text-white border-blue-600" : "bg-blue-50 text-blue-600 border-blue-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600")
+                                  : (isSelected ? "border-blue-600 text-blue-600 bg-transparent" : "border-slate-300 text-slate-500 group-hover:border-blue-600 group-hover:text-blue-600")
                               }`}>
                                 {badgeLabel}
                               </span>
@@ -1024,23 +1022,24 @@ export default function Home() {
                               }`}>
                                 {room.price?.toLocaleString("en-IN")}
                               </span>
-                              <span className="text-slate-400 text-sm font-medium whitespace-nowrap">/ day</span>
+                              <span className="text-slate-400 text-xs font-medium whitespace-nowrap">/ day</span>
                             </div>
 
                             {/* Book Now */}
-                            <motion.button
-                              whileTap={{ scale: 0.95 }}
+                            <button
                               onClick={e => { e.stopPropagation(); navigate("/booking", {
                                 state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests }
                               });}}
                               disabled={!room.available}
-                              className={`w-full py-3 rounded-2xl text-sm font-extrabold transition-all duration-300 shadow-sm mt-1 ${
+                              className={`w-full py-3 rounded-lg text-sm font-extrabold transition-all duration-300 shadow-sm mt-1 border ${
                                 room.available
-                                  ? "bg-blue-600 hover:bg-blue-700 text-white"
-                                  : "bg-slate-100 text-slate-400 cursor-not-allowed"
+                                  ? isSelected
+                                    ? "bg-blue-600 text-white border-blue-600"
+                                    : "bg-blue-600 hover:bg-blue-50 text-white hover:text-blue-700 border-blue-600 hover:border-blue-200"
+                                  : "bg-slate-100 text-slate-400 cursor-not-allowed border-slate-200"
                               }`}>
                               {room.available ? "Book Now" : "Sold Out"}
-                            </motion.button>
+                            </button>
                           </div>
                         </motion.div>
                       );

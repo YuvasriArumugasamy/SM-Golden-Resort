@@ -5,7 +5,11 @@
 @tailwind utilities;
 
 /* ─── Base ─────────────────────────────── */
-html { scroll-behavior: smooth; overflow-x: clip; }
+html { 
+  scroll-behavior: smooth; 
+  overflow-x: clip; 
+  overscroll-behavior: none; 
+}
 
 body {
   font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
@@ -14,6 +18,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
+  overscroll-behavior: none;
 }
 
 * { box-sizing: border-box; }
