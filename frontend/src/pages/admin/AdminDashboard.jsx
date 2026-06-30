@@ -58,13 +58,13 @@ const Modal = ({ title, isOpen, onClose, children }) => {
 const StatCard = ({ icon: Icon, label, value, sub, color = "blue", delay = 0, to }) => {
   const navigate = useNavigate();
   const themeClasses = {
-    blue:   { bg: "from-blue-50/50 to-blue-100/30", iconBg: "bg-blue-500", iconText: "text-white", border: "border-blue-100", dot: "bg-blue-400" },
-    violet: { bg: "from-violet-50/50 to-violet-100/30", iconBg: "bg-violet-500", iconText: "text-white", border: "border-violet-100", dot: "bg-violet-400" },
-    emerald:{ bg: "from-emerald-50/50 to-emerald-100/30", iconBg: "bg-emerald-500", iconText: "text-white", border: "border-emerald-100", dot: "bg-emerald-400" },
-    amber:  { bg: "from-amber-50/50 to-amber-100/30", iconBg: "bg-amber-500", iconText: "text-white", border: "border-amber-100", dot: "bg-amber-400" },
-    rose:   { bg: "from-rose-50/50 to-rose-100/30", iconBg: "bg-rose-500", iconText: "text-white", border: "border-rose-100", dot: "bg-rose-400" },
-    orange: { bg: "from-orange-50/50 to-orange-100/30", iconBg: "bg-orange-500", iconText: "text-white", border: "border-orange-100", dot: "bg-orange-400" },
-    teal:   { bg: "from-teal-50/50 to-teal-100/30", iconBg: "bg-teal-500", iconText: "text-white", border: "border-teal-100", dot: "bg-teal-400" },
+    blue:   { topBorder: "border-t-blue-500", iconBg: "bg-blue-500", iconText: "text-white", dot: "bg-blue-400", hoverGlow: "hover:shadow-blue-100/60" },
+    violet: { topBorder: "border-t-violet-500", iconBg: "bg-violet-500", iconText: "text-white", dot: "bg-violet-400", hoverGlow: "hover:shadow-violet-100/60" },
+    emerald:{ topBorder: "border-t-emerald-500", iconBg: "bg-emerald-500", iconText: "text-white", dot: "bg-emerald-400", hoverGlow: "hover:shadow-emerald-100/60" },
+    amber:  { topBorder: "border-t-amber-500", iconBg: "bg-amber-500", iconText: "text-white", dot: "bg-amber-400", hoverGlow: "hover:shadow-amber-100/60" },
+    rose:   { topBorder: "border-t-rose-500", iconBg: "bg-rose-500", iconText: "text-white", dot: "bg-rose-400", hoverGlow: "hover:shadow-rose-100/60" },
+    orange: { topBorder: "border-t-orange-500", iconBg: "bg-orange-500", iconText: "text-white", dot: "bg-orange-400", hoverGlow: "hover:shadow-orange-100/60" },
+    teal:   { topBorder: "border-t-teal-500", iconBg: "bg-teal-500", iconText: "text-white", dot: "bg-teal-400", hoverGlow: "hover:shadow-teal-100/60" },
   };
   const theme = themeClasses[color] || themeClasses.blue;
 
@@ -75,11 +75,11 @@ const StatCard = ({ icon: Icon, label, value, sub, color = "blue", delay = 0, to
       whileHover={{ scale: 1.03, y: -4 }}
       whileTap={{ scale: 0.97 }}
       onClick={() => to && navigate(to)}
-      className={`relative overflow-hidden bg-gradient-to-br ${theme.bg} rounded-3xl border ${theme.border} shadow-sm p-6 transition-all ${
+      className={`relative overflow-hidden bg-white rounded-2xl border border-slate-200 border-t-4 ${theme.topBorder} shadow-md p-6 transition-all ${theme.hoverGlow} ${
         to ? "cursor-pointer hover:shadow-xl" : ""
       }`}>
       {/* Decorative background shape */}
-      <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full opacity-10 blur-2xl ${theme.iconBg}`} />
+      <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full opacity-[0.06] blur-2xl ${theme.iconBg}`} />
 
       <div className="flex items-start justify-between mb-4 relative z-10">
         <p className="text-[11px] font-extrabold text-slate-500 uppercase tracking-widest">{label}</p>
