@@ -133,14 +133,14 @@ function Overview({ stats, bookings }) {
   return (
     <div className="space-y-5">
       {/* Stat row 1 */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard icon={BedDouble}    label="Total Rooms"     value={stats?.totalRooms ?? 11} color="blue"       delay={0}    to="/admin/rooms" sub="Active properties" />
         <StatCard icon={CalendarDays} label="Total Bookings"  value={total}                   color="violet"   delay={0.05} to="/admin/bookings" sub="All time bookings" />
         <StatCard icon={CheckCircle2} label="Available Rooms" value={stats?.totalRooms ?? 11} color="emerald" delay={0.1}  to="/admin/rooms" sub="Ready for guests" />
         <StatCard icon={Clock}        label="Today Check-ins" value={todayIn}                 color="amber"     delay={0.15} to="/admin/bookings" sub="Expected today" />
       </div>
       {/* Stat row 2 */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <StatCard icon={XCircle}    label="Today Check-outs" value={todayOut}   color="rose"        delay={0.2}  to="/admin/bookings" sub="Departing today" />
         <StatCard icon={Clock}      label="Pending"          value={pending}    color="orange"  delay={0.25} to="/admin/bookings" sub="Awaiting confirmation" />
         <StatCard icon={TrendingUp} label="Total Revenue"    value={`₹${revenue.toLocaleString("en-IN")}`} color="teal" delay={0.3} to="/admin/payments" sub="Overall earnings" />
