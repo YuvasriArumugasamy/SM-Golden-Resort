@@ -1,5 +1,6 @@
 const Booking = require("../models/Booking");
 const Room = require("../models/Room");
+const BookingBlock = require("../models/BookingBlock");
 
 // @desc    Create a new booking
 // @route   POST /api/bookings
@@ -28,6 +29,17 @@ const createBooking = async (req, res) => {
     const room = await Room.findOne({ roomId });
     if (!room) {
       return res.status(404).json({ message: "Room not found" });
+    }
+
+    // Check if the room is blocked during these dates
+    const isBlocked = await BookingBlock.findOne({
+      roomId,
+      startDate: { $lt: checkOutDate },
+      endDate: { $gt: checkInDate }
+    });
+
+    if (isBlocked) {
+      return res.status(400).json({ message: "This room is blocked by the administrator for the selected dates." });
     }
 
     const totalPrice = nights * room.price;

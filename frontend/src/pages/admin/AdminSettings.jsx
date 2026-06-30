@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { requestPermission, listenForegroundMessages } from "../../notification";
 import {
   Lock, Eye, EyeOff, Shield, RefreshCw, ExternalLink,
-  CheckCircle2, Info, Phone, MapPin, Bell
+  CheckCircle2, Info, Phone, MapPin, Bell, Calendar, Trash2, Plus
 } from "lucide-react";
 
 export default function AdminSettings() {
@@ -22,11 +22,72 @@ export default function AdminSettings() {
   const [notifPermission, setNotifPermission] = useState("default");
   const [notifLoading,    setNotifLoading]    = useState(false);
 
+  // Room Blocking state
+  const [rooms, setRooms] = useState([]);
+  const [blocks, setBlocks] = useState([]);
+  const [blockRoomId, setBlockRoomId] = useState("");
+  const [blockStartDate, setBlockStartDate] = useState("");
+  const [blockEndDate, setBlockEndDate] = useState("");
+  const [blockLoading, setBlockLoading] = useState(false);
+
   useEffect(() => {
     if ("Notification" in window) {
       setNotifPermission(Notification.permission);
     }
+    fetchRoomsAndBlocks();
   }, []);
+
+  const fetchRoomsAndBlocks = async () => {
+    try {
+      const [roomsRes, blocksRes] = await Promise.all([
+        api.get("/api/rooms"),
+        api.get("/api/booking-blocks")
+      ]);
+      setRooms(roomsRes.data);
+      setBlocks(blocksRes.data);
+    } catch (err) {
+      toast.error("Failed to load settings data");
+    }
+  };
+
+  const handleCreateBlock = async (e) => {
+    e.preventDefault();
+    if (!blockRoomId || !blockStartDate || !blockEndDate) {
+      toast.error("Please fill all fields for blocking");
+      return;
+    }
+    if (new Date(blockEndDate) < new Date(blockStartDate)) {
+      toast.error("End date cannot be before start date");
+      return;
+    }
+    setBlockLoading(true);
+    try {
+      await api.post("/api/booking-blocks", {
+        roomId: blockRoomId,
+        startDate: blockStartDate,
+        endDate: blockEndDate
+      });
+      toast.success("Room blocked successfully!");
+      setBlockRoomId("");
+      setBlockStartDate("");
+      setBlockEndDate("");
+      fetchRoomsAndBlocks();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to block room");
+    } finally {
+      setBlockLoading(false);
+    }
+  };
+
+  const handleDeleteBlock = async (id) => {
+    try {
+      await api.delete(`/api/booking-blocks/${id}`);
+      toast.success("Block removed successfully!");
+      fetchRoomsAndBlocks();
+    } catch (err) {
+      toast.error("Failed to remove block");
+    }
+  };
 
   const handleEnableAlerts = async () => {
     if (!("Notification" in window)) {
@@ -213,6 +274,108 @@ export default function AdminSettings() {
                   : <><Shield className="w-4 h-4" /> Update Password</>}
               </button>
             </form>
+          </motion.div>
+
+          {/* ── Room Blocking Manager ── */}
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+            className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+                  <Calendar className="w-5 h-5 text-red-600" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-slate-800 text-sm">Room Blocking Center</h3>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Block rooms for maintenance or custom bookings</p>
+                </div>
+              </div>
+
+              <form onSubmit={handleCreateBlock} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Select Room</label>
+                  <select
+                    value={blockRoomId}
+                    onChange={(e) => setBlockRoomId(e.target.value)}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none bg-white text-slate-800 transition-all font-semibold"
+                    required
+                  >
+                    <option value="">-- Choose Room --</option>
+                    {rooms.map((room) => (
+                      <option key={room.roomId} value={room.roomId}>
+                        {room.name} ({room.type})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Start Date</label>
+                    <input
+                      type="date"
+                      value={blockStartDate}
+                      onChange={(e) => setBlockStartDate(e.target.value)}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none bg-white text-slate-800 transition-all font-semibold"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">End Date</label>
+                    <input
+                      type="date"
+                      value={blockEndDate}
+                      onChange={(e) => setBlockEndDate(e.target.value)}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none bg-white text-slate-800 transition-all font-semibold"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={blockLoading}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-extrabold py-3 px-6 rounded-xl transition-all shadow disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm mt-2"
+                >
+                  {blockLoading ? (
+                    <><RefreshCw className="w-4 h-4 animate-spin" /> Blocking...</>
+                  ) : (
+                    <>
+                      <Plus className="w-4 h-4" /> Block Room
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+
+            <div className="border-t border-slate-100 pt-6 mt-6">
+              <h4 className="font-extrabold text-slate-800 text-xs uppercase tracking-wide mb-3">Blocked Dates</h4>
+              {blocks.length === 0 ? (
+                <p className="text-slate-400 text-xs italic">No blocked dates currently.</p>
+              ) : (
+                <div className="max-h-[160px] overflow-y-auto space-y-2 pr-1">
+                  {blocks.map((block) => {
+                    const roomName = rooms.find(r => r.roomId === block.roomId)?.name || block.roomId;
+                    const startFmt = new Date(block.startDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                    const endFmt = new Date(block.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                    return (
+                      <div key={block._id} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs">
+                        <div>
+                          <p className="font-bold text-slate-800">{roomName}</p>
+                          <p className="text-slate-500 mt-0.5">{startFmt} - {endFmt}</p>
+                        </div>
+                        <button
+                          onClick={() => handleDeleteBlock(block._id)}
+                          className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg transition-colors"
+                          title="Unblock Room"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </motion.div>
 
         </div>

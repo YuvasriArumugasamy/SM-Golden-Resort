@@ -11,6 +11,7 @@ const adminRoutes   = require("./routes/adminRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const roomRoutes    = require("./routes/roomRoutes");
 const galleryRoutes = require("./routes/galleryRoutes");
+const bookingBlockRoutes = require("./routes/bookingBlockRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -47,6 +48,7 @@ app.use("/api/admin",   adminRoutes);
 app.use("/api/bookings",bookingRoutes);
 app.use("/api/rooms",   roomRoutes);
 app.use("/api/gallery", galleryRoutes);
+app.use("/api/booking-blocks", bookingBlockRoutes);
 
 // Health check
 app.get("/", (req, res) => {
