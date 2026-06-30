@@ -22,7 +22,7 @@ const ARTICLES = [
     excerpt: "Planning a trip to Courtallam? Discover the best season to visit, what to expect at each time of year, and insider tips from our resort team.",
     date: "June 2026",
     readTime: "5 min read",
-    image: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
+    image: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.webp",
     metaDescription: "Best time to visit Courtallam waterfalls in 2026. Monsoon season guide, weather tips, and resort booking advice for SM Golden Resorts Courtallam.",
   },
   {
@@ -33,7 +33,7 @@ const ARTICLES = [
     excerpt: "Beyond the famous waterfalls — explore temples, local markets, nature walks, day trips, and more. Your complete 2026 activity guide for Courtallam.",
     date: "June 2026",
     readTime: "6 min read",
-    image: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png",
+    image: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.webp",
     metaDescription: "Top 10 things to do near Courtallam waterfalls. Complete activity guide including Old Falls, Main Falls, Tiger Falls, temples, and local food.",
   },
   {
@@ -44,7 +44,7 @@ const ARTICLES = [
     excerpt: "First time visiting Courtallam? This comprehensive guide covers how to reach, where to stay, what to eat, and essential tips for a perfect trip.",
     date: "June 2026",
     readTime: "8 min read",
-    image: "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png",
+    image: "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.webp",
     metaDescription: "Courtallam complete travel guide 2026. How to reach, where to stay, best resorts, local food, and travel tips for Courtallam Tamil Nadu.",
   },
 ];

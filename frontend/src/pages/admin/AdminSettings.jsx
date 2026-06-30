@@ -119,7 +119,7 @@ export default function AdminSettings() {
     }
     new Notification("SM Golden Resorts 🏨", {
       body: "Test: New booking received! Check your dashboard.",
-      icon: "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg",
+      icon: "/WhatsApp Image 2026-06-22 at 18.04.13.webp",
     });
     toast.success("Test notification sent!");
   };

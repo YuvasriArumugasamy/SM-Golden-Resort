@@ -168,7 +168,7 @@ export default function AdminLogin() {
               className="w-16 h-16 rounded-full overflow-hidden mb-4 border-2"
               style={{ borderColor: "rgba(99,102,241,0.5)", boxShadow: "0 0 24px rgba(99,102,241,0.4), 0 0 60px rgba(99,102,241,0.15)" }}
             >
-              <img src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
+              <img src="/WhatsApp Image 2026-06-22 at 18.04.13.webp" alt="SM Golden Resorts" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-2xl font-extrabold text-white tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
               SM Golden Resorts

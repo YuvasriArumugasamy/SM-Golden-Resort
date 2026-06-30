@@ -12,15 +12,15 @@ import { roomsData as fallbackRooms } from "../utils/roomData";
 
 /* ── room type → single image mapping ── */
 const ROOM_TYPE_IMAGE = {
-  "Non-AC":       "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
-  "Three Bed":    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
-  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
-  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
+  "Non-AC":       "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
+  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp",
+  "Three Bed":    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
+  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).webp",
+  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp",
+  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).webp",
 };
 
-const FALLBACK_IMG = "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg";
+const FALLBACK_IMG = "/WhatsApp Image 2026-06-14 at 07.53.16.webp";
 
 /* ── Step Bar ── */
 function StepBar({ step }) {
@@ -76,7 +76,7 @@ function Sidebar({ selectedRoom, checkIn, checkOut, guests, nights, roomCount, s
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="bg-slate-900 px-4 py-3 flex items-center gap-3">
           <div className="w-9 h-9 rounded-full overflow-hidden shrink-0">
-            <img src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
+            <img src="/WhatsApp Image 2026-06-22 at 18.04.13.webp" alt="SM Golden Resorts" className="w-full h-full object-cover" />
           </div>
           <div>
             <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>
@@ -401,7 +401,7 @@ export default function Booking() {
             {/* Hotel name strip */}
             <div className="bg-white/15 backdrop-blur-sm rounded-xl px-4 py-2.5 flex items-center gap-3">
               <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 border-2 border-white/40">
-                <img src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
+                <img src="/WhatsApp Image 2026-06-22 at 18.04.13.webp" alt="SM Golden Resorts" className="w-full h-full object-cover" />
               </div>
               <div>
                 <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>

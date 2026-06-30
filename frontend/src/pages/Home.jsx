@@ -59,20 +59,20 @@ function useCountUp(target, duration = 1500) {
 
 /* ── Static data ─────────────────────────── */
 const GALLERY = [
-  { label: "SM Golden Resorts Resort Building Mountain View Courtallam",    src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png" },
-  { label: "Villa Room at SM Golden Resorts Old Falls Courtallam",          src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png" },
-  { label: "Double Bed AC Room - SM Golden Resorts Courtallam",             src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
-  { label: "Suite Room SM Golden Resorts Courtallam Tamil Nadu",            src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png" },
-  { label: "Resort Garden View Near Old Falls Courtallam",                  src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png" },
-  { label: "SM Golden Resorts Resort Exterior Mountain View",               src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png" },
-  { label: "SM Golden Resorts Courtallam - Resort Exterior View",           src: "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png" },
-  { label: "Bedroom Interior SM Golden Resorts Old Falls Courtallam",       src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
-  { label: "SM Golden Resorts Building with Western Ghats Mountain View",   src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png" },
-  { label: "Double Bed Non-AC Room SM Golden Resorts Courtallam",           src: "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png" },
-  { label: "Premium Room at SM Golden Resorts Near Old Falls",              src: "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png" },
-  { label: "SM Golden Resorts Courtallam Resort Photo",                     src: "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" },
-  { label: "New AC Room View SM Golden Resorts Courtallam 2026",            src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
-  { label: "SM Golden Resorts Resort and Mountain Courtallam",              src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png" },
+  { label: "SM Golden Resorts Resort Building Mountain View Courtallam",    src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.webp" },
+  { label: "Villa Room at SM Golden Resorts Old Falls Courtallam",          src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp" },
+  { label: "Double Bed AC Room - SM Golden Resorts Courtallam",             src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp" },
+  { label: "Suite Room SM Golden Resorts Courtallam Tamil Nadu",            src: "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).webp" },
+  { label: "Resort Garden View Near Old Falls Courtallam",                  src: "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.webp" },
+  { label: "SM Golden Resorts Resort Exterior Mountain View",               src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.webp" },
+  { label: "SM Golden Resorts Courtallam - Resort Exterior View",           src: "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.webp" },
+  { label: "Bedroom Interior SM Golden Resorts Old Falls Courtallam",       src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.webp" },
+  { label: "SM Golden Resorts Building with Western Ghats Mountain View",   src: "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.webp" },
+  { label: "Double Bed Non-AC Room SM Golden Resorts Courtallam",           src: "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp" },
+  { label: "Premium Room at SM Golden Resorts Near Old Falls",              src: "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.webp" },
+  { label: "SM Golden Resorts Courtallam Resort Photo",                     src: "/WhatsApp Image 2026-06-22 at 18.04.13.webp" },
+  { label: "New AC Room View SM Golden Resorts Courtallam 2026",            src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.webp" },
+  { label: "SM Golden Resorts Resort and Mountain Courtallam",              src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.webp" },
 ];
 
 const FACILITIES = [
@@ -142,39 +142,39 @@ const NEARBY = [
 // Per-room photo sets — first image is the best hero shot
 const ROOM_PHOTO_SETS = {
   "101": [
-    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.webp",
   ],
   "102": [
-    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.webp",
   ],
   "104": [
-    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.webp",
   ],
   "110": [
-    "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
-    "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
-    "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png",
+    "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).webp",
+    "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp",
+    "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.webp",
   ],
 };
 
 const ROOM_SLIDES = [
-  "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
-  "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
+  "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).webp",
+  "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
 ];
 
 /* ── Manage Booking Modal ── */
@@ -411,11 +411,11 @@ export default function Home() {
 
   // Best 5 photos for hero grid — hardcoded, never overridden by API
   const HERO_5 = [
-    { label: "SM Golden Resorts Courtallam AC Room with Blue Curtains",      src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png" },
-    { label: "Double Bed AC Room at SM Golden Resorts Courtallam",           src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png" },
-    { label: "Room Entrance View SM Golden Resorts Old Falls Courtallam",    src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png" },
-    { label: "SM Golden Resorts Resort Building Mountain View Courtallam",   src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png" },
-    { label: "SM Golden Resorts Building with Mountain View Courtallam",     src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png" },
+    { label: "SM Golden Resorts Courtallam AC Room with Blue Curtains",      src: "/ChatGPT Image Jun 22, 2026, 06_57_51 PM.webp" },
+    { label: "Double Bed AC Room at SM Golden Resorts Courtallam",           src: "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp" },
+    { label: "Room Entrance View SM Golden Resorts Old Falls Courtallam",    src: "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp" },
+    { label: "SM Golden Resorts Resort Building Mountain View Courtallam",   src: "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.webp" },
+    { label: "SM Golden Resorts Building with Mountain View Courtallam",     src: "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.webp" },
   ];
   const [showAmenitiesModal, setShowAmenitiesModal] = useState(false);
   const [showAllNearby, setShowAllNearby] = useState(false);
@@ -553,7 +553,7 @@ export default function Home() {
           ref={videoRef}
           src="/WhatsApp Video 2026-06-29 at 23.23.01.mp4"
           className="absolute inset-0 w-full h-full object-cover"
-          loop autoPlay playsInline muted preload="auto" poster="/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png"
+          loop autoPlay playsInline muted preload="auto" poster="/ChatGPT Image Jun 22, 2026, 06_57_51 PM.webp"
           onLoadedData={() => setIsVideoLoaded(true)}
         />
 
@@ -753,7 +753,7 @@ export default function Home() {
           <div className="flex flex-col items-center mb-3">
             <div className="flex items-center gap-3 mb-1">
               <img
-                src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg"
+                src="/WhatsApp Image 2026-06-22 at 18.04.13.webp"
                 alt="SM Golden Resorts Logo"
                 className="w-14 h-14 rounded-full object-cover border-2 border-white/30 shadow-lg shrink-0"
               />
@@ -966,12 +966,12 @@ export default function Home() {
                 </div>
               ) : (() => {
                 const ROOM_TYPE_IMAGE = {
-                  "Non-AC":       "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-                  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
-                  "Three Bed":    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-                  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
-                  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
-                  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
+                  "Non-AC":       "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
+                  "AC":           "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp",
+                  "Three Bed":    "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
+                  "Four Bed AC":  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).webp",
+                  "Villa":        "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp",
+                  "Suite AC":     "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).webp",
                 };
                 const ROOM_DISPLAY_NAME = {
                   "Non-AC":      "Double Bed Non-AC",
@@ -981,7 +981,7 @@ export default function Home() {
                   "Villa":       "Villa",
                   "Suite AC":    "Suite Room AC",
                 };
-                const FALLBACK = "/WhatsApp Image 2026-06-14 at 07.53.16.jpeg";
+                const FALLBACK = "/WhatsApp Image 2026-06-14 at 07.53.16.webp";
                 const uniqueRooms = rooms.filter((room, idx, arr) =>
                   arr.findIndex(r => r.price === room.price) === idx
                 ).sort((a, b) => a.price - b.price);

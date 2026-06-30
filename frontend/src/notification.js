@@ -7,7 +7,7 @@ export async function requestPermission() {
   return permission;
 }
 
-export function showNotification(title, body, icon = "/WhatsApp Image 2026-06-22 at 18.04.13.jpeg") {
+export function showNotification(title, body, icon = "/WhatsApp Image 2026-06-22 at 18.04.13.webp") {
   if (typeof window === "undefined") return;
   if (Notification.permission !== "granted") return;
   new Notification(title, { body, icon });

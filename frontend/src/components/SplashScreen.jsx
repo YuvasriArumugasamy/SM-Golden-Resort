@@ -39,7 +39,7 @@ export default function SplashScreen({ onDone }) {
             className="absolute inset-0 w-full h-full pointer-events-none"
           >
             <img 
-              src="/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png" 
+              src="/ChatGPT Image Jun 21, 2026, 06_19_29 PM.webp" 
               alt="Resort Hills Background" 
               className="w-full h-full object-cover"
               onLoad={() => setImageLoaded(true)}
@@ -77,7 +77,7 @@ export default function SplashScreen({ onDone }) {
             {/* Logo Image */}
             <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl bg-slate-900">
               <img
-                src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg"
+                src="/WhatsApp Image 2026-06-22 at 18.04.13.webp"
                 alt="SM Golden Resorts Logo"
                 className="w-full h-full object-cover"
               />

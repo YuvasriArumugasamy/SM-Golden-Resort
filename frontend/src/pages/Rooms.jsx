@@ -20,19 +20,19 @@ const TYPE_STYLES = {
 const AMENITY_ICONS = { WiFi: Wifi, AC: Wind, TV: Tv, "Hot Water": Droplets, Fan: Wind, "Garden View": Trees, "Mountain View": Trees };
 
 const ROOM_IMGS = [
-  "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.png",
-  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).png",
+  "/ChatGPT Image Jun 21, 2026, 06_19_17 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_19_24 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_19_29 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_19_35 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_20_28 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_20_50 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_21_49 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_22_45 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_23_01 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_24_42 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_25_28 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_28_06 PM.webp",
+  "/ChatGPT Image Jun 21, 2026, 06_28_16 PM (1).webp",
 ];
 
 // Give each room a slice of images for its carousel

@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="col-span-2 md:col-span-1">
           <div className="flex items-center gap-3 mb-4">
             <img
-              src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg"
+              src="/WhatsApp Image 2026-06-22 at 18.04.13.webp"
               alt="SM Golden Resorts Logo"
               className="w-12 h-12 object-contain rounded-full border-2 border-white/30"
             />
