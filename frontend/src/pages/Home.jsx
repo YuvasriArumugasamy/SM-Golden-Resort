@@ -393,6 +393,7 @@ export default function Home() {
   const [rooms, setRooms]               = useState([]);
   const [roomsLoading, setRoomsLoading] = useState(true);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false); // tracks any click/scroll interaction
   const [selectedRoomId, setSelectedRoomId] = useState("");
   const [checkIn, setCheckIn]           = useState(new Date());
   const [checkOut, setCheckOut]         = useState(() => { const d = new Date(); d.setDate(d.getDate() + 1); return d; });
@@ -508,31 +509,38 @@ export default function Home() {
     const section = videoSectionRef.current;
     if (!video || !section) return;
 
+    // Unmute only after a user interaction (click, keypress, touch)
+    const maybeUnmute = () => setUserInteracted(true);
+    window.addEventListener('click', maybeUnmute);
+    window.addEventListener('keydown', maybeUnmute);
+    window.addEventListener('touchstart', maybeUnmute);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Video visible → play and unmute
-          video.muted = false;
+          // Video visible → play. Unmute only if user has interacted.
+          video.muted = !userInteracted;
           video.play().catch(() => {
-            // Fallback: browser blocked unmuted play → play muted
+            // If autoplay blocked, stay muted.
             video.muted = true;
-            setIsMuted(true);
-            video.play().catch(() => {});
           });
-          setIsMuted(false);
         } else {
-          // Video out of view → pause and mute
+          // Video out of view → pause and mute.
           video.pause();
           video.muted = true;
-          setIsMuted(true);
         }
       },
       { threshold: 0.4 } // at least 40% of section must be visible
     );
 
     observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('click', maybeUnmute);
+      window.removeEventListener('keydown', maybeUnmute);
+      window.removeEventListener('touchstart', maybeUnmute);
+    };
+  }, [userInteracted]);
 
 
 
