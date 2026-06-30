@@ -21,11 +21,20 @@ const login = async (req, res) => {
       admin = await Admin.findOne({ email: identifier });
     }
 
+    console.log("Login Attempt Details:", {
+      inputUsername: identifier,
+      inputPasswordLength: password ? password.length : 0,
+      adminFound: !!admin,
+      adminUsername: admin ? admin.username : null,
+      adminEmail: admin ? admin.email : null,
+    });
+
     if (!admin) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, admin.password);
+    console.log("Password Match Result:", isMatch);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }

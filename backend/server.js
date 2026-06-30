@@ -71,7 +71,7 @@ const seedAdmin = async () => {
   try {
     const adminUsername = process.env.ADMIN_USERNAME?.toLowerCase().trim();
     const adminEmail    = process.env.ADMIN_EMAIL?.toLowerCase().trim();
-    const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminPassword = process.env.ADMIN_PASSWORD?.trim();
 
     if (!adminPassword) {
       console.error("❌ ADMIN_PASSWORD not set in .env");
