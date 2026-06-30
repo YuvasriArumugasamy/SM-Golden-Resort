@@ -114,7 +114,14 @@ export default function App() {
 
   return (
     <AuthProvider>
-      {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} />}
+      {!splashDone && (
+        <SplashScreen
+          onDone={() => {
+            window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            setSplashDone(true);
+          }}
+        />
+      )}
       <BrowserRouter>
         <AppLayout />
       </BrowserRouter>

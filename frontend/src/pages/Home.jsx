@@ -498,9 +498,43 @@ export default function Home() {
 
   const fmtDate = (d) => d ? d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "2-digit" }) : "";
 
-  /* ── Video autoplay handled natively ── */
+  /* ── Video refs ── */
   const videoRef = useRef(null);
   const videoSectionRef = useRef(null);
+
+  /* ── IntersectionObserver: play+unmute when in view, pause+mute when out ── */
+  useEffect(() => {
+    const video = videoRef.current;
+    const section = videoSectionRef.current;
+    if (!video || !section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Video visible → play and unmute
+          video.muted = false;
+          video.play().catch(() => {
+            // Fallback: browser blocked unmuted play → play muted
+            video.muted = true;
+            setIsMuted(true);
+            video.play().catch(() => {});
+          });
+          setIsMuted(false);
+        } else {
+          // Video out of view → pause and mute
+          video.pause();
+          video.muted = true;
+          setIsMuted(true);
+        }
+      },
+      { threshold: 0.4 } // at least 40% of section must be visible
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+
 
   return (
     <div className="bg-white min-h-screen font-jakarta text-slate-800">
@@ -514,6 +548,8 @@ export default function Home() {
           loop autoPlay playsInline muted preload="auto"
           onLoadedData={() => setIsVideoLoaded(true)}
         />
+
+
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           {/* Top Badge */}
