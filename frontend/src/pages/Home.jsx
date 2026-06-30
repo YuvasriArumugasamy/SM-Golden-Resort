@@ -553,7 +553,7 @@ export default function Home() {
           ref={videoRef}
           src="/WhatsApp Video 2026-06-29 at 23.23.01.mp4"
           className="absolute inset-0 w-full h-full object-cover"
-          loop autoPlay playsInline muted preload="auto"
+          loop autoPlay playsInline muted preload="auto" poster="/ChatGPT Image Jun 22, 2026, 06_57_51 PM.png"
           onLoadedData={() => setIsVideoLoaded(true)}
         />
 
@@ -677,7 +677,7 @@ export default function Home() {
             <img
               src={HERO_5[0]?.src}
               alt="SM Golden Resorts"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover" loading="lazy"
             />
             <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-500" />
           </motion.div>
