@@ -56,14 +56,9 @@ const AdminLayout = ({ children }) => {
       <aside className="hidden lg:flex w-60 shrink-0 flex-col shadow-xl" style={SIDEBAR_BG}>
         {/* Logo */}
         <div className="px-5 py-5 border-b border-white/10 shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 shadow">
-              <img src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
-            </div>
-            <div>
-              <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>
-              <p className="text-blue-200 text-[10px] uppercase tracking-widest mt-0.5">Admin Panel</p>
-            </div>
+          <div>
+            <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>
+            <p className="text-blue-200 text-[10px] uppercase tracking-widest mt-0.5">Admin Panel</p>
           </div>
         </div>
 
@@ -110,14 +105,9 @@ const AdminLayout = ({ children }) => {
 
               {/* Drawer Header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 shadow">
-                    <img src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" alt="SM Golden Resorts" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>
-                    <p className="text-blue-200 text-[10px] uppercase tracking-widest mt-0.5">Admin Panel</p>
-                  </div>
+                <div>
+                  <p className="text-white font-extrabold text-sm leading-none">SM Golden Resorts</p>
+                  <p className="text-blue-200 text-[10px] uppercase tracking-widest mt-0.5">Admin Panel</p>
                 </div>
                 <button onClick={() => setOpen(false)}
                   className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all shrink-0">
@@ -163,9 +153,6 @@ const AdminLayout = ({ children }) => {
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full overflow-hidden">
-              <img src="/WhatsApp Image 2026-06-22 at 18.04.13.jpeg" alt="SM" className="w-full h-full object-cover" />
-            </div>
             <span className="text-white font-extrabold text-sm">SM Golden Resorts</span>
           </div>
           <div className="w-10" />
