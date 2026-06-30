@@ -224,7 +224,7 @@ function BookingMgmt({ bookings, onConfirm, onCancel, onWhatsApp, onDelete, onAd
             <Plus className="w-3.5 h-3.5" /> Add Offline Booking
           </button>
         </div>
-        <div className="flex gap-1 px-6 py-3 border-b border-slate-100 overflow-x-auto">
+        <div className="flex gap-1 px-6 py-3 border-b border-slate-100 overflow-x-auto no-scrollbar">
           {tabs.map(t => (
             <button key={t} onClick={() => setFilter(t)}
               className={`px-4 py-1.5 rounded-xl text-xs font-bold capitalize whitespace-nowrap transition-all ${
