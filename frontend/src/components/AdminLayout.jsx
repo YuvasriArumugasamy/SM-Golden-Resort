@@ -71,7 +71,7 @@ const AdminLayout = ({ children }) => {
         <div className="px-3 pb-5 pt-3 border-t border-white/10 space-y-0.5 shrink-0">
 
           <button onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-red-300 hover:text-red-200 hover:bg-red-500/15 transition-all">
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-all">
             <LogOut className="w-4 h-4 shrink-0" /> Logout
           </button>
           <div className="flex items-center gap-2.5 px-4 py-2.5 mt-1 rounded-xl">
@@ -124,7 +124,7 @@ const AdminLayout = ({ children }) => {
               <div className="px-3 pb-6 pt-3 border-t border-white/10 space-y-1 shrink-0">
 
                 <button onClick={handleLogout}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-red-300 hover:bg-red-500/15 transition-all">
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-all">
                   <LogOut className="w-4 h-4 shrink-0" /> Logout
                 </button>
                 <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 mt-1">
