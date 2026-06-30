@@ -559,15 +559,15 @@ export default function Home() {
 
 
         <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pb-20 md:pb-16">
           {/* Top Badge */}
           <motion.div
             initial={{ opacity: 0, y: 150 }}
             animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 150 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="mb-6 border border-[#c5a059]/40 rounded-full px-8 py-2 flex items-center justify-center bg-black/20 backdrop-blur-sm"
+            className="mb-4 md:mb-6 border border-[#c5a059]/40 rounded-full px-5 md:px-8 py-1.5 md:py-2 flex items-center justify-center bg-black/20 backdrop-blur-sm"
           >
-            <span className="text-[#c5a059] text-xs md:text-sm font-semibold tracking-widest uppercase" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+            <span className="text-[#c5a059] text-[10px] md:text-sm font-semibold tracking-widest uppercase" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
               ✦ OLD COURTALLAM'S PREMIUM STAY ✦
             </span>
           </motion.div>
@@ -580,10 +580,10 @@ export default function Home() {
             className="flex flex-col items-center justify-center text-center drop-shadow-2xl"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            <span className="text-white text-4xl md:text-5xl lg:text-6xl mb-1 md:mb-2 font-normal" style={{ textShadow: "0 4px 30px rgba(0,0,0,0.8)" }}>
+            <span className="text-white text-3xl md:text-5xl lg:text-6xl mb-1 md:mb-2 font-normal" style={{ textShadow: "0 4px 30px rgba(0,0,0,0.8)" }}>
               Welcome to
             </span>
-            <span className="text-[#d4af37] text-6xl md:text-7xl lg:text-[7rem] italic font-medium leading-tight" style={{ textShadow: "0 4px 30px rgba(0,0,0,0.8)" }}>
+            <span className="text-[#d4af37] text-[3.2rem] md:text-7xl lg:text-[7rem] italic font-medium leading-tight" style={{ textShadow: "0 4px 30px rgba(0,0,0,0.8)" }}>
               SM Golden Resorts
             </span>
           </motion.h1>
@@ -593,7 +593,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 100 }}
             animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="text-white font-medium mt-6 text-sm md:text-xl lg:text-2xl drop-shadow-md max-w-2xl px-4"
+            className="text-white font-medium mt-4 md:mt-6 text-xs md:text-xl lg:text-2xl drop-shadow-md max-w-2xl px-4"
             style={{ fontFamily: "'Playfair Display', serif", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}
           >
             Experience premium comfort steps away from the majestic Courtallam Falls
@@ -605,21 +605,21 @@ export default function Home() {
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
             onClick={() => navigate("/booking")}
-            className="mt-8 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-extrabold px-10 py-4 rounded-full text-base shadow-2xl transition-all btn-glow border border-blue-400/30"
+            className="mt-5 md:mt-8 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-extrabold px-8 md:px-10 py-3 md:py-4 rounded-full text-sm md:text-base shadow-2xl transition-all btn-glow border border-blue-400/30"
           >
             Book Your Stay
           </motion.button>
         </div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="absolute bottom-3 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 md:gap-2"
         >
-          <span className="text-white/60 text-xs font-medium uppercase tracking-widest">Scroll</span>
+          <span className="text-white/60 text-[10px] md:text-xs font-medium uppercase tracking-widest">Scroll</span>
           <motion.div
-            animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-5 h-5 border-2 border-white/60 rounded-full flex items-center justify-center"
+            animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}
+            className="w-4 h-4 md:w-5 md:h-5 border-2 border-white/60 rounded-full flex items-center justify-center"
           >
-            <div className="w-1.5 h-1.5 bg-white/60 rounded-full" />
+            <div className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white/60 rounded-full" />
           </motion.div>
         </motion.div>
       </section>
