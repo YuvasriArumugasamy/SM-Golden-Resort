@@ -8,7 +8,7 @@ import {
   ChevronLeft, ChevronRight, CheckCircle2, MapPin, Star,
   Calendar, Users, ChevronDown, Check, X,
   Phone, BedDouble, Droplets, Wind, Trees, ParkingCircle, Tv,
-  CalendarDays, Edit3,
+  CalendarDays, Edit3, Clock, Sparkles, Percent,
 } from "lucide-react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
@@ -56,6 +56,64 @@ function useCountUp(target, duration = 1500) {
   }, [target, duration]);
   return [count, ref];
 }
+
+/* ── Stat Counter Component ── */
+const StatCounter = ({ target, suffix = "", prefix = "" }) => {
+  const [count, ref] = useCountUp(target, 1500);
+  return <span ref={ref}>{prefix}{count}{suffix}</span>;
+};
+
+/* ── Room Upgrades Mapping ── */
+const roomUpgrades = {
+  "Non-AC": {
+    badge: "Budget Friendly",
+    badgeClass: "bg-stone-100 text-stone-700 border-stone-200",
+    occupancy: "Max 3 Guests",
+    beds: "Double Bed",
+    amenities: [
+      { name: "WiFi", icon: Wifi },
+      { name: "TV", icon: Tv },
+      { name: "Hot Water", icon: Droplets },
+      { name: "Fan", icon: Wind }
+    ]
+  },
+  "AC": {
+    badge: "Best Value",
+    badgeClass: "bg-blue-600 text-white border-blue-600 shadow-sm",
+    occupancy: "Max 3 Guests",
+    beds: "Double Bed",
+    amenities: [
+      { name: "WiFi", icon: Wifi },
+      { name: "TV", icon: Tv },
+      { name: "Hot Water", icon: Droplets },
+      { name: "A/C", icon: Wind }
+    ]
+  },
+  "Villa": {
+    badge: "Family Choice",
+    badgeClass: "bg-emerald-600 text-white border-emerald-600 shadow-sm",
+    occupancy: "Max 5 Guests",
+    beds: "Double Bed + Extra",
+    amenities: [
+      { name: "WiFi", icon: Wifi },
+      { name: "TV", icon: Tv },
+      { name: "Kitchen", icon: UtensilsCrossed },
+      { name: "Private Entrance", icon: ShieldCheck }
+    ]
+  },
+  "Suite AC": {
+    badge: "Premium Luxury",
+    badgeClass: "bg-purple-600 text-white border-purple-600 shadow-sm",
+    occupancy: "Max 6 Guests",
+    beds: "King Bed + Living Area",
+    amenities: [
+      { name: "WiFi", icon: Wifi },
+      { name: "TV", icon: Tv },
+      { name: "A/C", icon: Wind },
+      { name: "Bathtub", icon: Droplets }
+    ]
+  }
+};
 
 /* ── Static data ─────────────────────────── */
 const GALLERY = [
@@ -469,6 +527,15 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handle);
   }, []);
 
+  // Mobile gallery auto-slide
+  useEffect(() => {
+    if (galleryOpen) return;
+    const timer = setInterval(() => {
+      setGalleryIdx(prev => (prev + 1) % displayGallery.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [displayGallery.length, galleryOpen]);
+
   const scrollTo = (id, ref) => {
     setActiveTab(id);
     if (ref.current) window.scrollTo({ top: ref.current.offsetTop - 110, behavior: "smooth" });
@@ -545,7 +612,21 @@ export default function Home() {
 
 
   return (
-    <div className="bg-white min-h-screen font-jakarta text-slate-800">
+    <div className="bg-white min-h-screen font-jakarta text-slate-800 pb-20 lg:pb-0">
+
+      {/* ══ TOP SEASONAL ALERT & DIRECT DISCOUNT STRIP ══ */}
+      <div className="bg-[#1C2B4A] text-white py-2.5 px-4 text-center text-xs md:text-sm font-medium flex items-center justify-center gap-2 relative z-50">
+        <span className="animate-bounce">🌧️</span>
+        <span>
+          <strong>Courtallam Falls Season is LIVE (June–Sept)!</strong> Book directly with us & save a flat <strong>10% OFF</strong> automatically!
+        </span>
+        <button 
+          onClick={() => scrollTo("rooms", roomsRef)} 
+          className="underline font-bold text-amber-300 hover:text-amber-400 transition-colors ml-2 cursor-pointer outline-none"
+        >
+          Book Now
+        </button>
+      </div>
 
       {/* ══ 0. HERO VIDEO ══ */}
       <section ref={videoSectionRef} className="relative w-full overflow-hidden bg-black" style={{ height: "100svh", maxHeight: "700px" }}>
@@ -565,11 +646,22 @@ export default function Home() {
             initial={{ opacity: 0, y: 150 }}
             animate={isVideoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 150 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="mb-4 md:mb-6 border border-[#c5a059]/40 rounded-full px-5 md:px-8 py-1.5 md:py-2 flex items-center justify-center bg-black/20 backdrop-blur-sm"
+            className="mb-3 md:mb-4 border border-[#c5a059]/40 rounded-full px-5 md:px-8 py-1.5 md:py-2 flex items-center justify-center bg-black/20 backdrop-blur-sm"
           >
             <span className="text-[#c5a059] text-[10px] md:text-sm font-semibold tracking-widest uppercase" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
               ✦ OLD COURTALLAM'S PREMIUM STAY ✦
             </span>
+          </motion.div>
+
+          {/* Urgency Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isVideoLoaded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-3.5 px-4 py-1.5 rounded-full bg-red-600/90 text-white font-extrabold text-[10px] md:text-xs tracking-wider uppercase flex items-center gap-1.5 border border-red-500/30 shadow-lg animate-pulse"
+          >
+            <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
+            🔥 Peak Season: Limited Rooms Left!
           </motion.div>
 
           {/* Main Title */}
@@ -622,6 +714,37 @@ export default function Home() {
             <div className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white/60 rounded-full" />
           </motion.div>
         </motion.div>
+      </section>
+
+      {/* ══ STATS STRIP ══ */}
+      <section className="bg-slate-50 border-y border-slate-200 py-6 px-4">
+        <div className="max-w-[1280px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0 text-center">
+          <div className="space-y-1">
+            <p className="text-3xl md:text-4xl font-extrabold text-blue-600">
+              <StatCounter target={500} suffix="+" />
+            </p>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Happy Guests</p>
+          </div>
+          <div className="space-y-1 border-l border-slate-200">
+            <p className="text-3xl md:text-4xl font-extrabold text-blue-600 flex items-center justify-center gap-1">
+              <span>4.8</span>
+              <Star className="w-5 h-5 fill-amber-400 text-amber-400 shrink-0 self-center" />
+            </p>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Google Rating</p>
+          </div>
+          <div className="space-y-1 md:border-l border-slate-200">
+            <p className="text-3xl md:text-4xl font-extrabold text-blue-600">
+              <StatCounter target={11} />
+            </p>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Premium Rooms</p>
+          </div>
+          <div className="space-y-1 border-l border-slate-200">
+            <p className="text-3xl md:text-4xl font-extrabold text-blue-600">
+              <StatCounter target={380} suffix="m" />
+            </p>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">To Old Falls</p>
+          </div>
+        </div>
       </section>
 
       {/* ══ 1. PHOTO GRID ══ */}
@@ -921,6 +1044,44 @@ export default function Home() {
                 <a href="mailto:smgoldenresorts@gmail.com" className="mt-2 block text-sm text-slate-400">smgoldenresorts@gmail.com</a>
               </div>
 
+              {/* WHY CHOOSE US */}
+              <div className="pt-4 reveal">
+                <div className="text-center space-y-1 mb-6">
+                  <p className="text-xs font-bold text-blue-600 uppercase tracking-widest text-center">ADVANTAGES</p>
+                  <h2 className="text-xl font-extrabold text-slate-800 text-center">Why <span className="text-blue-600 italic">Choose Us</span></h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col items-center text-center hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3 shrink-0">
+                      <MapPin className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h3 className="font-bold text-sm text-slate-850">Nearest to Falls</h3>
+                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">Only 380m from Old Falls. Walk to the waterfalls in under 5 minutes.</p>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col items-center text-center hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3 shrink-0">
+                      <Clock className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h3 className="font-bold text-sm text-slate-850">24/7 Check-In & Open</h3>
+                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">Check-in or check-out at any time. Our front desk is open around the clock.</p>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col items-center text-center hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3 shrink-0">
+                      <UtensilsCrossed className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h3 className="font-bold text-sm text-slate-850">Kitchen Available</h3>
+                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">Fully functional kitchen facility access to cook your own delicious meals.</p>
+                  </div>
+                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col items-center text-center hover:shadow-md transition-all">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3 shrink-0">
+                      <Sparkles className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h3 className="font-bold text-sm text-slate-850">Pet Friendly Stay</h3>
+                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">Bring your beloved pets along. We welcome furry companions fully!</p>
+                  </div>
+                </div>
+              </div>
+
               {/* FACILITIES */}
               <div ref={amenitiesRef} className="scroll-mt-[110px]">
                 <div className="text-center space-y-1 mb-4 reveal">
@@ -1003,6 +1164,8 @@ export default function Home() {
                         "Suite AC": "SUITE",
                       }[room.type] || room.badge?.toUpperCase();
 
+                      const upgrade = roomUpgrades[room.type] || {};
+
                       return (
                         <motion.div key={room.roomId}
                           initial={{ opacity: 0, y: 40 }}
@@ -1030,8 +1193,16 @@ export default function Home() {
                                 alt={room.type}
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                               />
+
+                              {/* Popularity/Quality Badge */}
+                              {upgrade.badge && (
+                                <div className={`absolute top-2.5 left-2.5 text-[9px] font-extrabold px-3 py-1 rounded-full shadow-md z-10 tracking-wider uppercase ${upgrade.badgeClass}`}>
+                                  {upgrade.badge}
+                                </div>
+                              )}
+
                               {isSelected && (
-                                <div className="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md">
+                                <div className="absolute top-2.5 right-2.5 bg-emerald-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md z-10">
                                   ✓ Selected
                                 </div>
                               )}
@@ -1039,29 +1210,51 @@ export default function Home() {
                           </div>
 
                           {/* Info */}
-                          <div className="px-5 pt-4 pb-5 flex flex-col gap-3 flex-1 text-center">
+                          <div className="px-5 pt-4 pb-5 flex flex-col gap-3.5 flex-1 text-center">
                             {/* Name */}
-                            <h3 className={`font-extrabold text-xl leading-tight transition-colors duration-300 ${
-                              isSelected ? "text-blue-600" : "text-slate-800 group-hover:text-blue-600"
-                            }`} style={{ fontFamily: "'Playfair Display', serif" }}>
-                              {ROOM_DISPLAY_NAME[room.type] || room.type}
-                            </h3>
+                            <div>
+                              <h3 className={`font-extrabold text-xl leading-tight transition-colors duration-300 ${
+                                isSelected ? "text-blue-600" : "text-slate-800 group-hover:text-blue-600"
+                              }`} style={{ fontFamily: "'Playfair Display', serif" }}>
+                                {ROOM_DISPLAY_NAME[room.type] || room.type}
+                              </h3>
+                            </div>
 
-                            {/* Badge */}
-                            <div className="flex justify-center">
-                              <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full tracking-widest transition-all duration-300 border ${
-                                room.type.includes("AC") && room.type !== "Non-AC"
-                                  ? (isSelected ? "bg-blue-600 text-white border-blue-600" : "bg-blue-50 text-blue-600 border-blue-200 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600")
-                                  : (isSelected ? "border-blue-600 text-blue-600 bg-transparent" : "border-slate-300 text-slate-500 group-hover:border-blue-600 group-hover:text-blue-600")
-                              }`}>
-                                {badgeLabel}
+                            {/* Occupancy and Bed Details */}
+                            <div className="flex items-center justify-center gap-3 text-xs text-slate-500 font-medium">
+                              <span className="flex items-center gap-1">
+                                <Users className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                                {upgrade.occupancy}
+                              </span>
+                              <span className="w-1 h-1 rounded-full bg-slate-300 shrink-0" />
+                              <span className="flex items-center gap-1">
+                                <BedDouble className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                                {upgrade.beds}
                               </span>
                             </div>
 
+                            {/* Key Amenities Mini-Icons */}
+                            <div className="flex justify-center gap-2">
+                              {upgrade.amenities?.map((am, ai) => {
+                                const AmIcon = am.icon;
+                                return (
+                                  <div key={ai} className="w-7 h-7 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" title={am.name}>
+                                    <AmIcon className="w-3.5 h-3.5" />
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* Direct Booking Discount Alert */}
+                            <div className="bg-emerald-50/70 border border-emerald-100/60 rounded-xl py-1.5 px-3 flex items-center justify-center gap-1.5 text-[10px] font-bold text-emerald-700">
+                              <Percent className="w-3.5 h-3.5 text-emerald-600 animate-pulse shrink-0" />
+                              <span>10% Direct Discount Applied!</span>
+                            </div>
+
                             {/* Price */}
-                            <div className="flex items-baseline justify-center gap-1 mt-1">
-                              <span className="text-slate-500 text-sm font-medium">₹</span>
-                              <span className={`text-3xl font-extrabold whitespace-nowrap transition-colors duration-300 ${
+                            <div className="flex items-baseline justify-center gap-1 border-t border-slate-100 pt-3">
+                              <span className="text-slate-400 text-xs font-semibold">₹</span>
+                              <span className={`text-2xl font-extrabold whitespace-nowrap transition-colors duration-300 ${
                                 isSelected ? "text-blue-600" : "text-slate-800 group-hover:text-blue-600"
                               }`}>
                                 {room.price?.toLocaleString("en-IN")}
@@ -1075,7 +1268,7 @@ export default function Home() {
                                 state: { roomId: room.roomId, checkIn: checkIn.toISOString(), checkOut: checkOut.toISOString(), guests }
                               });}}
                               disabled={!room.available}
-                              className={`w-full py-3 rounded-lg text-sm font-extrabold transition-all duration-300 shadow-sm mt-1 border ${
+                              className={`w-full py-3 rounded-xl text-sm font-extrabold transition-all duration-300 shadow-sm mt-1 border ${
                                 room.available
                                   ? isSelected
                                     ? "bg-blue-600 text-white border-blue-600"
@@ -1160,12 +1353,42 @@ export default function Home() {
             </div>
 
             {/* REVIEWS — Google Reviews via Elfsight */}
-            <div ref={reviewsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-4">
+            <div ref={reviewsRef} className="scroll-mt-[110px] border-t border-slate-100 pt-8 space-y-6">
               <div className="text-center space-y-1 mb-4">
                 <p className="text-xs font-bold text-blue-600 uppercase tracking-widest">TESTIMONIALS</p>
                 <h2 className="text-2xl font-extrabold text-slate-800">Guest <span className="text-blue-600 italic">Reviews</span></h2>
               </div>
+              
+              {/* Elfsight Google Reviews Widget */}
               <div className="elfsight-app-9aed98a4-50a0-461b-8b92-9236e77aafcd"></div>
+
+              {/* Offline/Fallback Google Reviews Cards */}
+              <div className="mt-8">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center mb-6">— Verified Guest Stories —</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {REVIEWS.slice(0, 3).map((rev, idx) => (
+                    <div key={idx} className="bg-slate-50 border border-slate-100 rounded-2xl p-5 hover:shadow-md transition-all flex flex-col justify-between">
+                      <div>
+                        <div className="flex gap-0.5 mb-2.5">
+                          <Stars n={rev.rating} />
+                        </div>
+                        <p className="text-slate-600 text-xs md:text-sm italic leading-relaxed">
+                          "{rev.review}"
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-slate-100/60">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-extrabold text-xs">
+                          {rev.initials}
+                        </div>
+                        <div>
+                          <h4 className="text-xs font-extrabold text-slate-800 leading-none">{rev.name}</h4>
+                          <span className="text-[10px] text-slate-400 mt-1 block">{rev.time}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* FAQs */}
@@ -1279,26 +1502,53 @@ export default function Home() {
                 <span>💬</span> Chat on WhatsApp
               </a>
             </div>
-            <div className="border border-slate-100 rounded-xl p-3 bg-slate-50 text-center">
-              <p className="text-[10px] text-slate-400 font-medium">VISA · MASTERCARD · RUPAY · UPI / GPAY</p>
-              <p className="text-[10px] text-slate-400 mt-0.5">🔒 100% Secured Reservation</p>
+            <div className="border border-slate-150 rounded-2xl p-4 bg-slate-50 space-y-3 shadow-inner">
+              <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-700">
+                <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
+                <span>🔒 100% Secured Booking</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-700">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>🔄 Free Cancellation (48 Hours)</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-700">
+                <Star className="w-4 h-4 text-amber-500 fill-amber-500 shrink-0" />
+                <span>⭐️ Google Verified Resort</span>
+              </div>
+              <div className="border-t border-slate-200 pt-2 text-center">
+                <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">VISA · MASTERCARD · RUPAY · UPI / GPAY</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ══ MOBILE BOTTOM BAR — only when room is selected ══ */}
-      {selRoom && (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
-          <div className="flex flex-col items-center gap-1">
-            <p className="text-[10px] text-slate-400 font-medium">Final Price (incl. taxes) · ₹{total.toLocaleString("en-IN")}</p>
+      {/* ══ MOBILE BOTTOM BAR ══ */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 py-3 pb-4 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] flex flex-col items-center">
+        {selRoom ? (
+          <div className="w-full max-w-sm flex flex-col items-center gap-1.5">
+            <div className="flex items-center justify-between w-full text-xs font-bold text-slate-800">
+              <span className="truncate max-w-[200px]">Selected: {selRoom.type === "Suite AC" ? "Suite AC" : selRoom.type === "AC" ? "Double Bed AC" : selRoom.type === "Villa" ? "Villa" : "Double Bed Non-AC"}</span>
+              <span className="text-blue-600 font-extrabold text-sm">₹{total.toLocaleString("en-IN")}</span>
+            </div>
             <button onClick={handleBook}
-                    className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg outline-none focus:outline-none btn-primary">
-              Book Now →
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl text-sm transition-all shadow-lg outline-none focus:outline-none btn-primary">
+              Complete Booking →
             </button>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="w-full max-w-sm flex items-center justify-between gap-4">
+            <div>
+              <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider leading-none">Starting From</p>
+              <p className="text-base font-extrabold text-blue-600 mt-1">₹1,350<span className="text-[10px] text-slate-400 font-normal">/day</span></p>
+            </div>
+            <button onClick={() => scrollTo("rooms", roomsRef)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs transition-all shadow-md outline-none focus:outline-none">
+              Check Rooms ✓
+            </button>
+          </div>
+        )}
+      </div>
 
 
       {/* ══ GALLERY LIGHTBOX ══ */}
