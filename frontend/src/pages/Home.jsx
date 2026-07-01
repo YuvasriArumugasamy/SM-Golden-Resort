@@ -622,7 +622,7 @@ export default function Home() {
         </span>
         <button 
           onClick={() => navigate("/booking")} 
-          className="underline font-bold text-amber-300 hover:text-amber-400 transition-colors ml-2 cursor-pointer outline-none"
+          className="underline font-bold text-amber-300 hover:text-amber-400 transition-colors ml-2 cursor-pointer outline-none whitespace-nowrap shrink-0"
         >
           Book Now
         </button>
