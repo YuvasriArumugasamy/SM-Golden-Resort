@@ -1050,35 +1050,64 @@ export default function Home() {
                   <p className="text-xs font-bold text-blue-600 uppercase tracking-widest text-center">ADVANTAGES</p>
                   <h2 className="text-xl font-extrabold text-slate-800 text-center">Why <span className="text-blue-600 italic">Choose Us</span></h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col items-center text-center hover:shadow-md transition-all">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3 shrink-0">
-                      <MapPin className="w-5 h-5 text-blue-600" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+                  
+                  {/* Card 1 */}
+                  <div className="bg-white border border-slate-150 rounded-3xl p-5 flex flex-col items-start hover:shadow-[0_20px_40px_rgba(28,43,74,0.06)] hover:border-blue-200 transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-600 to-[#C8963E] transition-all duration-300 group-hover:w-full" />
+                    <div className="w-11 h-11 rounded-2xl bg-blue-50/70 group-hover:bg-gradient-to-br group-hover:from-blue-600 group-hover:to-blue-500 flex items-center justify-center mb-4 transition-all duration-300 shadow-sm shrink-0">
+                      <MapPin className="w-5 h-5 text-blue-600 group-hover:text-white transition-all duration-300" />
                     </div>
-                    <h3 className="font-bold text-sm text-slate-850">Nearest to Falls</h3>
-                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">Only 380m from Old Falls. Walk to the waterfalls in under 5 minutes.</p>
+                    <h3 className="font-extrabold text-sm text-[#1C2B4A] tracking-tight group-hover:text-blue-600 transition-colors duration-300">
+                      Nearest to Falls
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                      Only 380m from Old Falls. Walk to the waterfalls in under 5 minutes.
+                    </p>
                   </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col items-center text-center hover:shadow-md transition-all">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3 shrink-0">
-                      <Clock className="w-5 h-5 text-blue-600" />
+
+                  {/* Card 2 */}
+                  <div className="bg-white border border-slate-150 rounded-3xl p-5 flex flex-col items-start hover:shadow-[0_20px_40px_rgba(28,43,74,0.06)] hover:border-blue-200 transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-600 to-[#C8963E] transition-all duration-300 group-hover:w-full" />
+                    <div className="w-11 h-11 rounded-2xl bg-blue-50/70 group-hover:bg-gradient-to-br group-hover:from-blue-600 group-hover:to-blue-500 flex items-center justify-center mb-4 transition-all duration-300 shadow-sm shrink-0">
+                      <Clock className="w-5 h-5 text-blue-600 group-hover:text-white transition-all duration-300" />
                     </div>
-                    <h3 className="font-bold text-sm text-slate-850">24/7 Check-In & Open</h3>
-                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">Check-in or check-out at any time. Our front desk is open around the clock.</p>
+                    <h3 className="font-extrabold text-sm text-[#1C2B4A] tracking-tight group-hover:text-blue-600 transition-colors duration-300">
+                      24/7 Check-In & Open
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                      Check-in or check-out at any time. Our front desk is open around the clock.
+                    </p>
                   </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col items-center text-center hover:shadow-md transition-all">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3 shrink-0">
-                      <UtensilsCrossed className="w-5 h-5 text-blue-600" />
+
+                  {/* Card 3 */}
+                  <div className="bg-white border border-slate-150 rounded-3xl p-5 flex flex-col items-start hover:shadow-[0_20px_40px_rgba(28,43,74,0.06)] hover:border-blue-200 transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-600 to-[#C8963E] transition-all duration-300 group-hover:w-full" />
+                    <div className="w-11 h-11 rounded-2xl bg-blue-50/70 group-hover:bg-gradient-to-br group-hover:from-blue-600 group-hover:to-blue-500 flex items-center justify-center mb-4 transition-all duration-300 shadow-sm shrink-0">
+                      <UtensilsCrossed className="w-5 h-5 text-blue-600 group-hover:text-white transition-all duration-300" />
                     </div>
-                    <h3 className="font-bold text-sm text-slate-850">Kitchen Available</h3>
-                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">Fully functional kitchen facility access to cook your own delicious meals.</p>
+                    <h3 className="font-extrabold text-sm text-[#1C2B4A] tracking-tight group-hover:text-blue-600 transition-colors duration-300">
+                      Kitchen Available
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                      Fully functional kitchen facility access to cook your own delicious meals.
+                    </p>
                   </div>
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex flex-col items-center text-center hover:shadow-md transition-all">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3 shrink-0">
-                      <Sparkles className="w-5 h-5 text-blue-600" />
+
+                  {/* Card 4 */}
+                  <div className="bg-white border border-slate-150 rounded-3xl p-5 flex flex-col items-start hover:shadow-[0_20px_40px_rgba(28,43,74,0.06)] hover:border-blue-200 transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-600 to-[#C8963E] transition-all duration-300 group-hover:w-full" />
+                    <div className="w-11 h-11 rounded-2xl bg-blue-50/70 group-hover:bg-gradient-to-br group-hover:from-blue-600 group-hover:to-blue-500 flex items-center justify-center mb-4 transition-all duration-300 shadow-sm shrink-0">
+                      <Sparkles className="w-5 h-5 text-blue-600 group-hover:text-white transition-all duration-300" />
                     </div>
-                    <h3 className="font-bold text-sm text-slate-850">Pet Friendly Stay</h3>
-                    <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">Bring your beloved pets along. We welcome furry companions fully!</p>
+                    <h3 className="font-extrabold text-sm text-[#1C2B4A] tracking-tight group-hover:text-blue-600 transition-colors duration-300">
+                      Pet Friendly Stay
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                      Bring your beloved pets along. We welcome furry companions fully!
+                    </p>
                   </div>
+
                 </div>
               </div>
 
