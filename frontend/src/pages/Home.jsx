@@ -612,7 +612,7 @@ export default function Home() {
 
 
   return (
-    <div className="bg-white min-h-screen font-jakarta text-slate-800 pb-20 lg:pb-0">
+    <div className="bg-white min-h-screen font-jakarta text-slate-800">
 
       {/* ══ TOP SEASONAL ALERT & DIRECT DISCOUNT STRIP ══ */}
       <div className="bg-[#1C2B4A] text-white py-2.5 px-4 text-center text-xs md:text-sm font-medium flex items-center justify-center gap-2 relative z-50">
@@ -1552,9 +1552,9 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ MOBILE BOTTOM BAR ══ */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 py-3 pb-4 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] flex flex-col items-center">
-        {selRoom ? (
+      {/* ══ MOBILE BOTTOM BAR — only when room is selected ══ */}
+      {selRoom && (
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 py-3 pb-4 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] flex flex-col items-center">
           <div className="w-full max-w-sm flex flex-col items-center gap-1.5">
             <div className="flex items-center justify-between w-full text-xs font-bold text-slate-800">
               <span className="truncate max-w-[200px]">Selected: {selRoom.type === "Suite AC" ? "Suite AC" : selRoom.type === "AC" ? "Double Bed AC" : selRoom.type === "Villa" ? "Villa" : "Double Bed Non-AC"}</span>
@@ -1565,8 +1565,8 @@ export default function Home() {
               Complete Booking →
             </button>
           </div>
-        ) : null}
-      </div>
+        </div>
+      )}
 
 
       {/* ══ GALLERY LIGHTBOX ══ */}
