@@ -621,7 +621,7 @@ export default function Home() {
           <strong>Courtallam Falls Season is LIVE (June–Sept)!</strong> Book directly with us & save a flat <strong>10% OFF</strong> automatically!
         </span>
         <button 
-          onClick={() => scrollTo("rooms", roomsRef)} 
+          onClick={() => navigate("/booking")} 
           className="underline font-bold text-amber-300 hover:text-amber-400 transition-colors ml-2 cursor-pointer outline-none"
         >
           Book Now
