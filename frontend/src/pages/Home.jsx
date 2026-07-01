@@ -1565,18 +1565,7 @@ export default function Home() {
               Complete Booking →
             </button>
           </div>
-        ) : (
-          <div className="w-full max-w-sm flex items-center justify-between gap-4">
-            <div>
-              <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider leading-none">Starting From</p>
-              <p className="text-base font-extrabold text-blue-600 mt-1">₹1,350<span className="text-[10px] text-slate-400 font-normal">/day</span></p>
-            </div>
-            <button onClick={() => scrollTo("rooms", roomsRef)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs transition-all shadow-md outline-none focus:outline-none">
-              Check Rooms ✓
-            </button>
-          </div>
-        )}
+        ) : null}
       </div>
 
 
