@@ -360,17 +360,16 @@ export default function Booking() {
 
   const waText = encodeURIComponent(
     `✅ *SM Golden Resorts – Booking Confirmed!*\n\n` +
-    `Dear ${guestFullName},\n` +
-    `Your booking has been *confirmed*. Here are your details:\n\n` +
+    `Dear ${guestFullName},\n\n` +
     `🆔 Booking ID: *${bookingId6}*\n` +
     `🛏️ Room: *${roomLabel}*\n` +
     `📅 Check-in: *${fmtConfirmDate(checkIn)}*\n` +
     `📅 Check-out: *${fmtConfirmDate(checkOut)}*\n` +
     `🌙 Nights: *${nights}*\n` +
     `👥 Guests: *${guests}*\n` +
-    `💰 Total Amount: *₹${displayTotal.toLocaleString("en-IN")}*\n\n` +
+    `📊 Status: *Pending Confirmation*\n\n` +
     `📍 SM Golden Resorts, Old Falls Main Road, Courtallam – 627 802\n\n` +
-    `We look forward to hosting you! 🙏`
+    `Thank you! 🙏`
   );
 
   /* ── Success ── */
