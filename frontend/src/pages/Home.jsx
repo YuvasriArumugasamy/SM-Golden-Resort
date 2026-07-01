@@ -721,7 +721,7 @@ export default function Home() {
         <div className="max-w-[1280px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0 text-center">
           <div className="space-y-1">
             <p className="text-3xl md:text-4xl font-extrabold text-blue-600">
-              <StatCounter target={500} suffix="+" />
+              <StatCounter target={1000} suffix="+" />
             </p>
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Happy Guests</p>
           </div>
