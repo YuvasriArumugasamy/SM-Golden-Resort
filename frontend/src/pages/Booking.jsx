@@ -358,19 +358,23 @@ export default function Booking() {
   const displayGst      = Math.round(displayTotal * 0.12 / 1.12);
   const displayBase     = displayTotal - displayGst;
 
-  const waText = encodeURIComponent(
-    `✅ *SM Golden Resorts – Booking Confirmed!*\n\n` +
-    `Dear ${guestFullName},\n\n` +
-    `🆔 Booking ID: *${bookingId6}*\n` +
-    `🛏️ Room: *${roomLabel}*\n` +
-    `📅 Check-in: *${fmtConfirmDate(checkIn)}*\n` +
-    `📅 Check-out: *${fmtConfirmDate(checkOut)}*\n` +
-    `🌙 Nights: *${nights}*\n` +
-    `👥 Guests: *${guests}*\n` +
-    `📊 Status: *Pending Confirmation*\n\n` +
-    `📍 SM Golden Resorts, Old Falls Main Road, Courtallam – 627 802\n\n` +
-    `Thank you! 🙏`
-  );
+  const waText = encodeURIComponent([
+    "\u2705 *SM Golden Resorts \u2013 Booking Confirmed!*",
+    "",
+    `Dear ${guestFullName},`,
+    "",
+    `\uD83C\uDD94 Booking ID: *${bookingId6}*`,
+    `\uD83D\uDECF\uFE0F Room: *${roomLabel}*`,
+    `\uD83D\uDCC5 Check-in: *${fmtConfirmDate(checkIn)}*`,
+    `\uD83D\uDCC5 Check-out: *${fmtConfirmDate(checkOut)}*`,
+    `\uD83C\uDF19 Nights: *${nights}*`,
+    `\uD83D\uDC65 Guests: *${guests}*`,
+    `\uD83D\uDCCA Status: *Pending Confirmation*`,
+    "",
+    `\uD83D\uDCCD SM Golden Resorts, Old Falls Main Road, Courtallam \u2013 627 802`,
+    "",
+    "Thank you! \uD83D\uDE4F",
+  ].join("\n"));
 
   /* ── Success ── */
 

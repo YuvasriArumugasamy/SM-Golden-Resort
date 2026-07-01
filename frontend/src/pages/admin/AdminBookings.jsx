@@ -138,16 +138,21 @@ export default function AdminBookings() {
       await api.patch(`/api/bookings/${b._id}/status`, { status: "confirmed" });
       toast.success("Booking confirmed!");
       const shortId = (() => { try { const n = parseInt(b._id.slice(-8),16); return String(Math.abs(n)%1000000).padStart(6,"0"); } catch { return "------"; } })();
-      const msg =
-        `✅ *SM Golden Resorts – Booking Confirmed!*\n\n` +
-        `Dear ${b.guestName},\n\n` +
-        `🆔 Booking ID: *${shortId}*\n` +
-        `🛏️ Room: *${b.roomType || b.roomName}*\n` +
-        `📅 Check-in: *${fmt(b.checkIn)}*\n` +
-        `📅 Check-out: *${fmt(b.checkOut)}*\n` +
-        `📊 Status: *Confirmed*\n\n` +
-        `📍 SM Golden Resorts, Old Falls Main Road, Courtallam – 627 802\n\n` +
-        `Thank you! 🙏`;
+      const msg = [
+        "\u2705 *SM Golden Resorts \u2013 Booking Confirmed!*",
+        "",
+        `Dear ${b.guestName},`,
+        "",
+        `\uD83C\uDD94 Booking ID: *${shortId}*`,
+        `\uD83D\uDECF\uFE0F Room: *${b.roomType || b.roomName}*`,
+        `\uD83D\uDCC5 Check-in: *${fmt(b.checkIn)}*`,
+        `\uD83D\uDCC5 Check-out: *${fmt(b.checkOut)}*`,
+        `\uD83D\uDCCA Status: *Confirmed*`,
+        "",
+        `\uD83D\uDCCD SM Golden Resorts, Old Falls Main Road, Courtallam \u2013 627 802`,
+        "",
+        "Thank you! \uD83D\uDE4F",
+      ].join("\n");
       const phone = (b.phone || "").replace(/[^0-9]/g, "");
       window.open(`https://wa.me/${phone.startsWith("91") ? phone : "91" + phone}?text=${encodeURIComponent(msg)}`, "_blank");
       fetchBookings(true);
@@ -176,16 +181,22 @@ export default function AdminBookings() {
   const handleWhatsApp = (b) => {
     const shortId = (() => { try { const n = parseInt(b._id.slice(-8),16); return String(Math.abs(n)%1000000).padStart(6,"0"); } catch { return "------"; } })();
     const statusLabel = b.status?.charAt(0).toUpperCase() + b.status?.slice(1);
-    const msg =
-      `✅ *SM Golden Resorts – Booking Update*\n\n` +
-      `Dear ${b.guestName},\n\n` +
-      `Regarding your booking (ID: *${shortId}*):\n\n` +
-      `🛏️ Room: *${b.roomType || b.roomName}*\n` +
-      `📅 Check-in: *${fmt(b.checkIn)}*\n` +
-      `📅 Check-out: *${fmt(b.checkOut)}*\n` +
-      `📊 Status: *${statusLabel}*\n\n` +
-      `📍 SM Golden Resorts, Old Falls Main Road, Courtallam – 627 802\n\n` +
-      `Thank you! 🙏`;
+    const msg = [
+      "\u2705 *SM Golden Resorts \u2013 Booking Update*",
+      "",
+      `Dear ${b.guestName},`,
+      "",
+      `Regarding your booking (ID: *${shortId}*):`,
+      "",
+      `\uD83D\uDECF\uFE0F Room: *${b.roomType || b.roomName}*`,
+      `\uD83D\uDCC5 Check-in: *${fmt(b.checkIn)}*`,
+      `\uD83D\uDCC5 Check-out: *${fmt(b.checkOut)}*`,
+      `\uD83D\uDCCA Status: *${statusLabel}*`,
+      "",
+      `\uD83D\uDCCD SM Golden Resorts, Old Falls Main Road, Courtallam \u2013 627 802`,
+      "",
+      "Thank you! \uD83D\uDE4F",
+    ].join("\n");
     const phone = (b.phone || "").replace(/[^0-9]/g, "");
     window.open(`https://wa.me/${phone.startsWith("91") ? phone : "91" + phone}?text=${encodeURIComponent(msg)}`, "_blank");
   };
